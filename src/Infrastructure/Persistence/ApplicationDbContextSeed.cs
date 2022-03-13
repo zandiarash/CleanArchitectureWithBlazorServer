@@ -86,6 +86,21 @@ public static class ApplicationDbContextSeed
             context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "VehicleStatus", Value = "正常", Text = "正常", Description = "车辆状态" });
             context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "VehicleStatus", Value = "维修", Text = "维修", Description = "车辆状态" });
 
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "ShippingOrderStatus", Value = "派单", Text = "派单", Description = "发运单状态" });
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "ShippingOrderStatus", Value = "发运", Text = "发运", Description = "发运单状态" });
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "ShippingOrderStatus", Value = "卸货完成", Text = "卸货完成", Description = "发运单状态" });
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "ShippingOrderStatus", Value = "关闭", Text = "关闭", Description = "发运单状态" });
+
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "CostName", Value = "过路费", Text = "过路费", Description = "费用名称" });
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "CostName", Value = "燃油费", Text = "燃油费", Description = "费用名称" });
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "CostName", Value = "餐费", Text = "餐费", Description = "费用名称" });
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "CostName", Value = "装卸费", Text = "装卸费", Description = "费用名称" });
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "CostName", Value = "维修费", Text = "维修费", Description = "费用名称" });
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "CostName", Value = "违章罚款", Text = "违章罚款", Description = "费用名称" });
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "CostName", Value = "加水费", Text = "加水费", Description = "费用名称" });
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "CostName", Value = "其它费用", Text = "其它费用", Description = "费用名称" });
+           
+
 
             context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Status", Value = "initialization", Text = "initialization", Description = "Status of workflow" });
             context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Status", Value = "processing", Text = "processing", Description = "Status of workflow" });

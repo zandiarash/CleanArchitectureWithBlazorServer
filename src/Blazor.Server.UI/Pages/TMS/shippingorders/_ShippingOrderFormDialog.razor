@@ -1,0 +1,148 @@
+@using CleanArchitecture.Blazor.Application.Features.KeyValues.Queries.ByName
+@using CleanArchitecture.Blazor.Application.Features.ShippingOrders.Commands.AddEdit
+@using CleanArchitecture.Blazor.Application.Features.Trucks.DTOs
+@using SixLabors.ImageSharp
+@using SixLabors.ImageSharp.Formats
+@using SixLabors.ImageSharp.Processing
+@inherits MudComponentBase
+@inject IStringLocalizer<ShippingOrders> L
+<MudDialog>
+    <DialogContent>
+        <MudForm Model="model" @ref="form" Validation="@(modelValidator.ValidateValue)">
+            <MudGrid>
+                <MudItem xs="12" sm="6">
+                    <MudTextField Label="@L["OrderNo"]" @bind-Value="model.OrderNo"
+                                  For="@(() => model.OrderNo)"
+                                  Required="true"
+                                  RequiredError="@L["Order number is required!"]">
+                    </MudTextField>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <DictionaryAutocomplete Dictionary="ShippingOrderStatus"
+                                            Label="@L["Status"]"
+                                            For="@(() => model.Status)"
+                                            @bind-Value="model.Status"></DictionaryAutocomplete>
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudSelect T="string" Label="@L["Truck"]"
+                               For="@(() => model.PlateNumber)"
+                               Value="model.PlateNumber"
+                               Required="true"
+                               RequiredError="@L["Plate number is required!"]"
+                               ValueChanged="Truck_Changed"
+                               >
+                        @foreach(var truck in trucks)
+                        {
+                            <MudSelectItem Value="@truck.PlateNumber">@truck.PlateNumber</MudSelectItem>
+                        }
+                        
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudTextField Label="@L["Driver"]" @bind-Value="model.Driver"
+                                  For="@(() => model.Driver)">
+                    </MudTextField>
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudTextField Label="@L["Phone Number"]" @bind-Value="model.PhoneNumber"
+                                  For="@(() => model.PhoneNumber)">
+                    </MudTextField>
+                </MudItem>
+                 <MudItem xs="12" sm="4">
+                    <MudTextField Label="@L["Dispatcher"]"
+                                For="@(() => model.Dispatcher)"
+                                @bind-Value="model.Dispatcher"
+                                Variant="Variant.Text"
+                             />
+                </MudItem>
+               <MudItem xs="12" sm="4">
+                    <MudDatePicker  Label="@L["Starting Time"]"
+                                    Editable="true"
+                                    For="@(() => model.StartingTime)"
+                                    @bind-Date="model.StartingTime"></MudDatePicker>
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudDatePicker  Label="@L["Finish Time"]"
+                                    Editable="true"
+                                    For="@(() => model.FinishTime)"
+                                    @bind-Date="model.FinishTime"></MudDatePicker>
+                </MudItem>
+               
+                <MudItem xs="12" sm="3">
+                    <MudNumericField Label="@L["Cash Advance"]"
+                                HideSpinButtons="true"
+                                For="@(() => model.CashAdvance)"
+                                @bind-Value="model.CashAdvance"
+                                ReadOnly="false"
+                                Variant="Variant.Text"
+                                Min="0" />
+                </MudItem>
+                <MudItem xs="12" sm="3">
+                    <MudNumericField Label="@L["Freight"]"
+                                HideSpinButtons="true"
+                                For="@(() => model.Freight)"
+                                @bind-Value="model.Freight"
+                                ReadOnly="true"
+                                Variant="Variant.Text"
+                                Min="0" />
+                </MudItem>
+                <MudItem xs="12" sm="3">
+                    <MudNumericField Label="@L["Cost"]"
+                                HideSpinButtons="true"
+                                For="@(() => model.Cost)"
+                                @bind-Value="model.Cost"
+                                ReadOnly="true"
+                                Variant="Variant.Text"
+                                Min="0" />
+                </MudItem>
+                <MudItem xs="12" sm="3">
+                    <MudNumericField Label="@L["Gross Margin"]"
+                                HideSpinButtons="true"
+                                For="@(() => model.GrossMargin)"
+                                @bind-Value="model.GrossMargin"
+                                ReadOnly="true"
+                                Variant="Variant.Text"
+                                Min="0" />
+                </MudItem>
+                <MudItem xs="12">
+                    <MudTextField Label="@L["Remark"]"
+                                  Lines="2"
+                                  For="@(() => model.Remark)"
+                                  @bind-Value="model.Remark"></MudTextField>
+                </MudItem>
+            </MudGrid>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">@L["Cancle"]</MudButton>
+        <MudButton Color="MudBlazor.Color.Primary" OnClick="Submit">@L["Ok"]</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    MudForm form = default!;
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; } = default!;
+    [Inject] private IUploadService _uploadService { get; set; } = default!;
+    AddEditShippingOrderCommandValidator modelValidator = new AddEditShippingOrderCommandValidator();
+    [EditorRequired][Parameter] public AddEditShippingOrderCommand model { get; set; } = default!;
+    [EditorRequired][Parameter] public IEnumerable<TruckDto> trucks { get; set; } = default!;
+    async Task Submit()
+    {
+        await form.Validate();
+        if (form.IsValid)
+        {
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+
+    }
+    void Cancel() => MudDialog.Cancel();
+    private void Truck_Changed(string value)
+    {
+        var truck = trucks.First(x => x.PlateNumber == value);
+        model.TruckId=truck.Id;
+        model.PlateNumber = truck.PlateNumber;
+        model.Driver = truck.Driver;
+        model.PhoneNumber = truck.PhoneNumber;
+    }
+}

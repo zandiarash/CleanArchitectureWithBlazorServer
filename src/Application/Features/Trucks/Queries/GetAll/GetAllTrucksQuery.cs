@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using CleanArchitecture.Blazor.Application.Features.Trucks.DTOs;
@@ -30,9 +30,9 @@ namespace CleanArchitecture.Blazor.Application.Features.Trucks.Queries.GetAll;
 
         public async Task<IEnumerable<TruckDto>> Handle(GetAllTrucksQuery request, CancellationToken cancellationToken)
         {
-            //TODO:Implementing GetAllTrucksQueryHandler method 
             var data = await _context.Trucks
                          .ProjectTo<TruckDto>(_mapper.ConfigurationProvider)
+                         .OrderBy(x => x.PlateNumber)
                          .ToListAsync(cancellationToken);
             return data;
         }

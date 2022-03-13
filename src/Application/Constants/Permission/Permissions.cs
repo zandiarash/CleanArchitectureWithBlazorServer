@@ -37,6 +37,19 @@ public static class Permissions
         public const string Export = "Permissions.Trucks.Export";
         public const string Import = "Permissions.Trucks.Import";
     }
+    [DisplayName("Shipping Orders")]
+    [Description("Shipping Orders Permissions")]
+    public static class ShippingOrders
+    {
+        public const string View = "Permissions.ShippingOrders.View";
+        public const string Create = "Permissions.ShippingOrders.Create";
+        public const string Edit = "Permissions.ShippingOrders.Edit";
+        public const string Delete = "Permissions.ShippingOrders.Delete";
+        public const string Search = "Permissions.ShippingOrders.Search";
+        public const string Export = "Permissions.ShippingOrders.Export";
+        public const string Import = "Permissions.ShippingOrders.Import";
+        public const string Finish = "Permissions.ShippingOrders.Finish";
+    }
     [DisplayName("Products")]
     [Description("Products Permissions")]
     public static class Products

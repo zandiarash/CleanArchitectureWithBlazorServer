@@ -27,15 +27,16 @@ public class MenuService : IMenuService
                     MenuItems = new List<MenuSectionSubItemModel>
                     {
                         new(){
-                             Title = "Truck",
-                             Href = "/tms/trucks",
+                             Title = "Shipping Orders",
+                             Href = "/tms/shippingorders",
                              PageStatus = PageStatus.Completed,
                         },
                         new(){
-                             Title = "Customers",
-                             Href = "/pages/customers",
-                             PageStatus = PageStatus.ComingSoon,
+                             Title = "Truck",
+                             Href = "/tms/trucks",
+                             PageStatus = PageStatus.Completed,
                         }
+                        
                     }
                 },
                 new()
