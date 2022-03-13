@@ -339,6 +339,7 @@
             var result = await _mediator.Send(command);
             await _table.ReloadServerData();
             Snackbar.Add($"{L["Deleted successfully"]}", MudBlazor.Severity.Info);
+            _selectedItems = new HashSet<TruckDto>();
         }
     }
     private async Task OnExport()
