@@ -297,7 +297,7 @@
                 { "trucks",_trucks},
                 { nameof(_ShippingOrderFormDialog.model),command },
             };
-        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Large, FullWidth = true };
         var dialog = DialogService.Show<_ShippingOrderFormDialog>(L["Create a new shipping order"], parameters, options);
         var state = await dialog.Result;
         if (!state.Cancelled)
@@ -333,7 +333,7 @@
                 { "trucks",_trucks},
                 { nameof(_ShippingOrderFormDialog.model),command },
             };
-        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Large, FullWidth = true };
         var dialog = DialogService.Show<_ShippingOrderFormDialog>(L["Edit the shipping order"], parameters, options);
         var state = await dialog.Result;
         if (!state.Cancelled)

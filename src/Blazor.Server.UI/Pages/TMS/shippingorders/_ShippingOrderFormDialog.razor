@@ -29,13 +29,12 @@
                                Value="model.PlateNumber"
                                Required="true"
                                RequiredError="@L["Plate number is required!"]"
-                               ValueChanged="Truck_Changed"
-                               >
-                        @foreach(var truck in trucks)
+                               ValueChanged="Truck_Changed">
+                        @foreach (var truck in trucks)
                         {
                             <MudSelectItem Value="@truck.PlateNumber">@truck.PlateNumber</MudSelectItem>
                         }
-                        
+
                     </MudSelect>
                 </MudItem>
                 <MudItem xs="12" sm="4">
@@ -48,67 +47,113 @@
                                   For="@(() => model.PhoneNumber)">
                     </MudTextField>
                 </MudItem>
-                 <MudItem xs="12" sm="4">
+                <MudItem xs="12" sm="4">
                     <MudTextField Label="@L["Dispatcher"]"
-                                For="@(() => model.Dispatcher)"
-                                @bind-Value="model.Dispatcher"
-                                Variant="Variant.Text"
-                             />
-                </MudItem>
-               <MudItem xs="12" sm="4">
-                    <MudDatePicker  Label="@L["Starting Time"]"
-                                    Editable="true"
-                                    For="@(() => model.StartingTime)"
-                                    @bind-Date="model.StartingTime"></MudDatePicker>
+                                  For="@(() => model.Dispatcher)"
+                                  @bind-Value="model.Dispatcher"
+                                  Variant="Variant.Text" />
                 </MudItem>
                 <MudItem xs="12" sm="4">
-                    <MudDatePicker  Label="@L["Finish Time"]"
-                                    Editable="true"
-                                    For="@(() => model.FinishTime)"
-                                    @bind-Date="model.FinishTime"></MudDatePicker>
+                    <MudDatePicker Label="@L["Starting Time"]"
+                                   Editable="true"
+                                   For="@(() => model.StartingTime)"
+                                   @bind-Date="model.StartingTime"></MudDatePicker>
                 </MudItem>
-               
+                <MudItem xs="12" sm="4">
+                    <MudDatePicker Label="@L["Finish Time"]"
+                                   Editable="true"
+                                   For="@(() => model.FinishTime)"
+                                   @bind-Date="model.FinishTime"></MudDatePicker>
+                </MudItem>
+
                 <MudItem xs="12" sm="3">
                     <MudNumericField Label="@L["Cash Advance"]"
-                                HideSpinButtons="true"
-                                For="@(() => model.CashAdvance)"
-                                @bind-Value="model.CashAdvance"
-                                ReadOnly="false"
-                                Variant="Variant.Text"
-                                Min="0" />
+                                     HideSpinButtons="true"
+                                     For="@(() => model.CashAdvance)"
+                                     @bind-Value="model.CashAdvance"
+                                     ReadOnly="false"
+                                     Variant="Variant.Text"
+                                     Min="0" />
                 </MudItem>
                 <MudItem xs="12" sm="3">
                     <MudNumericField Label="@L["Freight"]"
-                                HideSpinButtons="true"
-                                For="@(() => model.Freight)"
-                                @bind-Value="model.Freight"
-                                ReadOnly="true"
-                                Variant="Variant.Text"
-                                Min="0" />
+                                     HideSpinButtons="true"
+                                     For="@(() => model.Freight)"
+                                     @bind-Value="model.Freight"
+                                     ReadOnly="true"
+                                     Variant="Variant.Text"
+                                     Min="0" />
                 </MudItem>
                 <MudItem xs="12" sm="3">
                     <MudNumericField Label="@L["Cost"]"
-                                HideSpinButtons="true"
-                                For="@(() => model.Cost)"
-                                @bind-Value="model.Cost"
-                                ReadOnly="true"
-                                Variant="Variant.Text"
-                                Min="0" />
+                                     HideSpinButtons="true"
+                                     For="@(() => model.Cost)"
+                                     @bind-Value="model.Cost"
+                                     ReadOnly="true"
+                                     Variant="Variant.Text"
+                                     Min="0" />
                 </MudItem>
                 <MudItem xs="12" sm="3">
                     <MudNumericField Label="@L["Gross Margin"]"
-                                HideSpinButtons="true"
-                                For="@(() => model.GrossMargin)"
-                                @bind-Value="model.GrossMargin"
-                                ReadOnly="true"
-                                Variant="Variant.Text"
-                                Min="0" />
+                                     HideSpinButtons="true"
+                                     For="@(() => model.GrossMargin)"
+                                     @bind-Value="model.GrossMargin"
+                                     ReadOnly="true"
+                                     Variant="Variant.Text"
+                                     Min="0" />
                 </MudItem>
                 <MudItem xs="12">
                     <MudTextField Label="@L["Remark"]"
                                   Lines="2"
                                   For="@(() => model.Remark)"
                                   @bind-Value="model.Remark"></MudTextField>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-0">
+                        <MudTabPanel Text="@L["Goods"]" Icon="@Icons.Filled.AutoAwesomeMotion"
+                         BadgeData="@model.GoodsDetailDtos.Count" >
+                            <MudToolBar Dense="false">
+                                <MudIconButton Icon="@Icons.Material.Outlined.Add" />
+                            </MudToolBar>
+                            <MudTable Items="@model.GoodsDetailDtos" Hover="true" Breakpoint="Breakpoint.Sm">
+                                <HeaderContent>
+                                    <MudTh>@L["Pickup Address"]</MudTh>
+                                    <MudTh>@L["Delivery Address"]</MudTh>
+                                    <MudTh>@L["Goods Name"]</MudTh>
+                                    <MudTh>@L["Freight"]</MudTh>
+                                    <MudTh>@L["Customer"]</MudTh>
+                                    <MudTh>@L["Remark"]</MudTh>
+                                </HeaderContent>
+                                <RowTemplate>
+                                    <MudTd DataLabel="PickupAddress">@context.PickupAddress</MudTd>
+                                    <MudTd DataLabel="DeliveryAddress">@context.DeliveryAddress</MudTd>
+                                    <MudTd DataLabel="Goods">@context.Goods</MudTd>
+                                    <MudTd DataLabel="Freight">@context.Freight</MudTd>
+                                    <MudTd DataLabel="Customer">@context.Customer</MudTd>
+                                    <MudTd DataLabel="Remark">@context.Remark</MudTd>
+                                </RowTemplate>
+                            </MudTable>
+                        </MudTabPanel>
+                        <MudTabPanel Text="@L["Costs"]" Icon="@Icons.Filled.CurrencyYen"
+                         BadgeData="@model.CostDetailDtos.Count">
+                            <MudToolBar  Dense="false">
+                                <MudIconButton Icon="@Icons.Material.Outlined.Add" />
+                            </MudToolBar>
+                            <MudTable Items="@model.CostDetailDtos" Hover="true" Breakpoint="Breakpoint.Sm">
+                                <HeaderContent>
+                                    <MudTh>@L["Name"]</MudTh>
+                                    <MudTh>@L["Cost"]</MudTh>
+                                    <MudTh>@L["Remark"]</MudTh>
+                                </HeaderContent>
+                                <RowTemplate>
+                                    <MudTd DataLabel="Name">@context.Name</MudTd>
+                                    <MudTd DataLabel="Cost">@context.Cost</MudTd>
+                                    <MudTd DataLabel="Remark">@context.Remark</MudTd>
+                                </RowTemplate>
+                            </MudTable>
+                        </MudTabPanel>
+
+                    </MudTabs>
                 </MudItem>
             </MudGrid>
         </MudForm>
@@ -140,7 +185,7 @@
     private void Truck_Changed(string value)
     {
         var truck = trucks.First(x => x.PlateNumber == value);
-        model.TruckId=truck.Id;
+        model.TruckId = truck.Id;
         model.PlateNumber = truck.PlateNumber;
         model.Driver = truck.Driver;
         model.PhoneNumber = truck.PhoneNumber;
