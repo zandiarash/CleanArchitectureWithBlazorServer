@@ -13,5 +13,9 @@ public interface IApplicationDbContext
     DbSet<Document> Documents { get; set; }
     DbSet<KeyValue> KeyValues { get; set; }
     DbSet<Product> Products { get; set; }
+    DbSet<Truck> Trucks { get; set; }
+    DbSet<ShippingOrder> ShippingOrders { get; set; }
+    DbSet<CostDetail> CostDetails { get; set; }
+    DbSet<GoodsDetail> GoodsDetails { get; set; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

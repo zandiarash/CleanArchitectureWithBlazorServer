@@ -40,6 +40,10 @@ public class ApplicationDbContext : IdentityDbContext<
     public DbSet<KeyValue> KeyValues { get; set; }
 
     public DbSet<Product> Products { get; set; }
+    public DbSet<Truck> Trucks { get; set; }
+    public DbSet<ShippingOrder> ShippingOrders { get; set; }
+    public DbSet<CostDetail> CostDetails { get; set; }
+    public DbSet<GoodsDetail> GoodsDetails { get; set; }
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
     {
         var userId = await _currentUserService.UserId();
