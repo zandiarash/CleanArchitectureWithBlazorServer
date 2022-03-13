@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using CleanArchitecture.Blazor.Application.Features.Trucks.DTOs;
@@ -32,7 +32,7 @@ namespace CleanArchitecture.Blazor.Application.Features.Trucks.Queries.Paginatio
         {
             //TODO:Implementing TrucksWithPaginationQueryHandler method 
            var data = await _context.Trucks
-                .OrderBy("{request.OrderBy} {request.SortDirection}")
+                .OrderBy($"{request.OrderBy} {request.SortDirection}")
                 .ProjectTo<TruckDto>(_mapper.ConfigurationProvider)
                 .PaginatedDataAsync(request.PageNumber, request.PageSize);
             return data;

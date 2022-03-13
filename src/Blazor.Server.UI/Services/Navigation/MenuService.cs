@@ -20,15 +20,15 @@ public class MenuService : IMenuService
                 },
                 new()
                 {
-                    Title = "E-Commerce",
-                    Icon = Icons.Material.Filled.ShoppingCart,
+                    Title = "TMS",
+                    Icon = Icons.Material.Filled.DeliveryDining,
                     PageStatus = PageStatus.Completed,
                     IsParent = true,
                     MenuItems = new List<MenuSectionSubItemModel>
                     {
                         new(){
-                             Title = "Products",
-                             Href = "/pages/products",
+                             Title = "Truck",
+                             Href = "/tms/trucks",
                              PageStatus = PageStatus.Completed,
                         },
                         new(){

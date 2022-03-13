@@ -24,8 +24,19 @@ public static class Permissions
         public const string Search = "Permissions.Logs.Search";
         public const string Export = "Permissions.Logs.Export";
     }
-    
 
+    [DisplayName("Trucks")]
+    [Description("Trucks Permissions")]
+    public static class Trucks
+    {
+        public const string View = "Permissions.Trucks.View";
+        public const string Create = "Permissions.Trucks.Create";
+        public const string Edit = "Permissions.Trucks.Edit";
+        public const string Delete = "Permissions.Trucks.Delete";
+        public const string Search = "Permissions.Trucks.Search";
+        public const string Export = "Permissions.Trucks.Export";
+        public const string Import = "Permissions.Trucks.Import";
+    }
     [DisplayName("Products")]
     [Description("Products Permissions")]
     public static class Products

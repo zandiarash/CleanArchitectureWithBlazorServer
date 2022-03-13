@@ -76,6 +76,17 @@ public static class ApplicationDbContextSeed
         }
         if (!context.KeyValues.Any())
         {
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "VehicleType", Value = "厢式货车", Text = "厢式货车", Description = "车辆类型" });
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "VehicleType", Value = "平板式货车", Text = "平板式货车", Description = "车辆类型" });
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "VehicleType", Value = "自卸车", Text = "自卸车", Description = "车辆类型" });
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "VehicleType", Value = "集装箱货车", Text = "集装箱货车", Description = "车辆类型" });
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "VehicleType", Value = "两翼车", Text = "两翼车", Description = "车辆类型" });
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "VehicleType", Value = "集装箱车", Text = "集装箱车", Description = "车辆类型" });
+
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "VehicleStatus", Value = "正常", Text = "正常", Description = "车辆状态" });
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "VehicleStatus", Value = "维修", Text = "维修", Description = "车辆状态" });
+
+
             context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Status", Value = "initialization", Text = "initialization", Description = "Status of workflow" });
             context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Status", Value = "processing", Text = "processing", Description = "Status of workflow" });
             context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Status", Value = "pending", Text = "pending", Description = "Status of workflow" });

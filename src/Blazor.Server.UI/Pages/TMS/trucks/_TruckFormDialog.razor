@@ -1,0 +1,90 @@
+@using CleanArchitecture.Blazor.Application.Features.KeyValues.Queries.ByName
+@using CleanArchitecture.Blazor.Application.Features.Trucks.Commands.AddEdit
+@using SixLabors.ImageSharp
+@using SixLabors.ImageSharp.Formats
+@using SixLabors.ImageSharp.Processing
+@inherits MudComponentBase
+@inject IStringLocalizer<Trucks> L
+<MudDialog>
+    <DialogContent>
+        <MudForm Model="model" @ref="form" Validation="@(modelValidator.ValidateValue)">
+            <MudGrid>
+                <MudItem xs="12" sm="6">
+                    <MudTextField Label="@L["Plate Number"]" @bind-Value="model.PlateNumber"
+                                  For="@(() => model.PlateNumber)"
+                                  Required="true"
+                                  RequiredError="@L["Plate number is required!"]"
+                                  >
+                    </MudTextField>
+                </MudItem>
+                 <MudItem xs="12" sm="6">
+                    <DictionaryAutocomplete Dictionary="VehicleStatus"
+                                     Label="@L["Status"]"
+                                     For="@(() => model.Status)"
+                                     @bind-Value="model.Status"></DictionaryAutocomplete>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <DictionaryAutocomplete Dictionary="VehicleType"
+                                     Label="@L["Vehicle Type"]"
+                                     For="@(() => model.VehicleType)"
+                                     ResetValueOnEmptyText="true"
+                                     @bind-Value="model.VehicleType"></DictionaryAutocomplete>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudTextField Label="@L["Trailer Number"]" @bind-Value="model.TrailerNumber"
+                                  For="@(() => model.TrailerNumber)"
+                                  >
+                    </MudTextField>
+                </MudItem>
+                <MudItem xs="12" sm="12">
+                    <MudTextField Label="@L["Owner"]" @bind-Value="model.Owner"
+                                  For="@(() => model.Owner)"
+                                  >
+                    </MudTextField>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudTextField Label="@L["Driver"]" @bind-Value="model.Driver"
+                                  For="@(() => model.Driver)"
+                                  >
+                    </MudTextField>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudTextField Label="@L["Phone Number"]" @bind-Value="model.PhoneNumber"
+                                  For="@(() => model.PhoneNumber)"
+                                  >
+                    </MudTextField>
+                </MudItem>
+               
+                  <MudItem xs="12">
+                    <MudTextField Label="@L["Description"]"
+                                  Lines="3"
+                                  For="@(() => model.Description)"
+                                  @bind-Value="model.Description"></MudTextField>
+                </MudItem>
+            </MudGrid>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">@L["Cancle"]</MudButton>
+        <MudButton Color="MudBlazor.Color.Primary" OnClick="Submit">@L["Ok"]</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    MudForm form = default!;
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; } = default!;
+    [Inject] private IUploadService _uploadService { get; set; } = default!;
+    AddEditTruckCommandValidator modelValidator = new AddEditTruckCommandValidator();
+    [EditorRequired] [Parameter] public AddEditTruckCommand model { get; set; } = default!;
+    async Task Submit()
+    {
+        await form.Validate();
+        if (form.IsValid)
+        {
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+
+    }
+    void Cancel() => MudDialog.Cancel();
+}
