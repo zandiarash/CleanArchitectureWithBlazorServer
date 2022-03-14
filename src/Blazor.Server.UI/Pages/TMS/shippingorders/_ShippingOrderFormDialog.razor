@@ -120,25 +120,33 @@
                                      BadgeData="@model.GoodsDetailDtos.Count">
                             <MudToolBar Dense="false">
                                 <MudIconButton OnClick="AddGoods" Icon="@Icons.Material.Outlined.Add" />
+                                <MudIconButton Disabled="@(selectedGoodsItem==null)" OnClick="EditGoods" Icon="@Icons.Material.Outlined.Edit" />
+
                             </MudToolBar>
-                            <MudTable Items="@model.GoodsDetailDtos"
-                                Hover="false"
-                                RowEditCommit="GoodsItemCommitted"
-                                IsEditRowSwitchingBlocked="true"
-                                Breakpoint="Breakpoint.Sm">
+                            <MudTable @ref="goodsTable" Items="@model.GoodsDetailDtos"
+                                      Hover="false"
+                                      @bind-SelectedItem="selectedGoodsItem"
+                                      RowEditCommit="GoodsItemCommitted"
+                                      OnCommitEditClick="GoodsCommitClick"
+                                      IsEditRowSwitchingBlocked="true"
+                                      FixedHeader="true"
+                                      Height="300px"
+                                      Breakpoint="Breakpoint.Sm">
                                 <HeaderContent>
                                     <MudTh>@L["Pickup/Delivery Address"]</MudTh>
                                     <MudTh>@L["Goods Name"]</MudTh>
                                     <MudTh>@L["Freight"]</MudTh>
                                     <MudTh>@L["Customer"]</MudTh>
                                     <MudTh>@L["Remark"]</MudTh>
+                                    <MudTh></MudTh>
                                 </HeaderContent>
                                 <ColGroup>
                                     <col style="width:40%;" />
+                                    <col style="width:160px" />
                                     <col style="width:150px" />
-                                    <col style="width:125px" />
-                                    <col style="width:120px" />
-                               
+                                    <col style="width:180px" />
+                                    <col />
+                                    <col style="width:30px" />
                                 </ColGroup>
                                 <RowTemplate>
                                     <MudTd DataLabel="PickupAddress">
@@ -149,6 +157,7 @@
                                     <MudTd DataLabel="Freight">@context.Freight</MudTd>
                                     <MudTd DataLabel="Customer">@context.Customer</MudTd>
                                     <MudTd DataLabel="Remark">@context.Remark</MudTd>
+                                    <MudTd DataLabel="_delete"><MudIconButton Size="MudBlazor.Size.Small" Color="MudBlazor.Color.Secondary" OnClick="@(()=>DeleteGoods(context))" Icon="@Icons.Material.Outlined.Delete" /></MudTd>
                                 </RowTemplate>
                                 <RowEditingTemplate>
                                     <MudTd DataLabel="PickupAddress">
@@ -167,6 +176,9 @@
                                     <MudTd DataLabel="Remark">
                                         <MudTextField @bind-Value="@context.Remark" />
                                     </MudTd>
+                                     <MudTd DataLabel="_delete">
+                                       
+                                    </MudTd>
                                 </RowEditingTemplate>
                             </MudTable>
                         </MudTabPanel>
@@ -174,24 +186,34 @@
                                      BadgeData="@model.CostDetailDtos.Count">
                             <MudToolBar Dense="false">
                                 <MudIconButton OnClick="AddCost" Icon="@Icons.Material.Outlined.Add" />
+                                <MudIconButton  Disabled="@(selectedCostItem==null)" OnClick="EditCost" Icon="@Icons.Material.Outlined.Edit" />
+
                             </MudToolBar>
-                            <MudTable Items="@model.CostDetailDtos" Hover="false"
-                                RowEditCommit="CostItemCommitted"
-                                IsEditRowSwitchingBlocked="true"
-                                Breakpoint="Breakpoint.Sm">
+                            <MudTable @ref="costTable" Items="@model.CostDetailDtos" Hover="false"
+                                      @bind-SelectedItem="selectedCostItem"
+                                      RowEditCommit="CostItemCommitted"
+                                      OnCommitEditClick="CostCommitClick"
+                                      IsEditRowSwitchingBlocked="true"
+                                      FixedHeader="true"
+                                      Height="300px"
+                                      Breakpoint="Breakpoint.Sm">
                                 <HeaderContent>
                                     <MudTh>@L["Name"]</MudTh>
                                     <MudTh>@L["Cost"]</MudTh>
                                     <MudTh>@L["Remark"]</MudTh>
+                                    <MudTh></MudTh>
                                 </HeaderContent>
                                 <ColGroup>
                                     <col style="width:50%;" />
                                     <col style="width:150px" />
-                                  </ColGroup>
+                                    <col style="width:30%"/>
+                                    <col style="width:30px"/>
+                                </ColGroup>
                                 <RowTemplate>
                                     <MudTd DataLabel="Name">@context.Name</MudTd>
                                     <MudTd DataLabel="Cost">@context.Cost</MudTd>
                                     <MudTd DataLabel="Remark">@context.Remark</MudTd>
+                                    <MudTd DataLabel="_delete"><MudIconButton Size="MudBlazor.Size.Small" Color="MudBlazor.Color.Secondary" OnClick="@(()=>DeleteCost(context))" Icon="@Icons.Material.Outlined.Delete" /></MudTd>
                                 </RowTemplate>
                                 <RowEditingTemplate>
                                     <MudTd DataLabel="Name">
@@ -202,6 +224,9 @@
                                     </MudTd>
                                     <MudTd DataLabel="Remark">
                                         <MudTextField @bind-Value="@context.Remark" />
+                                    </MudTd>
+                                    <MudTd DataLabel="_delete">
+                                       
                                     </MudTd>
                                 </RowEditingTemplate>
                             </MudTable>
@@ -219,6 +244,10 @@
 
 @code {
     MudForm form = default!;
+    MudTable<GoodsDetailDto> goodsTable;
+    MudTable<CostDetailDto> costTable;
+    GoodsDetailDto selectedGoodsItem;
+    CostDetailDto selectedCostItem;
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; } = default!;
     [Inject] private IUploadService _uploadService { get; set; } = default!;
@@ -244,13 +273,27 @@
         model.PhoneNumber = truck.PhoneNumber;
     }
 
-    private void AddGoods()
+    private async void AddGoods()
     {
-        var newItem = new GoodsDetailDto()
-            {
-                ShippingOrderId = model.Id,
-            };
-        model.GoodsDetailDtos.Add(newItem);
+        await form.Validate();
+        if (form.IsValid)
+        {
+            var newItem = new GoodsDetailDto()
+                {
+                    ShippingOrderId = model.Id,
+                };
+            model.GoodsDetailDtos.Add(newItem);
+            StateHasChanged();
+        }
+
+    }
+    private void EditGoods()
+    {
+        goodsTable.SetEditingItem(selectedGoodsItem);
+    }
+    private void DeleteGoods(GoodsDetailDto item)
+    {
+        model.GoodsDetailDtos.Remove(item);
     }
     private void AddCost()
     {
@@ -259,12 +302,29 @@
                 ShippingOrderId = model.Id,
             };
         model.CostDetailDtos.Add(newItem);
+        //costTable.SetEditingItem(newItem);
+    }
+    private void EditCost()
+    {
+        costTable.SetEditingItem(selectedCostItem);
+    }
+    private void DeleteCost(CostDetailDto item)
+    {
+        model.CostDetailDtos.Remove(item);
     }
     private void GoodsItemCommitted(object element)
+    {
+        //model.Freight = model.GoodsDetailDtos.Sum(x => x.Freight);
+    }
+    private void GoodsCommitClick()
     {
         model.Freight = model.GoodsDetailDtos.Sum(x => x.Freight);
     }
     private void CostItemCommitted(object element)
+    {
+        //model.Cost = model.CostDetailDtos.Sum(x => x.Cost);
+    }
+    private void CostCommitClick()
     {
         model.Cost = model.CostDetailDtos.Sum(x => x.Cost);
     }

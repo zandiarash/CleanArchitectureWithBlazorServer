@@ -9,7 +9,9 @@ public class CostDetailDto : IMapFrom<CostDetail>
 {
     public void Mapping(Profile profile)
     {
-        profile.CreateMap<CostDetail, CostDetailDto>().ReverseMap();
+        profile.CreateMap<CostDetail, CostDetailDto>();
+        profile.CreateMap<CostDetailDto, CostDetail>();
+         
     }
     public int Id { get; set; }
     public int ShippingOrderId { get; set; }

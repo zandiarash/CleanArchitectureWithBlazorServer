@@ -1,14 +1,18 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System.Collections.ObjectModel;
+
 namespace CleanArchitecture.Blazor.Application.Features.ShippingOrders.DTOs;
 
 
-public class ShippingOrderDto : IMapFrom<ShippingOrder>
+public  class ShippingOrderDto : IMapFrom<ShippingOrder>
 {
+
     public void Mapping(Profile profile)
     {
-        profile.CreateMap<ShippingOrder, ShippingOrderDto>().ReverseMap();
+        profile.CreateMap<ShippingOrder, ShippingOrderDto>();
+        profile.CreateMap<ShippingOrderDto, ShippingOrder>();
     }
     public int Id { get; set; }
     public string? OrderNo { get; set; }
