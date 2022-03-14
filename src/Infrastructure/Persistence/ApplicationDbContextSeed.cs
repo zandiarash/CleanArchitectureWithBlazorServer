@@ -79,9 +79,9 @@ public static class ApplicationDbContextSeed
             context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "VehicleType", Value = "厢式货车", Text = "厢式货车", Description = "车辆类型" });
             context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "VehicleType", Value = "平板式货车", Text = "平板式货车", Description = "车辆类型" });
             context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "VehicleType", Value = "自卸车", Text = "自卸车", Description = "车辆类型" });
-            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "VehicleType", Value = "集装箱货车", Text = "集装箱货车", Description = "车辆类型" });
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "VehicleType", Value = "重卡", Text = "重卡", Description = "车辆类型" });
             context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "VehicleType", Value = "两翼车", Text = "两翼车", Description = "车辆类型" });
-            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "VehicleType", Value = "集装箱车", Text = "集装箱车", Description = "车辆类型" });
+            
 
             context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "VehicleStatus", Value = "正常", Text = "正常", Description = "车辆状态" });
             context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "VehicleStatus", Value = "维修", Text = "维修", Description = "车辆状态" });
@@ -118,6 +118,14 @@ public static class ApplicationDbContextSeed
             context.Products.Add(new Domain.Entities.Product() { Brand= "Apple", Name = "IPhone 13 Pro", Description= "Apple iPhone 13 Pro smartphone. Announced Sep 2021. Features 6.1″ display, Apple A15 Bionic chipset, 3095 mAh battery, 1024 GB storage.", Unit="EA",Price=999.98m });
             context.Products.Add(new Domain.Entities.Product() { Brand = "MI", Name = "MI 12 Pro", Description = "Xiaomi 12 Pro Android smartphone. Announced Dec 2021. Features 6.73″ display, Snapdragon 8 Gen 1 chipset, 4600 mAh battery, 256 GB storage.", Unit = "EA", Price = 199.00m });
             context.Products.Add(new Domain.Entities.Product() { Brand = "Logitech",  Name = "MX KEYS Mini", Description = "Logitech MX Keys Mini Introducing MX Keys Mini – a smaller, smarter, and mightier keyboard made for creators. Type with confidence on a keyboard crafted for efficiency, stability, and...", Unit = "PA", Price = 99.90m });
+            await context.SaveChangesAsync();
+        }
+
+        if (!context.Trucks.Any())
+        {
+            context.Trucks.Add(new Domain.Entities.Truck() { PlateNumber = "京AM4Y871", VehicleType= "重卡", Status="正常",  Driver = "李荣", Owner="北京长途运输公司", PhoneNumber="13962698750", Description = "一汽解放J6P牵引车 460马力" });
+            context.Trucks.Add(new Domain.Entities.Truck() { PlateNumber = "苏B9U3180", VehicleType = "厢式货车", Status = "正常", Driver = "王胜", Owner = "南京货物运输公司", PhoneNumber = "1597508971", Description = "东风商用车 天锦KR 245马力 4X2 6.8米排半栏板载货车(国六)(DFH1160E5)" });
+            context.Trucks.Add(new Domain.Entities.Truck() { PlateNumber = "浙CMM9120", VehicleType = "两翼车", Status = "正常", Driver = "李兵", Owner = "杭州天天运输公司", PhoneNumber = "11262698750", Description = "江淮 帅铃Q8 绿巨人 154马力 5.2米排半仓栅式轻卡(HFC5141CCYP91K1C6V)" });
             await context.SaveChangesAsync();
         }
     }

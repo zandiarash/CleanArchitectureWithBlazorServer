@@ -288,6 +288,7 @@
         var user = (await AuthState).User;
         var command = new AddEditShippingOrderCommand()
             {
+                OrderNo=DateTime.Now.ToString("yyMMdd"),
                 Status = "派单",
                 StartingTime = DateTime.Now,
                 Dispatcher = user.GetDisplayName()

@@ -1,6 +1,7 @@
 @using CleanArchitecture.Blazor.Application.Features.KeyValues.Queries.ByName
 @using CleanArchitecture.Blazor.Application.Features.ShippingOrders.Commands.AddEdit
 @using CleanArchitecture.Blazor.Application.Features.Trucks.DTOs
+@using CleanArchitecture.Blazor.Domain.Entities
 @using SixLabors.ImageSharp
 @using SixLabors.ImageSharp.Formats
 @using SixLabors.ImageSharp.Processing
@@ -12,6 +13,7 @@
             <MudGrid>
                 <MudItem xs="12" sm="6">
                     <MudTextField Label="@L["OrderNo"]" @bind-Value="model.OrderNo"
+                                  ReadOnly="@(model.Id>0?true:false)"
                                   For="@(() => model.OrderNo)"
                                   Required="true"
                                   RequiredError="@L["Order number is required!"]">
@@ -20,6 +22,7 @@
                 <MudItem xs="12" sm="6">
                     <DictionaryAutocomplete Dictionary="ShippingOrderStatus"
                                             Label="@L["Status"]"
+                                            ReadOnly="true"
                                             For="@(() => model.Status)"
                                             @bind-Value="model.Status"></DictionaryAutocomplete>
                 </MudItem>
@@ -73,6 +76,7 @@
                                      @bind-Value="model.CashAdvance"
                                      ReadOnly="false"
                                      Variant="Variant.Text"
+                                     Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.CurrencyYen"
                                      Min="0" />
                 </MudItem>
                 <MudItem xs="12" sm="3">
@@ -82,6 +86,7 @@
                                      @bind-Value="model.Freight"
                                      ReadOnly="true"
                                      Variant="Variant.Filled"
+                                     Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.CurrencyYen"
                                      Min="0" />
                 </MudItem>
                 <MudItem xs="12" sm="3">
@@ -91,6 +96,7 @@
                                      @bind-Value="model.Cost"
                                      ReadOnly="true"
                                      Variant="Variant.Filled"
+                                     Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.CurrencyYen"
                                      Min="0" />
                 </MudItem>
                 <MudItem xs="12" sm="3">
@@ -111,48 +117,95 @@
                 <MudItem xs="12">
                     <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-0">
                         <MudTabPanel Text="@L["Goods"]" Icon="@Icons.Filled.AutoAwesomeMotion"
-                         BadgeData="@model.GoodsDetailDtos.Count" >
+                                     BadgeData="@model.GoodsDetailDtos.Count">
                             <MudToolBar Dense="false">
-                                <MudIconButton Icon="@Icons.Material.Outlined.Add" />
+                                <MudIconButton OnClick="AddGoods" Icon="@Icons.Material.Outlined.Add" />
                             </MudToolBar>
-                            <MudTable Items="@model.GoodsDetailDtos" Hover="true" Breakpoint="Breakpoint.Sm">
+                            <MudTable Items="@model.GoodsDetailDtos"
+                                Hover="false"
+                                RowEditCommit="GoodsItemCommitted"
+                                IsEditRowSwitchingBlocked="true"
+                                Breakpoint="Breakpoint.Sm">
                                 <HeaderContent>
-                                    <MudTh>@L["Pickup Address"]</MudTh>
-                                    <MudTh>@L["Delivery Address"]</MudTh>
+                                    <MudTh>@L["Pickup/Delivery Address"]</MudTh>
                                     <MudTh>@L["Goods Name"]</MudTh>
                                     <MudTh>@L["Freight"]</MudTh>
                                     <MudTh>@L["Customer"]</MudTh>
                                     <MudTh>@L["Remark"]</MudTh>
                                 </HeaderContent>
+                                <ColGroup>
+                                    <col style="width:40%;" />
+                                    <col style="width:150px" />
+                                    <col style="width:125px" />
+                                    <col style="width:120px" />
+                               
+                                </ColGroup>
                                 <RowTemplate>
-                                    <MudTd DataLabel="PickupAddress">@context.PickupAddress</MudTd>
-                                    <MudTd DataLabel="DeliveryAddress">@context.DeliveryAddress</MudTd>
+                                    <MudTd DataLabel="PickupAddress">
+                                        <MudText Typo="Typo.body2">@L["Pickup Address"]: @context.PickupAddress</MudText>
+                                        <MudText Typo="Typo.body2">@L["Delivery Address"]: @context.DeliveryAddress</MudText>
+                                    </MudTd>
                                     <MudTd DataLabel="Goods">@context.Goods</MudTd>
                                     <MudTd DataLabel="Freight">@context.Freight</MudTd>
                                     <MudTd DataLabel="Customer">@context.Customer</MudTd>
                                     <MudTd DataLabel="Remark">@context.Remark</MudTd>
                                 </RowTemplate>
+                                <RowEditingTemplate>
+                                    <MudTd DataLabel="PickupAddress">
+                                        <MudTextField Label="@L["Pickup Address"]" @bind-Value="@context.PickupAddress" Required />
+                                        <MudTextField Label="@L["Delivery Address"]" @bind-Value="@context.DeliveryAddress" Required />
+                                    </MudTd>
+                                    <MudTd DataLabel="Goods">
+                                        <MudTextField @bind-Value="@context.Goods" />
+                                    </MudTd>
+                                    <MudTd DataLabel="Freight">
+                                        <MudNumericField @bind-Value="@context.Freight" Required />
+                                    </MudTd>
+                                    <MudTd DataLabel="Customer">
+                                        <MudTextField @bind-Value="@context.Customer" />
+                                    </MudTd>
+                                    <MudTd DataLabel="Remark">
+                                        <MudTextField @bind-Value="@context.Remark" />
+                                    </MudTd>
+                                </RowEditingTemplate>
                             </MudTable>
                         </MudTabPanel>
                         <MudTabPanel Text="@L["Costs"]" Icon="@Icons.Filled.CurrencyYen"
-                         BadgeData="@model.CostDetailDtos.Count">
-                            <MudToolBar  Dense="false">
-                                <MudIconButton Icon="@Icons.Material.Outlined.Add" />
+                                     BadgeData="@model.CostDetailDtos.Count">
+                            <MudToolBar Dense="false">
+                                <MudIconButton OnClick="AddCost" Icon="@Icons.Material.Outlined.Add" />
                             </MudToolBar>
-                            <MudTable Items="@model.CostDetailDtos" Hover="true" Breakpoint="Breakpoint.Sm">
+                            <MudTable Items="@model.CostDetailDtos" Hover="false"
+                                RowEditCommit="CostItemCommitted"
+                                IsEditRowSwitchingBlocked="true"
+                                Breakpoint="Breakpoint.Sm">
                                 <HeaderContent>
                                     <MudTh>@L["Name"]</MudTh>
                                     <MudTh>@L["Cost"]</MudTh>
                                     <MudTh>@L["Remark"]</MudTh>
                                 </HeaderContent>
+                                <ColGroup>
+                                    <col style="width:50%;" />
+                                    <col style="width:150px" />
+                                  </ColGroup>
                                 <RowTemplate>
                                     <MudTd DataLabel="Name">@context.Name</MudTd>
                                     <MudTd DataLabel="Cost">@context.Cost</MudTd>
                                     <MudTd DataLabel="Remark">@context.Remark</MudTd>
                                 </RowTemplate>
+                                <RowEditingTemplate>
+                                    <MudTd DataLabel="Name">
+                                        <DictionaryAutocomplete Dictionary="CostName" @bind-Value="@context.Name" Required />
+                                    </MudTd>
+                                    <MudTd DataLabel="Cost">
+                                        <MudNumericField @bind-Value="@context.Cost" Required />
+                                    </MudTd>
+                                    <MudTd DataLabel="Remark">
+                                        <MudTextField @bind-Value="@context.Remark" />
+                                    </MudTd>
+                                </RowEditingTemplate>
                             </MudTable>
                         </MudTabPanel>
-
                     </MudTabs>
                 </MudItem>
             </MudGrid>
@@ -189,5 +242,30 @@
         model.PlateNumber = truck.PlateNumber;
         model.Driver = truck.Driver;
         model.PhoneNumber = truck.PhoneNumber;
+    }
+
+    private void AddGoods()
+    {
+        var newItem = new GoodsDetailDto()
+            {
+                ShippingOrderId = model.Id,
+            };
+        model.GoodsDetailDtos.Add(newItem);
+    }
+    private void AddCost()
+    {
+        var newItem = new CostDetailDto()
+            {
+                ShippingOrderId = model.Id,
+            };
+        model.CostDetailDtos.Add(newItem);
+    }
+    private void GoodsItemCommitted(object element)
+    {
+        model.Freight = model.GoodsDetailDtos.Sum(x => x.Freight);
+    }
+    private void CostItemCommitted(object element)
+    {
+        model.Cost = model.CostDetailDtos.Sum(x => x.Cost);
     }
 }
