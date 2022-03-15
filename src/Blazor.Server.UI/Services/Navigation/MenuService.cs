@@ -14,20 +14,20 @@ public class MenuService : IMenuService
             {
                 new()
                 {
-                    Title = "首页",
+                    Title = "Home",
                     Icon = Icons.Material.Filled.Dashboard,
                     Href = "/"
                 },
                 new()
                 {
-                    Title = "运输管理",
+                    Title = "Transportation",
                     Icon = Icons.Material.Filled.AirplaneTicket,
                     PageStatus = PageStatus.Completed,
                     IsParent = true,
                     MenuItems = new List<MenuSectionSubItemModel>
                     {
                         new(){
-                             Title = "运单信息",
+                             Title = "Shipping Orders",
                              Href = "/tms/shippingorders",
                              PageStatus = PageStatus.Completed,
                         }
@@ -35,14 +35,14 @@ public class MenuService : IMenuService
                 },
                new()
                 {
-                    Title = "车辆管理",
+                    Title = "Trucks",
                     Icon = Icons.Filled.LocalShipping,
                     PageStatus = PageStatus.Completed,
                     IsParent = true,
                     MenuItems = new List<MenuSectionSubItemModel>
                     {
                         new(){
-                             Title = "车辆信息",
+                             Title = "Trucks",
                              Href = "/tms/trucks",
                              PageStatus = PageStatus.Completed,
                         }

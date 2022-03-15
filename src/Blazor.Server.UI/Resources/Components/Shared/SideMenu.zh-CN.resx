@@ -174,4 +174,16 @@
   <data name="Users" xml:space="preserve">
     <value>账号</value>
   </data>
+  <data name="Shipping Orders" xml:space="preserve">
+    <value>运单管理</value>
+  </data>
+  <data name="TMS" xml:space="preserve">
+    <value>运输管理系统</value>
+  </data>
+  <data name="Transportation" xml:space="preserve">
+    <value>运输管理</value>
+  </data>
+  <data name="Trucks" xml:space="preserve">
+    <value>车辆管理</value>
+  </data>
 </root>

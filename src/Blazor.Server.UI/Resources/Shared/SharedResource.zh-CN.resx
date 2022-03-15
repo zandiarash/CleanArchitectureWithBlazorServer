@@ -165,4 +165,7 @@
   <data name="Themes" xml:space="preserve">
     <value>主题</value>
   </data>
+  <data name="Shipping Orders" xml:space="preserve">
+    <value>运单信息</value>
+  </data>
 </root>

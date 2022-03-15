@@ -165,8 +165,20 @@
   <data name="Roles" xml:space="preserve">
     <value>Roles</value>
   </data>
+  <data name="Shipping Orders" xml:space="preserve">
+    <value>Shipping Orders</value>
+  </data>
   <data name="System" xml:space="preserve">
     <value>System</value>
+  </data>
+  <data name="TMS" xml:space="preserve">
+    <value>TMS</value>
+  </data>
+  <data name="Transportation" xml:space="preserve">
+    <value>Transportation</value>
+  </data>
+  <data name="Trucks" xml:space="preserve">
+    <value>Trucks</value>
   </data>
   <data name="Users" xml:space="preserve">
     <value>Users</value>
