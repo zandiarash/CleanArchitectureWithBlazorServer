@@ -4,6 +4,7 @@
 @using CleanArchitecture.Blazor.Application.Features.ShippingOrders.Commands.Import
 @using CleanArchitecture.Blazor.Application.Features.ShippingOrders.DTOs
 @using CleanArchitecture.Blazor.Application.Features.ShippingOrders.Queries.Export
+@using CleanArchitecture.Blazor.Application.Features.ShippingOrders.Queries.GetAll
 @using CleanArchitecture.Blazor.Application.Features.ShippingOrders.Queries.Pagination
 @using CleanArchitecture.Blazor.Application.Features.ShippingOrders.Commands.AddEdit
 @using CleanArchitecture.Blazor.Application.Features.Trucks.DTOs
@@ -188,7 +189,7 @@
                 <MudTd DataLabel="Status">@context.Status</MudTd>
                 <MudTd DataLabel="OrderNo">
                     <MudText>@context.OrderNo</MudText>
-                    <MudText Typo="Typo.body2">@context.Description</MudText>
+                    <MudText Typo="Typo.body2">@(new MarkupString(context.Description??""))</MudText>
                 </MudTd>
                 <MudTd DataLabel="StartingTime">
                     <MudText Typo="Typo.body2">发车时间: @context.StartingTime?.Date.ToShortDateString()</MudText>
@@ -310,24 +311,27 @@
     }
     private async Task OnEdit(ShippingOrderDto dto)
     {
+        var orderdto = await _mediator.Send(new GetByIdShippingOrderQuery(dto.Id));
         var command = new AddEditShippingOrderCommand()
             {
-                Id = dto.Id,
-                TruckId = dto.TruckId,
-                Dispatcher = dto.Dispatcher,
-                PlateNumber = dto.PlateNumber,
-                OrderNo = dto.OrderNo,
-                Description = dto.Description,
-                Driver = dto.Driver,
-                PhoneNumber = dto.PhoneNumber,
-                Status = dto.Status,
-                StartingTime = dto.StartingTime,
-                FinishTime = dto.FinishTime,
-                Freight = dto.Freight,
-                CashAdvance = dto.CashAdvance,
-                Cost = dto.Cost,
-                GrossMargin = dto.GrossMargin,
-                Remark = dto.Remark
+                Id = orderdto.Id,
+                TruckId = orderdto.TruckId,
+                Dispatcher = orderdto.Dispatcher,
+                PlateNumber = orderdto.PlateNumber,
+                OrderNo = orderdto.OrderNo,
+                Description = orderdto.Description,
+                Driver = orderdto.Driver,
+                PhoneNumber = orderdto.PhoneNumber,
+                Status = orderdto.Status,
+                StartingTime = orderdto.StartingTime,
+                FinishTime = orderdto.FinishTime,
+                Freight = orderdto.Freight,
+                CashAdvance = orderdto.CashAdvance,
+                Cost = orderdto.Cost,
+                GrossMargin = orderdto.GrossMargin,
+                Remark = orderdto.Remark,
+                CostDetailDtos = orderdto.CostDetailDtos,
+                GoodsDetailDtos =  orderdto.GoodsDetailDtos
             };
         var parameters = new DialogParameters
             {

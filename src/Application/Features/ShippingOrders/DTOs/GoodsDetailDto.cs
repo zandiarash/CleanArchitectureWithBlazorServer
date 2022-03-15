@@ -19,4 +19,9 @@ public class GoodsDetailDto: IMapFrom<GoodsDetail>
     public decimal? Freight { get; set; }
     public string? Customer { get; set; }
     public string? Remark { get; set; }
+
+    public override string ToString()
+    {
+        return $"从:{PickupAddress} 到:{DeliveryAddress} 货物:{Goods} 备注:{Remark}";
+    }
 }

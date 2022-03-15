@@ -34,22 +34,61 @@ public class AddEditShippingOrderCommandHandler : IRequestHandler<AddEditShippin
             var item = await _context.ShippingOrders.FindAsync(new object[] { request.Id }, cancellationToken);
             _ = item ?? throw new NotFoundException("ShippingOrder {request.Id} Not Found.");
             item = _mapper.Map(request, item);
+            var description = "";
+            foreach (var costdto in request.CostDetailDtos)
+            {
+                if (costdto.Id <= 0)
+                {
+                    var cost = _mapper.Map<CostDetail>(costdto);
+                    _context.CostDetails.Add(cost);
+                }
+                else
+                {
+                    var cost = await _context.CostDetails.FindAsync(costdto.Id);
+                    cost = _mapper.Map(costdto, cost);
+                }
+                
+                
+
+            }
+            for (var i = 0; i < request.GoodsDetailDtos.Count; i++)
+            {
+                var goodsdto = request.GoodsDetailDtos[i];
+                if (goodsdto.Id <= 0)
+                {
+                    var goods = _mapper.Map<GoodsDetail>(goodsdto);
+                    _context.GoodsDetails.Add(goods);
+                }
+                else
+                {
+                    var goods = await _context.GoodsDetails.FindAsync(goodsdto.Id);
+                    goods = _mapper.Map(goodsdto, goods);
+                }
+                description +=  $"{i + 1}. " + goodsdto.ToString() + $"{ (i + 1 < request.GoodsDetailDtos.Count ? "<br>" : "")} ";
+            }
+            item.Description = description;
             await _context.SaveChangesAsync(cancellationToken);
             return Result<int>.Success(item.Id);
         }
         else
         {
             var item = _mapper.Map<ShippingOrder>(request);
-            foreach (var costdto in request.CostDetailDtos)
+            var description = "";
+            foreach (var costdto in request.CostDetailDtos.Where(x=>!string.IsNullOrEmpty(x.Name)))
             {
                 var cost = _mapper.Map<CostDetail>(costdto);
                 item.CostDetails.Add(cost);
+               
             }
-            foreach(var goodsdto in request.GoodsDetailDtos)
+            for(var i=0;i< request.GoodsDetailDtos.Count;i++)
             {
+                var goodsdto = request.GoodsDetailDtos[i];
+                if (string.IsNullOrEmpty(goodsdto.PickupAddress) || string.IsNullOrEmpty(goodsdto.DeliveryAddress)) continue;
                 var goods = _mapper.Map<GoodsDetail>(goodsdto);
                 item.GoodsDetails.Add(goods);
+                description += $"{i + 1}. " + goodsdto.ToString() + $"{ (i + 1 < request.GoodsDetailDtos.Count ? "<br>" : "")} ";
             }
+            item.Description = description;
             _context.ShippingOrders.Add(item);
             await _context.SaveChangesAsync(cancellationToken);
             return Result<int>.Success(item.Id);
