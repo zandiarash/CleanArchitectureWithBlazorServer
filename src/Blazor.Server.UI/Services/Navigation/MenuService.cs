@@ -14,52 +14,41 @@ public class MenuService : IMenuService
             {
                 new()
                 {
-                    Title = "Home",
-                    Icon = Icons.Material.Filled.Home,
+                    Title = "首页",
+                    Icon = Icons.Material.Filled.Dashboard,
                     Href = "/"
                 },
                 new()
                 {
-                    Title = "TMS",
-                    Icon = Icons.Material.Filled.DeliveryDining,
+                    Title = "运输管理",
+                    Icon = Icons.Material.Filled.AirplaneTicket,
                     PageStatus = PageStatus.Completed,
                     IsParent = true,
                     MenuItems = new List<MenuSectionSubItemModel>
                     {
                         new(){
-                             Title = "Shipping Orders",
+                             Title = "运单信息",
                              Href = "/tms/shippingorders",
                              PageStatus = PageStatus.Completed,
-                        },
+                        }
+                    }
+                },
+               new()
+                {
+                    Title = "车辆管理",
+                    Icon = Icons.Filled.LocalShipping,
+                    PageStatus = PageStatus.Completed,
+                    IsParent = true,
+                    MenuItems = new List<MenuSectionSubItemModel>
+                    {
                         new(){
-                             Title = "Truck",
+                             Title = "车辆信息",
                              Href = "/tms/trucks",
                              PageStatus = PageStatus.Completed,
                         }
-                        
+
                     }
                 },
-                new()
-                {
-                    Title = "Analytics",
-                    Icon = Icons.Material.Filled.Analytics,
-                    Href = "/analytics",
-                    PageStatus = PageStatus.ComingSoon
-                },
-                new()
-                {
-                    Title = "Banking",
-                    Icon = Icons.Material.Filled.Money,
-                    Href = "/banking",
-                    PageStatus = PageStatus.ComingSoon
-                },
-                new()
-                {
-                    Title = "Booking",
-                    Icon = Icons.Material.Filled.CalendarToday,
-                    Href = "/booking",
-                    PageStatus = PageStatus.ComingSoon
-                }
             }
         },
 

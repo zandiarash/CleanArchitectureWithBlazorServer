@@ -12,7 +12,7 @@
         <MudForm Model="model" @ref="form" Validation="@(modelValidator.ValidateValue)">
             <MudGrid>
                 <MudItem xs="12" sm="6">
-                    <MudTextField Label="@L["OrderNo"]" @bind-Value="model.OrderNo"
+                    <MudTextField Label="@L["Order No"]" @bind-Value="model.OrderNo"
                                   ReadOnly="@(model.Id>0?true:false)"
                                   For="@(() => model.OrderNo)"
                                   Required="true"
@@ -152,7 +152,7 @@
                                     <MudTd DataLabel="PickupAddress">
                                         @if (string.IsNullOrEmpty(context.PickupAddress))
                                         {
-                                            @L["typing pickup address"]
+                                            @L["typing pickup address"] <br>
                                         }
                                         else
                                         {
@@ -344,6 +344,8 @@
     private void GoodsCommitClick()
     {
         model.Freight = model.GoodsDetailDtos.Sum(x => x.Freight);
+
+        model.GrossMargin = model.Freight - model.Cost;
     }
     private void CostItemCommitted(object element)
     {
@@ -352,5 +354,6 @@
     private void CostCommitClick()
     {
         model.Cost = model.CostDetailDtos.Sum(x => x.Cost);
+        model.GrossMargin = model.Freight - model.Cost;
     }
 }

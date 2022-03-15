@@ -109,7 +109,7 @@
                         }
                     </MudHidden>
                     <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
-                        <MudMenu AnchorOrigin="Origin.BottomLeft" StartIcon="@Icons.Filled.KeyboardCommandKey" EndIcon="@Icons.Filled.KeyboardArrowDown" Label="@L["Action"]" Color="Color.Primary" Variant="Variant.Filled">
+                        <MudMenu AnchorOrigin="Origin.BottomLeft" StartIcon="@Icons.Filled.KeyboardCommandKey" EndIcon="@Icons.Filled.KeyboardArrowDown" Label="@L["Actions"]" Color="Color.Primary" Variant="Variant.Filled">
                             <MudMenuItem OnClick="@(()=>OnRefresh())">Refresh</MudMenuItem>
                             @if (_canCreate)
                             {
@@ -137,7 +137,7 @@
                     </MudHidden>
                 </div>
                 <MudSpacer />
-                <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Placeholder="Search" Adornment="Adornment.Start"
+                <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Placeholder="@L["Search"]" Adornment="Adornment.Start"
                               AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
             </ToolBarContent>
             <ColGroup>
@@ -150,7 +150,7 @@
             <HeaderContent>
                 <MudTh Style="width:80px">@L["Actions"]</MudTh>
                 <MudTh><MudTableSortLabel SortLabel="Status" T="ShippingOrderDto">@L["Status"]</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortLabel="PlateNumber" T="ShippingOrderDto">@L["OrderNo"]</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="PlateNumber" T="ShippingOrderDto">@L["Order No"]</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="StartingTime" T="ShippingOrderDto">@L["Starting Time"]</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="PlateNumber" T="ShippingOrderDto">@L["Plate Number"]</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="Driver" T="ShippingOrderDto">@L["Driver"]</MudTableSortLabel></MudTh>
@@ -244,7 +244,7 @@
     private bool _canFinish;
     protected override async Task OnInitializedAsync()
     {
-        Title = L["ShippingOrders"];
+        Title = L["Shipping Orders"];
         var state = await AuthState;
         _canCreate = (await AuthService.AuthorizeAsync(state.User, Permissions.ShippingOrders.Create)).Succeeded;
         _canSearch = (await AuthService.AuthorizeAsync(state.User, Permissions.ShippingOrders.Search)).Succeeded;
