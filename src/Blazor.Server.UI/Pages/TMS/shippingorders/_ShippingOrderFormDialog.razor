@@ -232,7 +232,7 @@
                                         }
                                         else
                                         {
-                                            @L["please edit cost"]
+                                            @L["typing cost"]
                                         }
                                     </MudTd>
                                     <MudTd DataLabel="Cost">@context.Cost</MudTd>
@@ -308,6 +308,7 @@
                     ShippingOrderId = model.Id,
                 };
             model.GoodsDetailDtos.Add(newItem);
+            goodsTable.SetSelectedItem(newItem);
             StateHasChanged();
         }
 
@@ -328,6 +329,7 @@
             };
         model.CostDetailDtos.Add(newItem);
         //costTable.SetEditingItem(newItem);
+
     }
     private void EditCost()
     {

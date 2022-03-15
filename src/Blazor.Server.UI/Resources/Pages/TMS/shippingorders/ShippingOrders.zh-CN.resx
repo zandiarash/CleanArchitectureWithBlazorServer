@@ -249,6 +249,9 @@
   <data name="Status" xml:space="preserve">
     <value>状态</value>
   </data>
+  <data name="typing cost" xml:space="preserve">
+    <value>输入费用</value>
+  </data>
   <data name="typing delivery address" xml:space="preserve">
     <value>输入卸货地址</value>
   </data>

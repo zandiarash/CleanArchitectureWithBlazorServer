@@ -249,6 +249,9 @@
   <data name="Status" xml:space="preserve">
     <value>Status</value>
   </data>
+  <data name="typing cost" xml:space="preserve">
+    <value>typing cost</value>
+  </data>
   <data name="typing delivery address" xml:space="preserve">
     <value>typing delivery address</value>
   </data>
