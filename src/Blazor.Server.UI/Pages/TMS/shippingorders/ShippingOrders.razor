@@ -160,7 +160,7 @@
                 <MudTh><MudTableSortLabel SortLabel="Remark" T="ShippingOrderDto">@L["Remark"]</MudTableSortLabel></MudTh>
             </HeaderContent>
             <RowTemplate>
-                <MudTd DataLabel="Actions">
+                <MudTd DataLabel="@L["Actions"]">
                     @if (_canEdit || _canDelete)
                     {
                         <MudMenu Label="@L["Actions"]" Variant="Variant.Filled" DisableElevation="true" Size="Size.Small"
@@ -186,24 +186,24 @@
                         </MudButton>
                     }
                 </MudTd>
-                <MudTd DataLabel="Status">@context.Status</MudTd>
-                <MudTd DataLabel="OrderNo">
+                <MudTd DataLabel="@L["Status"]">@context.Status</MudTd>
+                <MudTd DataLabel="@L["Order No"]">
                     <MudText>@context.OrderNo</MudText>
                     <MudText Typo="Typo.body2">@(new MarkupString(context.Description??""))</MudText>
                 </MudTd>
-                <MudTd DataLabel="StartingTime">
+                <MudTd DataLabel="@L["Starting Time"]">
                     <MudText Typo="Typo.body2">发车时间: @context.StartingTime?.Date.ToShortDateString()</MudText>
                     <MudText Typo="Typo.body2">返回时间: @context.FinishTime?.Date.ToShortDateString()</MudText>
                 </MudTd>
-                <MudTd DataLabel="PlateNumber">@context.PlateNumber</MudTd>
-                <MudTd DataLabel="Driver">
+                <MudTd DataLabel="@L["Plate Number"]">@context.PlateNumber</MudTd>
+                <MudTd DataLabel="@L["Driver"]">
                     <MudText>@context.Driver</MudText>
                     <MudText Typo="Typo.body2">@context.PhoneNumber</MudText>
                 </MudTd>
-                <MudTd Style="text-align:right" DataLabel="Freight">@context.Freight</MudTd>
-                <MudTd Style="text-align:right" DataLabel="Cost">@context.Cost</MudTd>
-                <MudTd Style="text-align:right" DataLabel="GrossMargin">@context.GrossMargin</MudTd>
-                <MudTd DataLabel="Remark">@context.Remark</MudTd>
+                <MudTd Style="text-align:right" DataLabel="@L["Freight"]">@context.Freight</MudTd>
+                <MudTd Style="text-align:right" DataLabel="@L["Cost"]">@context.Cost</MudTd>
+                <MudTd Style="text-align:right" DataLabel="@L["Gross Margin"]">@context.GrossMargin</MudTd>
+                <MudTd DataLabel="@L["Remark"]">@context.Remark</MudTd>
             </RowTemplate>
             <NoRecordsContent>
                 <MudText>@L["No matching records found"]</MudText>

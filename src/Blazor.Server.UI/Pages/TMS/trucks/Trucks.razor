@@ -96,7 +96,7 @@
                         }
                     </MudHidden>
                     <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
-                        <MudMenu AnchorOrigin="Origin.BottomLeft" StartIcon="@Icons.Filled.KeyboardCommandKey" EndIcon="@Icons.Filled.KeyboardArrowDown" Label="@L["Action"]" Color="Color.Primary" Variant="Variant.Filled">
+                        <MudMenu AnchorOrigin="Origin.BottomLeft" StartIcon="@Icons.Filled.KeyboardCommandKey" EndIcon="@Icons.Filled.KeyboardArrowDown" Label="@L["Actions"]" Color="Color.Primary" Variant="Variant.Filled">
                             <MudMenuItem OnClick="@(()=>OnRefresh())">Refresh</MudMenuItem>
                             @if (_canCreate)
                             {
@@ -139,7 +139,7 @@
 
             </HeaderContent>
             <RowTemplate>
-                <MudTd DataLabel="Actions">
+                <MudTd DataLabel="@L["Actions"]">
                     @if (_canEdit || _canDelete)
                     {
                         <MudMenu Label="@L["Actions"]" Variant="Variant.Filled" DisableElevation="true" Size="Size.Small"
@@ -166,18 +166,18 @@
                     }
                 </MudTd>
                
-                <MudTd DataLabel="PlateNumber">
+                <MudTd DataLabel="@L["Plate Number"]">
                     <MudText>@context.PlateNumber</MudText>
                     <MudText Typo="Typo.body2">@context.Description</MudText>
                 </MudTd>
-                <MudTd DataLabel="VehicleType">@context.VehicleType</MudTd>
-                <MudTd DataLabel="TrailerNumber">@context.TrailerNumber</MudTd>
-                <MudTd DataLabel="Owner">@context.Owner</MudTd>
-                <MudTd DataLabel="Driver">
+                <MudTd DataLabel="@L["Vehicle Type"]">@context.VehicleType</MudTd>
+                <MudTd DataLabel="@L["Trailer Number"]">@context.TrailerNumber</MudTd>
+                <MudTd DataLabel="@L["Owner"]">@context.Owner</MudTd>
+                <MudTd DataLabel="@L["Driver"]">
                     <MudText>@context.Driver</MudText>
                     <MudText Typo="Typo.body2">@context.PhoneNumber</MudText>
                 </MudTd>
-                <MudTd DataLabel="Status">@context.Status</MudTd>
+                <MudTd DataLabel="@L["Status"]">@context.Status</MudTd>
             </RowTemplate>
             <NoRecordsContent>
                 <MudText>@L["No matching records found"]</MudText>
