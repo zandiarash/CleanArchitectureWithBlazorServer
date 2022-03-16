@@ -119,7 +119,7 @@
                         <MudTabPanel Text="@L["Goods"]" Icon="@Icons.Filled.AutoAwesomeMotion"
                                      BadgeData="@model.GoodsDetailDtos.Count">
                             <MudToolBar Dense="false">
-                                <MudIconButton OnClick="AddGoods" Icon="@Icons.Material.Outlined.Add" />
+                                <MudIconButton Disabled="@_editing" OnClick="AddGoods" Icon="@Icons.Material.Outlined.Add" />
                                 <MudIconButton Disabled="@(selectedGoodsItem==null)" OnClick="EditGoods" Icon="@Icons.Material.Outlined.Edit" />
 
                             </MudToolBar>
@@ -128,6 +128,7 @@
                                       @bind-SelectedItem="selectedGoodsItem"
                                       RowEditCommit="GoodsItemCommitted"
                                       OnCommitEditClick="GoodsCommitClick"
+                                      OnPreviewEditClick="@(()=>_editing = true)"
                                       IsEditRowSwitchingBlocked="true"
                                       FixedHeader="true"
                                       Height="300px"
@@ -200,14 +201,14 @@
                         <MudTabPanel Text="@L["Costs"]" Icon="@Icons.Filled.CurrencyYen"
                                      BadgeData="@model.CostDetailDtos.Count">
                             <MudToolBar Dense="false">
-                                <MudIconButton OnClick="AddCost" Icon="@Icons.Material.Outlined.Add" />
+                                <MudIconButton Disabled="_editing" OnClick="AddCost" Icon="@Icons.Material.Outlined.Add" />
                                 <MudIconButton Disabled="@(selectedCostItem==null)" OnClick="EditCost" Icon="@Icons.Material.Outlined.Edit" />
-
                             </MudToolBar>
                             <MudTable @ref="costTable" Items="@model.CostDetailDtos" Hover="false"
                                       @bind-SelectedItem="selectedCostItem"
                                       RowEditCommit="CostItemCommitted"
                                       OnCommitEditClick="CostCommitClick"
+                                      OnPreviewEditClick="@(()=>_editing = true)"
                                       IsEditRowSwitchingBlocked="true"
                                       FixedHeader="true"
                                       Height="300px"
@@ -278,6 +279,8 @@
     AddEditShippingOrderCommandValidator modelValidator = new AddEditShippingOrderCommandValidator();
     [EditorRequired][Parameter] public AddEditShippingOrderCommand model { get; set; } = default!;
     [EditorRequired][Parameter] public IEnumerable<TruckDto> trucks { get; set; } = default!;
+
+    private bool _editing;
     async Task Submit()
     {
         await form.Validate();
@@ -298,7 +301,7 @@
         StateHasChanged();
     }
 
-    private async void AddGoods()
+    private async Task AddGoods()
     {
         await form.Validate();
         if (form.IsValid)
@@ -308,7 +311,10 @@
                     ShippingOrderId = model.Id,
                 };
             model.GoodsDetailDtos.Add(newItem);
+            await Task.Delay(25);
             goodsTable.SetSelectedItem(newItem);
+            goodsTable.SetEditingItem(newItem);
+            _editing = true;
             StateHasChanged();
         }
 
@@ -321,14 +327,18 @@
     {
         model.GoodsDetailDtos.Remove(item);
     }
-    private void AddCost()
+    private async Task AddCost()
     {
         var newItem = new CostDetailDto()
             {
                 ShippingOrderId = model.Id,
             };
         model.CostDetailDtos.Add(newItem);
-        //costTable.SetEditingItem(newItem);
+        await Task.Delay(25);
+        costTable.SetSelectedItem(newItem);
+        costTable.SetEditingItem(newItem);
+        _editing = true;
+        StateHasChanged();
 
     }
     private void EditCost()
@@ -342,6 +352,7 @@
     private void GoodsItemCommitted(object element)
     {
         //model.Freight = model.GoodsDetailDtos.Sum(x => x.Freight);
+        _editing = false;
     }
     private void GoodsCommitClick()
     {
@@ -352,6 +363,7 @@
     private void CostItemCommitted(object element)
     {
         //model.Cost = model.CostDetailDtos.Sum(x => x.Cost);
+        _editing = false;
     }
     private void CostCommitClick()
     {
