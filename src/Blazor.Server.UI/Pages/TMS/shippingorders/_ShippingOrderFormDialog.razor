@@ -120,7 +120,7 @@
                                      BadgeData="@model.GoodsDetailDtos.Count">
                             <MudToolBar Dense="false">
                                 <MudIconButton Disabled="@_editing" OnClick="AddGoods" Icon="@Icons.Material.Outlined.Add" />
-                                <MudIconButton Disabled="@(selectedGoodsItem==null)" OnClick="EditGoods" Icon="@Icons.Material.Outlined.Edit" />
+                                <MudIconButton Disabled="@(selectedGoodsItem==null || _editing)" OnClick="EditGoods" Icon="@Icons.Material.Outlined.Edit" />
 
                             </MudToolBar>
                             <MudTable @ref="goodsTable" Items="@model.GoodsDetailDtos"
@@ -202,7 +202,7 @@
                                      BadgeData="@model.CostDetailDtos.Count">
                             <MudToolBar Dense="false">
                                 <MudIconButton Disabled="_editing" OnClick="AddCost" Icon="@Icons.Material.Outlined.Add" />
-                                <MudIconButton Disabled="@(selectedCostItem==null)" OnClick="EditCost" Icon="@Icons.Material.Outlined.Edit" />
+                                <MudIconButton Disabled="@(selectedCostItem==null || _editing)" OnClick="EditCost" Icon="@Icons.Material.Outlined.Edit" />
                             </MudToolBar>
                             <MudTable @ref="costTable" Items="@model.CostDetailDtos" Hover="false"
                                       @bind-SelectedItem="selectedCostItem"
@@ -271,8 +271,8 @@
     MudForm form = default!;
     MudTable<GoodsDetailDto> goodsTable;
     MudTable<CostDetailDto> costTable;
-    GoodsDetailDto selectedGoodsItem;
-    CostDetailDto selectedCostItem;
+    GoodsDetailDto? selectedGoodsItem=null;
+    CostDetailDto? selectedCostItem=null;
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; } = default!;
     [Inject] private IUploadService _uploadService { get; set; } = default!;
@@ -321,6 +321,7 @@
     }
     private void EditGoods()
     {
+        _editing = true;
         goodsTable.SetEditingItem(selectedGoodsItem);
     }
     private void DeleteGoods(GoodsDetailDto item)
@@ -343,6 +344,7 @@
     }
     private void EditCost()
     {
+        _editing = true;
         costTable.SetEditingItem(selectedCostItem);
     }
     private void DeleteCost(CostDetailDto item)
