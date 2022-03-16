@@ -117,55 +117,73 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="authentication is required, click sign in." xml:space="preserve">
-    <value>需要登录后访问, 单击“登录”.</value>
+  <data name="Analytics" xml:space="preserve">
+    <value>分析决策</value>
   </data>
-  <data name="Go Home" xml:space="preserve">
-    <value>返回首页</value>
+  <data name="Application" xml:space="preserve">
+    <value>应用程序</value>
   </data>
-  <data name="Sorry, there's nothing at this address." xml:space="preserve">
-    <value>对不起, 没有这个地址.</value>
+  <data name="Audit Trails" xml:space="preserve">
+    <value>安全审计</value>
   </data>
-  <data name="You are not authorized to be here. For more information, contact your system administrator." xml:space="preserve">
-    <value>不允许访问, 更多信息, 请联系管理员.</value>
+  <data name="Authorization" xml:space="preserve">
+    <value>授权</value>
   </data>
-  <data name="Logout" xml:space="preserve">
-    <value>注销</value>
+  <data name="Banking" xml:space="preserve">
+    <value>金融</value>
+  </data>
+  <data name="Blazor Dashbord" xml:space="preserve">
+    <value>Blazor看板</value>
+  </data>
+  <data name="Booking" xml:space="preserve">
+    <value>预定</value>
+  </data>
+  <data name="Customers" xml:space="preserve">
+    <value>客户信息</value>
+  </data>
+  <data name="Dictionaries" xml:space="preserve">
+    <value>数据字典</value>
+  </data>
+  <data name="E-Commerce" xml:space="preserve">
+    <value>电子商务</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>首页</value>
+  </data>
+  <data name="Jobs" xml:space="preserve">
+    <value>任务</value>
+  </data>
+  <data name="Log" xml:space="preserve">
+    <value>日志</value>
+  </data>
+  <data name="MANAGEMENT" xml:space="preserve">
+    <value>系统管理</value>
+  </data>
+  <data name="Products" xml:space="preserve">
+    <value>产品库</value>
   </data>
   <data name="Profile" xml:space="preserve">
     <value>简介</value>
   </data>
-  <data name="Settings" xml:space="preserve">
-    <value>设置</value>
+  <data name="Roles" xml:space="preserve">
+    <value>角色</value>
   </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>取消</value>
+  <data name="System" xml:space="preserve">
+    <value>系统</value>
   </data>
-  <data name="Confirm" xml:space="preserve">
-    <value>确认</value>
-  </data>
-  <data name="Delete Confirmation" xml:space="preserve">
-    <value>删除确认</value>
-  </data>
-  <data name="Logged out" xml:space="preserve">
-    <value>已注销</value>
-  </data>
-  <data name="Logout Confirmation" xml:space="preserve">
-    <value>注销确认</value>
-  </data>
-  <data name="You are attempting to log out of application. Do you really want to log out?" xml:space="preserve">
-    <value>您正试图注销应用程序.您真的想退出吗?</value>
-  </data>
-  <data name="Color" xml:space="preserve">
-    <value>颜色</value>
-  </data>
-  <data name="Mode" xml:space="preserve">
-    <value>模式</value>
-  </data>
-  <data name="Themes" xml:space="preserve">
-    <value>主题</value>
+  <data name="Users" xml:space="preserve">
+    <value>账号</value>
   </data>
   <data name="Shipping Orders" xml:space="preserve">
-    <value>运单信息</value>
+    <value>运单管理</value>
+  </data>
+  <data name="TMS" xml:space="preserve">
+    <value>运输管理系统</value>
+  </data>
+  <data name="Transportation" xml:space="preserve">
+    <value>运输管理</value>
+  </data>
+  <data name="Trucks" xml:space="preserve">
+    <value>车辆管理</value>
   </data>
 </root>
