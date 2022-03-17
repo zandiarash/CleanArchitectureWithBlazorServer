@@ -8,7 +8,7 @@ namespace CleanArchitecture.Blazor.Application.Features.ShippingOrders.Queries.P
 
 public class ShippingOrdersWithPaginationQuery : PaginationFilter, IRequest<PaginatedData<ShippingOrderDto>>, ICacheable
 {
-    public string CacheKey => ShippingOrderCacheKey.GetPagtionCacheKey($"{nameof(ShippingOrdersWithPaginationQuery)}:${this}");
+    public string CacheKey => ShippingOrderCacheKey.GetPagtionCacheKey($"{this}");
     public MemoryCacheEntryOptions? Options => new MemoryCacheEntryOptions().AddExpirationToken(new CancellationChangeToken(ShippingOrderCacheKey.SharedExpiryTokenSource.Token));
 }
 

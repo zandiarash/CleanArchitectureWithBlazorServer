@@ -8,7 +8,7 @@ public static class TruckCacheKey
     public const string GetAllCacheKey = "all-Trucks";
     public static string GetPagtionCacheKey(string parameters)
     {
-        return "TrucksWithPaginationQuery,{parameters}";
+        return $"TrucksWithPaginationQuery,{parameters}";
     }
     static TruckCacheKey()
     {

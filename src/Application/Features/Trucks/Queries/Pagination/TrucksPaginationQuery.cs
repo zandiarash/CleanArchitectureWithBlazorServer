@@ -8,7 +8,7 @@ namespace CleanArchitecture.Blazor.Application.Features.Trucks.Queries.Paginatio
 
 public class TrucksWithPaginationQuery : PaginationFilter, IRequest<PaginatedData<TruckDto>>, ICacheable
 {
-    public string CacheKey => TruckCacheKey.GetPagtionCacheKey($"{nameof(TrucksWithPaginationQuery)}:${this}");
+    public string CacheKey => TruckCacheKey.GetPagtionCacheKey($"{this}");
     public MemoryCacheEntryOptions? Options => new MemoryCacheEntryOptions().AddExpirationToken(new CancellationChangeToken(TruckCacheKey.SharedExpiryTokenSource.Token));
 }
 

@@ -7,7 +7,7 @@ public static class ShippingOrderCacheKey
 {
     public const string GetAllCacheKey = "all-ShippingOrders";
     public static string GetPagtionCacheKey(string parameters) {
-        return "ShippingOrdersWithPaginationQuery,{parameters}";
+        return $"ShippingOrdersWithPaginationQuery,{parameters}";
     }
         static ShippingOrderCacheKey()
     {
