@@ -1,19 +1,22 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using CleanArchitecture.Blazor.Application.Features.ShippingOrders.Caching;
 using CleanArchitecture.Blazor.Application.Features.ShippingOrders.DTOs;
 
 namespace CleanArchitecture.Blazor.Application.Features.ShippingOrders.Queries.GetAll;
 
-public class GetByIdShippingOrderQuery : IRequest<ShippingOrderDto>
+public class GetByIdShippingOrderQuery : IRequest<ShippingOrderDto>, ICacheable
 {
+    public string CacheKey => ShippingOrderCacheKey.GetByIdCacheKey(Id);
+    public MemoryCacheEntryOptions? Options => new MemoryCacheEntryOptions().AddExpirationToken(new CancellationChangeToken(ShippingOrderCacheKey.SharedExpiryTokenSource.Token));
     public int Id { get; set; }
     public GetByIdShippingOrderQuery(int id)
     {
         Id = id;
     }
 }
-
+ 
 public class GetByIdShippingOrderQueryHandler :
      IRequestHandler<GetByIdShippingOrderQuery, ShippingOrderDto>
 {

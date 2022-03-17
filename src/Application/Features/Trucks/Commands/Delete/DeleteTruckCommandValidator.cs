@@ -3,22 +3,14 @@
 
 namespace CleanArchitecture.Blazor.Application.Features.Trucks.Commands.Delete;
 
-    public class DeleteTruckCommandValidator : AbstractValidator<DeleteTruckCommand>
+public class DeleteTruckCommandValidator : AbstractValidator<DeleteTruckCommand>
+{
+    public DeleteTruckCommandValidator()
     {
-        public DeleteTruckCommandValidator()
-        {
-         
-           RuleFor(v => v.Id).NotNull().GreaterThan(0);
-         
-        }
+
+        RuleFor(v => v.Id).NotNull().NotEmpty().ForEach(x => x.GreaterThan(0));
+
     }
-    public class DeleteCheckedTrucksCommandValidator : AbstractValidator<DeleteCheckedTrucksCommand>
-    {
-        public DeleteCheckedTrucksCommandValidator()
-        {
-           
-            RuleFor(v => v.Id).NotNull().NotEmpty().ForEach(x=>x.GreaterThan(0));
-     
-        }
-    }
+}
+
 

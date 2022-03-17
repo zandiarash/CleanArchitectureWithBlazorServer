@@ -361,7 +361,7 @@
         var state = await dialog.Result;
         if (!state.Cancelled)
         {
-            var command = new DeleteShippingOrderCommand() { Id = dto.Id };
+            var command = new DeleteShippingOrderCommand(new int[] {dto.Id });
             var result = await _mediator.Send(command);
             await _table.ReloadServerData();
             Snackbar.Add($"{L["Deleted successfully"]}", MudBlazor.Severity.Info);
@@ -380,7 +380,7 @@
         var state = await dialog.Result;
         if (!state.Cancelled)
         {
-            var command = new DeleteCheckedShippingOrdersCommand() { Id = _selectedItems.Select(x => x.Id).ToArray() };
+            var command = new DeleteShippingOrderCommand(_selectedItems.Select(x => x.Id).ToArray());
             var result = await _mediator.Send(command);
             await _table.ReloadServerData();
             Snackbar.Add($"{L["Deleted successfully"]}", MudBlazor.Severity.Info);
@@ -406,11 +406,7 @@
         _uploading = true;
         var stream = new MemoryStream();
         await e.File.OpenReadStream().CopyToAsync(stream);
-        var command = new ImportShippingOrdersCommand()
-            {
-                Data = stream.ToArray(),
-                FileName = e.File.Name
-            };
+        var command = new ImportShippingOrdersCommand(e.File.Name,stream.ToArray()) ;
         var result = await _mediator.Send(command);
         if (result.Succeeded)
         {

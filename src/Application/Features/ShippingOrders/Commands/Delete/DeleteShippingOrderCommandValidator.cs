@@ -8,17 +8,9 @@ namespace CleanArchitecture.Blazor.Application.Features.ShippingOrders.Commands.
         public DeleteShippingOrderCommandValidator()
         {
           
-           RuleFor(v => v.Id).NotNull().GreaterThan(0);
+           RuleFor(v => v.Id).NotNull().NotEmpty().ForEach(x=>x.GreaterThan(0));
      
         }
     }
-    public class DeleteCheckedShippingOrdersCommandValidator : AbstractValidator<DeleteCheckedShippingOrdersCommand>
-    {
-        public DeleteCheckedShippingOrdersCommandValidator()
-        {
-          
-            RuleFor(v => v.Id).NotNull().NotEmpty();
-         
-        }
-    }
+   
 

@@ -1,19 +1,26 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using CleanArchitecture.Blazor.Application.Features.Trucks.Caching;
 using CleanArchitecture.Blazor.Application.Features.Trucks.Commands.AddEdit;
 
 namespace CleanArchitecture.Blazor.Application.Features.Trucks.Commands.Import;
 
-public class ImportTrucksCommand : IRequest<Result>
+public class ImportTrucksCommand : IRequest<Result>, ICacheInvalidator
 {
-    public string FileName { get; set; }
-    public byte[] Data { get; set; }
+    public string FileName { get;  }
+    public byte[] Data { get;  }
+    public string CacheKey => TruckCacheKey.GetAllCacheKey;
+    public CancellationTokenSource? SharedExpiryTokenSource => TruckCacheKey.SharedExpiryTokenSource;
+    public ImportTrucksCommand(string fileName,byte[] data)
+    {
+        FileName = fileName;
+        Data = data;
+    }
 }
-public class CreateTrucksTemplateCommand : IRequest<byte[]>
+public record CreateTrucksTemplateCommand : IRequest<byte[]>
 {
-    public IEnumerable<string> Fields { get; set; }
-    public string SheetName { get; set; }
+   
 }
 
 public class ImportTrucksCommandHandler :
