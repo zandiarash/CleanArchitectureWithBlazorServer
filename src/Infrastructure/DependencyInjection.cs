@@ -19,7 +19,7 @@ public static class DependencyInjection
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseInMemoryDatabase("BlazorDashboardDb")
-                ,ServiceLifetime.Transient);
+                );
         }
         else
         {
@@ -27,7 +27,7 @@ public static class DependencyInjection
                 options.UseSqlServer(
                     configuration.GetConnectionString("DefaultConnection"),
                     b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName))
-                 ,ServiceLifetime.Transient );
+                );
             services.AddDatabaseDeveloperPageExceptionFilter();
         }
 
@@ -40,7 +40,7 @@ public static class DependencyInjection
         });
         services.Configure<DashbordSettings>(configuration.GetSection(DashbordSettings.SectionName));
         services.AddSingleton(s => s.GetRequiredService<IOptions<DashbordSettings>>().Value);
-        services.AddScoped<IDbContextFactory<ApplicationDbContext>,BlazorContextFactory<ApplicationDbContext>>();
+        services.AddTransient<IDbContextFactory<ApplicationDbContext>,BlazorContextFactory<ApplicationDbContext>>();
         services.AddTransient<IApplicationDbContext>(provider => provider.GetRequiredService<IDbContextFactory<ApplicationDbContext>>().CreateDbContext());
         services.AddScoped<IDomainEventService, DomainEventService>();
 
@@ -108,8 +108,6 @@ public static class DependencyInjection
             options.FallBackToParentUICultures = true;
 
         });
-
-
 
         services.AddControllers();
         services.AddSingleton<CircuitHandler, CircuitHandlerService>();

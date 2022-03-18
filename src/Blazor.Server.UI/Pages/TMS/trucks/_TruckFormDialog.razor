@@ -74,7 +74,6 @@
     MudForm form = default!;
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; } = default!;
-    [Inject] private IUploadService _uploadService { get; set; } = default!;
     AddEditTruckCommandValidator modelValidator = new AddEditTruckCommandValidator();
     [EditorRequired] [Parameter] public AddEditTruckCommand model { get; set; } = default!;
     async Task Submit()
