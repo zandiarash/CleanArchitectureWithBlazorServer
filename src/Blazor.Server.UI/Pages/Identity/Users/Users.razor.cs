@@ -153,12 +153,6 @@ namespace Blazor.Server.UI.Pages.Identity.Users
                 user.Site = model.Site;
                 user.UserName = model.UserName;
                 var state = await _userManager.UpdateAsync(user);
-                //item.DisplayName = model.DisplayName;
-                //item.UserName = model.UserName;
-                //item.Email = model.Email;
-                //item.PhoneNumber = model.PhoneNumber;
-                //item.ProfilePictureDataUrl = model.ProfilePictureDataUrl;
-                //item.Site = model.Site;
                 if (model.AssignRoles is not null && model.AssignRoles.Length > 0)
                 {
                     await _userManager.RemoveFromRolesAsync(user, roles);
