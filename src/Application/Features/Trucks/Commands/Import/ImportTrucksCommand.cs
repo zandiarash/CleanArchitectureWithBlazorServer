@@ -53,7 +53,7 @@ public class ImportTrucksCommandHandler :
             {
                 { _localizer["Plate Number"], (row,item) => item.PlateNumber = row[_localizer["Plate Number"]]?.ToString() },
                 { _localizer["Trailer Number"], (row,item) => item.TrailerNumber = row[_localizer["Trailer Number"]]?.ToString() },
-                { _localizer["Vehicle Type"], (row,item) => item.VehicleType = row[_localizer["VehicleType"]]?.ToString() },
+                { _localizer["Vehicle Type"], (row,item) => item.VehicleType = row[_localizer["Vehicle Type"]]?.ToString() },
                 { _localizer["Owner"], (row,item) => item.Owner = row[_localizer["Owner"]]?.ToString() },
                 { _localizer["Description"], (row,item) => item.Description = row[_localizer["Description"]]?.ToString() },
                 { _localizer["Driver"], (row,item) => item.Driver = row[_localizer["Driver"]]?.ToString() },

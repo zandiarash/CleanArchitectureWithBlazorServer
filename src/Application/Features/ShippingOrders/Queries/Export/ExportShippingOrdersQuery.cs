@@ -36,16 +36,28 @@ namespace CleanArchitecture.Blazor.Application.Features.ShippingOrders.Queries.E
 
         public async Task<byte[]> Handle(ExportShippingOrdersQuery request, CancellationToken cancellationToken)
         {
-    
-  
+ 
             var data = await _context.ShippingOrders//.Where(x=>x.Name.Contains(request.Keyword) || x.Description.Contains(request.Keyword))
-                       .OrderBy("{request.OrderBy} {request.SortDirection}")
+                       .OrderBy($"{request.OrderBy} {request.SortDirection}")
                        .ProjectTo<ShippingOrderDto>(_mapper.ConfigurationProvider)
                        .ToListAsync(cancellationToken);
             var result = await _excelService.ExportAsync(data,
                 new Dictionary<string, Func<ShippingOrderDto, object>>()
                 {
-                    //{ _localizer["Id"], item => item.Id },
+                    { _localizer["Order No"], item => item.OrderNo },
+                    { _localizer["Starting Time"], item => item.StartingTime },
+                    { _localizer["Finish Time"], item => item.FinishTime },
+                    { _localizer["Plate Number"], item => item.PlateNumber },
+                    { _localizer["Driver"], item => item.Driver },
+                    { _localizer["Phone Number"], item => item.PhoneNumber },
+                    { _localizer["Dispatcher"], item => item.Dispatcher },
+                    { _localizer["Description"], item => item.Description },
+                    { _localizer["Freight"], item => item.Freight },
+                    { _localizer["CashAdvance"], item => item.CashAdvance },
+                    { _localizer["Cost"], item => item.Cost },
+                    { _localizer["Gross Margin"], item => item.GrossMargin },
+                    { _localizer["Status"], item => item.Status },
+                    { _localizer["Remark"], item => item.Remark },
                 }
                 , _localizer["ShippingOrders"]);
             return result;
