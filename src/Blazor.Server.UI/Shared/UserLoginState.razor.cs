@@ -23,7 +23,6 @@ using MudBlazor;
 using MediatR;
 using Blazor.Server.UI.Components.Shared;
 using Blazor.Server.UI.Components.Shared.Themes;
-using Blazor.Server.UI.Components.Index;
 using Blazor.Server.UI.Components.Charts;
 using Blazor.Server.UI.Models.Localization;
 using FluentValidation;
