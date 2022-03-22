@@ -133,7 +133,7 @@
     <value>注销</value>
   </data>
   <data name="Profile" xml:space="preserve">
-    <value>简介</value>
+    <value>简档</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>设置</value>
@@ -165,7 +165,16 @@
   <data name="Themes" xml:space="preserve">
     <value>主题</value>
   </data>
-  <data name="Shipping Orders" xml:space="preserve">
-    <value>运单信息</value>
+  <data name="Mark as read" xml:space="preserve">
+    <value>标记已读</value>
+  </data>
+  <data name="Nothing new :(" xml:space="preserve">
+    <value>没有新消息 :(</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>通知</value>
+  </data>
+  <data name="Search..." xml:space="preserve">
+    <value>搜索</value>
   </data>
 </root>
