@@ -222,4 +222,7 @@
   <data name="You're sure you want to delete the selected items:{0}?" xml:space="preserve">
     <value>你确定要删除选中的记录:{0}?</value>
   </data>
+  <data name="Edit" xml:space="preserve">
+    <value>编辑</value>
+  </data>
 </root>

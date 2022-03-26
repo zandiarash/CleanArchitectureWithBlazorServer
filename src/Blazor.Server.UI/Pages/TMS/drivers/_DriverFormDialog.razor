@@ -1,4 +1,5 @@
 @using CleanArchitecture.Blazor.Application.Features.Drivers.Commands.AddEdit
+@using CleanArchitecture.Blazor.Application.Features.KeyValues.DTOs
 @using SixLabors.ImageSharp
 @using SixLabors.ImageSharp.Formats
 @using SixLabors.ImageSharp.Processing
@@ -56,7 +57,7 @@
                     </MudTextField>
                 </MudItem>
                  <MudItem xs="12" sm="6">
-                    <DictionaryAutocomplete Dictionary="DrivingType"
+                    <DictionaryAutocomplete Dictionary="DrivingType" DataSource="datasource"
                                      Label="@L["Driving Type"]"
                                      For="@(() => model.DrivingType)"
                                      @bind-Value="model.DrivingType"
@@ -65,7 +66,7 @@
                     ></DictionaryAutocomplete>
                 </MudItem>
                 <MudItem xs="12" sm="6">
-                    <DictionaryAutocomplete Dictionary="PayPeriod"
+                    <DictionaryAutocomplete Dictionary="PayPeriod" DataSource="datasource"
                                      Label="@L["Pay Period"]"
                                      For="@(() => model.PayPeriod)"
                                      @bind-Value="model.PayPeriod"></DictionaryAutocomplete>
@@ -90,6 +91,7 @@
     MudDialogInstance MudDialog { get; set; } = default!;
     AddEditDriverCommandValidator modelValidator = new AddEditDriverCommandValidator();
     [EditorRequired] [Parameter] public AddEditDriverCommand model { get; set; } = default!;
+    [EditorRequired] [Parameter] public IList<KeyValueDto> datasource { get; set; } = default!;
     async Task Submit()
     {
         await form.Validate();

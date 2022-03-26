@@ -46,6 +46,15 @@ namespace CleanArchitecture.Blazor.Application.Features.Drivers.Queries.Export;
                 new Dictionary<string, Func<DriverDto, object>>()
                 {
                     { _localizer["Name"], item => item.Name },
+                    { _localizer["Phone Number"], item => item.PhoneNumber },
+                    { _localizer["Identity No"], item => item.IdentityNo },
+                    { _localizer["Address"], item => item.Address },
+                    { _localizer["Brithday"], item => item.BrithDay },
+                    { _localizer["Age"], item => item.Age },
+                    { _localizer["Driving No"], item => item.DrivingNo },
+                    { _localizer["Driving Type"], item => item.DrivingType },
+                    { _localizer["Pay Period"], item => item.PayPeriod },
+                    { _localizer["Remark"], item => item.Remark }
                 }
                 , _localizer["Drivers"]);
             return result;

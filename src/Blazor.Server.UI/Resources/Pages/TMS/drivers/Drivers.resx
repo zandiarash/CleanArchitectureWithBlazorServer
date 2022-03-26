@@ -222,4 +222,7 @@
   <data name="You're sure you want to delete the selected items:{0}?" xml:space="preserve">
     <value>You're sure you want to delete the selected items:{0}?</value>
   </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
 </root>
