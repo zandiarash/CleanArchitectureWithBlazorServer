@@ -16,7 +16,7 @@ namespace CleanArchitecture.Blazor.Application.Features.ShippingOrders.Commands.
                  .GreaterThan(e => e.StartingTime);
         RuleFor(v => v.TruckId)
             .GreaterThan(0);
-        RuleFor(v => v.Driver).NotEmpty();
+        RuleFor(v => v.DriverName).NotEmpty();
         RuleFor(v => v.PhoneNumber).NotEmpty();
     }
         public Func<object, string, Task<IEnumerable<string>>> ValidateValue => async (model, propertyName) =>

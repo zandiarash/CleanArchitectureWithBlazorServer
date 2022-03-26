@@ -48,7 +48,7 @@ namespace CleanArchitecture.Blazor.Application.Features.ShippingOrders.Queries.E
                     { _localizer["Starting Time"], item => item.StartingTime },
                     { _localizer["Finish Time"], item => item.FinishTime },
                     { _localizer["Plate Number"], item => item.PlateNumber },
-                    { _localizer["Driver"], item => item.Driver },
+                    { _localizer["Driver Name"], item => item.DriverName },
                     { _localizer["Phone Number"], item => item.PhoneNumber },
                     { _localizer["Dispatcher"], item => item.Dispatcher },
                     { _localizer["Description"], item => item.Description },

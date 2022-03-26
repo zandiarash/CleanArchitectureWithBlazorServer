@@ -41,8 +41,8 @@
                     </MudSelect>
                 </MudItem>
                 <MudItem xs="12" sm="4">
-                    <MudTextField Label="@L["Driver"]" @bind-Value="model.Driver"
-                                  For="@(() => model.Driver)">
+                    <MudTextField Label="@L["Driver Name"]" @bind-Value="model.DriverName"
+                                  For="@(() => model.DriverName)">
                     </MudTextField>
                 </MudItem>
                 <MudItem xs="12" sm="4">
@@ -296,7 +296,7 @@
         var truck = trucks.First(x => x.PlateNumber == value);
         model.TruckId = truck.Id;
         model.PlateNumber = truck.PlateNumber;
-        model.Driver = truck.Driver;
+        model.DriverName = truck.Driver;
         model.PhoneNumber = truck.PhoneNumber;
         StateHasChanged();
     }

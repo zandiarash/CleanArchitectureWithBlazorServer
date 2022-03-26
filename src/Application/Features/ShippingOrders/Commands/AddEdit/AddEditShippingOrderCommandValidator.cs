@@ -17,7 +17,7 @@ public class AddEditShippingOrderCommandValidator : AbstractValidator<AddEditShi
                  .GreaterThan(e => e.StartingTime);
         RuleFor(v => v.TruckId)
             .GreaterThan(0);
-        RuleFor(v => v.Driver).NotEmpty();
+        RuleFor(v => v.DriverName).NotEmpty();
         RuleFor(v => v.PhoneNumber).NotEmpty();
 
     }

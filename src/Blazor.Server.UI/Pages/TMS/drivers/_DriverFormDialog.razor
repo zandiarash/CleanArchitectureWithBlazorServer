@@ -1,0 +1,99 @@
+@using CleanArchitecture.Blazor.Application.Features.Drivers.Commands.AddEdit
+@using SixLabors.ImageSharp
+@using SixLabors.ImageSharp.Formats
+@using SixLabors.ImageSharp.Processing
+@inherits MudComponentBase
+@inject IStringLocalizer<Drivers> L
+<MudDialog>
+    <DialogContent>
+        <MudForm Model="model" @ref="form" Validation="@(modelValidator.ValidateValue)">
+            <MudGrid>
+                <MudItem xs="12" sm="6">
+                    <MudTextField Label="@L["Driver Name"]" @bind-Value="model.Name"
+                                  For="@(() => model.Name)"
+                                  Required="true"
+                                  RequiredError="@L["Name is required!"]"
+                                  >
+                    </MudTextField>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudTextField Label="@L["Phone Number"]" @bind-Value="model.PhoneNumber"
+                                  For="@(() => model.PhoneNumber)"
+                                  Required="true"
+                                  RequiredError="@L["Phone number is required!"]"
+                                  >
+                    </MudTextField>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudTextField Label="@L["IdentityNo"]" @bind-Value="model.IdentityNo"
+                                  For="@(() => model.IdentityNo)"
+                                  >
+                    </MudTextField>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudTextField Label="@L["Address"]" @bind-Value="model.Address"
+                                  For="@(() => model.Address)"
+                                  >
+                    </MudTextField>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudDatePicker Label="@L["BrithDay"]" @bind-Value="model.BrithDay"
+                                   For="@(() => model.BrithDay)"
+                                  >
+                    </MudDatePicker>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudNumericField Label="@L["Age"]" @bind-Value="model.Age"
+                                   For="@(() => model.Age)"
+                                  >
+                    </MudNumericField>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudTextField Label="@L["Driving No"]" @bind-Value="model.DrivingNo"
+                                  For="@(() => model.DrivingNo)"
+                                  >
+                    </MudTextField>
+                </MudItem>
+                 <MudItem xs="12" sm="6">
+                    <DictionaryAutocomplete Dictionary="DrivingType"
+                                     Label="@L["Driving Type"]"
+                                     For="@(() => model.DrivingType)"
+                                     @bind-Value="model.DrivingType"></DictionaryAutocomplete>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <DictionaryAutocomplete Dictionary="PayPeriod"
+                                     Label="@L["Pay Period"]"
+                                     For="@(() => model.PayPeriod)"
+                                     @bind-Value="model.PayPeriod"></DictionaryAutocomplete>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudTextField Label="@L["Remark"]"
+                                  For="@(() => model.Remark)"
+                                  @bind-Value="model.Remark"></MudTextField>
+                </MudItem>
+            </MudGrid>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">@L["Cancle"]</MudButton>
+        <MudButton Color="MudBlazor.Color.Primary" OnClick="Submit">@L["Ok"]</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    MudForm form = default!;
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; } = default!;
+    AddEditDriverCommandValidator modelValidator = new AddEditDriverCommandValidator();
+    [EditorRequired] [Parameter] public AddEditDriverCommand model { get; set; } = default!;
+    async Task Submit()
+    {
+        await form.Validate();
+        if (form.IsValid)
+        {
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+
+    }
+    void Cancel() => MudDialog.Cancel();
+}

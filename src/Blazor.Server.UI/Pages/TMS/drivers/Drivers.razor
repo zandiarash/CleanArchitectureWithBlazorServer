@@ -1,17 +1,14 @@
-@page "/tms/shippingorders"
+@page "/tms/drivers"
 
-@using CleanArchitecture.Blazor.Application.Features.ShippingOrders.Commands.Delete
-@using CleanArchitecture.Blazor.Application.Features.ShippingOrders.Commands.Import
-@using CleanArchitecture.Blazor.Application.Features.ShippingOrders.DTOs
-@using CleanArchitecture.Blazor.Application.Features.ShippingOrders.Queries.Export
-@using CleanArchitecture.Blazor.Application.Features.ShippingOrders.Queries.GetAll
-@using CleanArchitecture.Blazor.Application.Features.ShippingOrders.Queries.Pagination
-@using CleanArchitecture.Blazor.Application.Features.ShippingOrders.Commands.AddEdit
-@using CleanArchitecture.Blazor.Application.Features.Trucks.DTOs
-@using CleanArchitecture.Blazor.Application.Features.Trucks.Queries.GetAll
+@using CleanArchitecture.Blazor.Application.Features.Drivers.Commands.Delete
+@using CleanArchitecture.Blazor.Application.Features.Drivers.Commands.Import
+@using CleanArchitecture.Blazor.Application.Features.Drivers.DTOs
+@using CleanArchitecture.Blazor.Application.Features.Drivers.Queries.Export
+@using CleanArchitecture.Blazor.Application.Features.Drivers.Queries.Pagination
+@using CleanArchitecture.Blazor.Application.Features.Drivers.Commands.AddEdit
 
 @inject IJSRuntime JS
-@inject IStringLocalizer<ShippingOrders> L
+@inject IStringLocalizer<Drivers> L
 <PageTitle>@Title</PageTitle>
 <style>
     .mud-table-toolbar {
@@ -20,7 +17,7 @@
 </style>
 <ErrorBoundary>
     <ChildContent>
-        <MudTable ServerData="@(new Func<TableState, Task<TableData<ShippingOrderDto>>>(ServerReload))"
+        <MudTable ServerData="@(new Func<TableState, Task<TableData<DriverDto>>>(ServerReload))"
                   FixedHeader="true"
                   FixedFooter="true"
                   Height="calc(100vh - 265px)"
@@ -30,7 +27,7 @@
                   Hover="true" @ref="_table">
             <ToolBarContent>
                 <div class="justify-start pt-3">
-                    <MudText Typo="Typo.h6">@L["Shipping Orders"]</MudText>
+                    <MudText Typo="Typo.h6">@L["Drivers"]</MudText>
                     <MudHidden Breakpoint="Breakpoint.SmAndDown">
                         <MudButton DisableElevation Variant="Variant.Outlined"
                                    Size="Size.Small"
@@ -55,16 +52,6 @@
                                    Style="margin-right: 4px; margin-bottom:4px"
                                    OnClick="OnDeleteChecked"
                                    IconColor="Color.Surface">@L["Delete"]</MudButton>
-                        }
-                        @if (_canFinish)
-                        {
-                            <MudButton DisableElevation Variant="Variant.Outlined" Color="Color.Info"
-                                   StartIcon="@Icons.Material.Filled.Done"
-                                   Disabled="@(!(_selectedItems.Count>0))"
-                                   Size="Size.Small"
-                                   Style="margin-right: 4px; margin-bottom:4px"
-                                   OnClick="OnFinish"
-                                   IconColor="Color.Surface">@L["Finish"]</MudButton>
                         }
                         @if (_canImport)
                         {
@@ -119,10 +106,6 @@
                             {
                                 <MudMenuItem OnClick="OnDeleteChecked">@L["Delete"]</MudMenuItem>
                             }
-                            @if (_canFinish)
-                            {
-                                <MudMenuItem OnClick="OnFinish">@L["Finish"]</MudMenuItem>
-                            }
                             @if (_canImport)
                             {
                                 <InputFile id="importdataInput" OnChange="OnImportData" hidden accept=".xlsx" />
@@ -137,27 +120,21 @@
                     </MudHidden>
                 </div>
                 <MudSpacer />
-                <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Placeholder="@L["Search"]" Adornment="Adornment.Start"
+                <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Placeholder="Search" Adornment="Adornment.Start"
                               AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
             </ToolBarContent>
             <ColGroup>
                 <col style="width:50px;" />
                 <col style="width:80px" />
-                <col style="width:75px" />
-                <col style="width:40%" />
-                <col style="width:160px" />
+                <col style="width:300px" />
             </ColGroup>
             <HeaderContent>
                 <MudTh Style="width:80px">@L["Actions"]</MudTh>
-                <MudTh><MudTableSortLabel SortLabel="Status" T="ShippingOrderDto">@L["Status"]</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortLabel="PlateNumber" T="ShippingOrderDto">@L["Order No"]</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortLabel="StartingTime" T="ShippingOrderDto">@L["Starting Time"]</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortLabel="PlateNumber" T="ShippingOrderDto">@L["Plate Number"]</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortLabel="DriverName" T="ShippingOrderDto">@L["Driver"]</MudTableSortLabel></MudTh>
-                <MudTh Style="text-align:right"><MudTableSortLabel SortLabel="Freight" T="ShippingOrderDto">@L["Freight"]</MudTableSortLabel></MudTh>
-                <MudTh Style="text-align:right"><MudTableSortLabel SortLabel="Cost" T="ShippingOrderDto">@L["Cost"]</MudTableSortLabel></MudTh>
-                <MudTh Style="text-align:right"><MudTableSortLabel SortLabel="GrossMargin" T="ShippingOrderDto">@L["Gross Margin"]</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortLabel="Remark" T="ShippingOrderDto">@L["Remark"]</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="Name" T="DriverDto">@L["Driver Name"]</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="IdentityNo" T="DriverDto">@L["Identity No"]</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="BrithDay" T="DriverDto">@L["Brith Day"]</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="DrivingNo" T="DriverDto">@L["Driving No"]</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="Remark" T="DriverDto">@L["Remark"]</MudTableSortLabel></MudTh>
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel="@L["Actions"]">
@@ -186,24 +163,27 @@
                         </MudButton>
                     }
                 </MudTd>
-                <MudTd DataLabel="@L["Status"]">@context.Status</MudTd>
-                <MudTd DataLabel="@L["Order No"]">
-                    <MudText>@context.OrderNo</MudText>
-                    <MudText Typo="Typo.body2">@(new MarkupString(context.Description??""))</MudText>
-                </MudTd>
-                <MudTd DataLabel="@L["Starting Time"]">
-                    <MudText Typo="Typo.body2">发车时间: @context.StartingTime?.Date.ToShortDateString()</MudText>
-                    <MudText Typo="Typo.body2">返回时间: @context.FinishTime?.Date.ToShortDateString()</MudText>
-                </MudTd>
-                <MudTd DataLabel="@L["Plate Number"]">@context.PlateNumber</MudTd>
-                <MudTd DataLabel="@L["Driver"]">
-                    <MudText>@context.DriverName</MudText>
+
+                <MudTd DataLabel="@L["Driver Name"]">
+                    <MudText>@context.Name</MudText>
                     <MudText Typo="Typo.body2">@context.PhoneNumber</MudText>
                 </MudTd>
-                <MudTd Style="text-align:right" DataLabel="@L["Freight"]">@context.Freight</MudTd>
-                <MudTd Style="text-align:right" DataLabel="@L["Cost"]">@context.Cost</MudTd>
-                <MudTd Style="text-align:right" DataLabel="@L["Gross Margin"]">@context.GrossMargin</MudTd>
-                <MudTd DataLabel="@L["Remark"]">@context.Remark</MudTd>
+                <MudTd DataLabel="@L["Identity No"]">
+                    <MudText>@context.IdentityNo</MudText>
+                    <MudText Typo="Typo.body2">@context.Address</MudText>
+                </MudTd>
+                <MudTd DataLabel="@L["Brith Day"]">
+                    <MudText>@context.BrithDay</MudText>
+                    <MudText Typo="Typo.body2">@context.Age</MudText>
+                </MudTd>
+                <MudTd DataLabel="@L["Driving No"]">
+                    <MudText>@context.DrivingNo</MudText>
+                    <MudText Typo="Typo.body2">@context.DrivingType</MudText>
+                </MudTd>
+                <MudTd DataLabel="@L["Remark"]">
+                    <MudText>@context.PayPeriod</MudText>
+                    <MudText Typo="Typo.body2">@context.Remark</MudText>
+                </MudTd>
             </RowTemplate>
             <NoRecordsContent>
                 <MudText>@L["No matching records found"]</MudText>
@@ -222,8 +202,8 @@
 </ErrorBoundary>
 @code {
     public string? Title { get; private set; }
-    private HashSet<ShippingOrderDto> _selectedItems = new HashSet<ShippingOrderDto>();
-    private MudTable<ShippingOrderDto> _table = default!;
+    private HashSet<DriverDto> _selectedItems = new HashSet<DriverDto>();
+    private MudTable<DriverDto> _table = default!;
     private int _totalItems;
     private string _searchString = string.Empty;
     private bool _loading;
@@ -233,7 +213,7 @@
     private ISender _mediator { get; set; } = default!;
     [CascadingParameter]
     protected Task<AuthenticationState> AuthState { get; set; } = default!;
-    private IEnumerable<TruckDto> _trucks = new List<TruckDto>();
+
 
     private bool _canSearch;
     private bool _canCreate;
@@ -241,26 +221,22 @@
     private bool _canDelete;
     private bool _canImport;
     private bool _canExport;
-    private bool _canFinish;
     protected override async Task OnInitializedAsync()
     {
-        Title = L["Shipping Orders"];
+        Title = L["Drivers"];
         var state = await AuthState;
-        _canCreate = (await AuthService.AuthorizeAsync(state.User, Permissions.ShippingOrders.Create)).Succeeded;
-        _canSearch = (await AuthService.AuthorizeAsync(state.User, Permissions.ShippingOrders.Search)).Succeeded;
-        _canEdit = (await AuthService.AuthorizeAsync(state.User, Permissions.ShippingOrders.Edit)).Succeeded;
-        _canDelete = (await AuthService.AuthorizeAsync(state.User, Permissions.ShippingOrders.Delete)).Succeeded;
-        _canImport = (await AuthService.AuthorizeAsync(state.User, Permissions.ShippingOrders.Import)).Succeeded;
-        _canExport = (await AuthService.AuthorizeAsync(state.User, Permissions.ShippingOrders.Export)).Succeeded;
-        _canFinish = (await AuthService.AuthorizeAsync(state.User, Permissions.ShippingOrders.Finish)).Succeeded;
-        var cmd=new GetAllTrucksQuery();
-        _trucks = await _mediator.Send(cmd);
+        _canCreate = (await AuthService.AuthorizeAsync(state.User, Permissions.Drivers.Create)).Succeeded;
+        _canSearch = (await AuthService.AuthorizeAsync(state.User, Permissions.Drivers.Search)).Succeeded;
+        _canEdit = (await AuthService.AuthorizeAsync(state.User, Permissions.Drivers.Edit)).Succeeded;
+        _canDelete = (await AuthService.AuthorizeAsync(state.User, Permissions.Drivers.Delete)).Succeeded;
+        _canImport = (await AuthService.AuthorizeAsync(state.User, Permissions.Drivers.Import)).Succeeded;
+        _canExport = (await AuthService.AuthorizeAsync(state.User, Permissions.Drivers.Export)).Succeeded;
 
     }
-    private async Task<TableData<ShippingOrderDto>> ServerReload(TableState state)
+    private async Task<TableData<DriverDto>> ServerReload(TableState state)
     {
         _loading = true;
-        var request = new ShippingOrdersWithPaginationQuery()
+        var request = new DriversWithPaginationQuery()
             {
                 Keyword = _searchString,
                 OrderBy = string.IsNullOrEmpty(state.SortLabel) ? "Id" : state.SortLabel,
@@ -270,7 +246,7 @@
             };
         var result = await _mediator.Send(request);
         _loading = false;
-        return new TableData<ShippingOrderDto>() { TotalItems = result.TotalItems, Items = result.Items };
+        return new TableData<DriverDto>() { TotalItems = result.TotalItems, Items = result.Items };
 
     }
     private async Task OnSearch(string text)
@@ -280,27 +256,22 @@
     }
     private async Task OnRefresh()
     {
-        _selectedItems = new HashSet<ShippingOrderDto>();
+        _selectedItems = new HashSet<DriverDto>();
         _searchString = string.Empty;
         await _table.ReloadServerData();
     }
     private async Task OnCreate()
     {
-        var user = (await AuthState).User;
-        var command = new AddEditShippingOrderCommand()
+        var command = new AddEditDriverCommand()
             {
-                OrderNo=DateTime.Now.ToString("yyMMdd"),
-                Status = "派单",
-                StartingTime = DateTime.Now,
-                Dispatcher = user.GetDisplayName()
+                PayPeriod="月结"
             };
         var parameters = new DialogParameters
             {
-                { "trucks",_trucks},
-                { nameof(_ShippingOrderFormDialog.model),command },
+                { nameof(_DriverFormDialog.model),command },
             };
-        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Large, FullWidth = true };
-        var dialog = DialogService.Show<_ShippingOrderFormDialog>(L["Create a new shipping order"], parameters, options);
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
+        var dialog = DialogService.Show<_DriverFormDialog>(L["Create a new Driver"], parameters, options);
         var state = await dialog.Result;
         if (!state.Cancelled)
         {
@@ -309,37 +280,28 @@
             Snackbar.Add($"{L["Create successfully"]}", MudBlazor.Severity.Info);
         }
     }
-    private async Task OnEdit(ShippingOrderDto dto)
+    private async Task OnEdit(DriverDto dto)
     {
-        var orderdto = await _mediator.Send(new GetByIdShippingOrderQuery(dto.Id));
-        var command = new AddEditShippingOrderCommand()
+        var command = new AddEditDriverCommand()
             {
-                Id = orderdto.Id,
-                TruckId = orderdto.TruckId,
-                Dispatcher = orderdto.Dispatcher,
-                PlateNumber = orderdto.PlateNumber,
-                OrderNo = orderdto.OrderNo,
-                Description = orderdto.Description,
-                DriverName = orderdto.DriverName,
-                PhoneNumber = orderdto.PhoneNumber,
-                Status = orderdto.Status,
-                StartingTime = orderdto.StartingTime,
-                FinishTime = orderdto.FinishTime,
-                Freight = orderdto.Freight,
-                CashAdvance = orderdto.CashAdvance,
-                Cost = orderdto.Cost,
-                GrossMargin = orderdto.GrossMargin,
-                Remark = orderdto.Remark,
-                CostDetailDtos = orderdto.CostDetailDtos,
-                GoodsDetailDtos =  orderdto.GoodsDetailDtos
+                Id = dto.Id,
+                Name = dto.Name,
+                BrithDay = dto.BrithDay,
+                Age = dto.Age,
+                DrivingNo = dto.DrivingNo,
+                DrivingType = dto.DrivingNo,
+                IdentityNo = dto.IdentityNo,
+                PayPeriod = dto.PayPeriod,
+                PhoneNumber = dto.PhoneNumber,
+                Remark = dto.Remark,
+                Address = dto.Address,
             };
         var parameters = new DialogParameters
             {
-                { "trucks",_trucks},
-                { nameof(_ShippingOrderFormDialog.model),command },
+                { nameof(_DriverFormDialog.model),command },
             };
-        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Large, FullWidth = true };
-        var dialog = DialogService.Show<_ShippingOrderFormDialog>(L["Edit the shipping order"], parameters, options);
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
+        var dialog = DialogService.Show<_DriverFormDialog>(L["Edit the Driver"], parameters, options);
         var state = await dialog.Result;
         if (!state.Cancelled)
         {
@@ -349,19 +311,19 @@
         }
     }
 
-    private async Task OnDelete(ShippingOrderDto dto)
+    private async Task OnDelete(DriverDto dto)
     {
-        var deleteContent = L["You're sure you want to delete the order:{0}?"];
+        var deleteContent = L["You're sure you want to delete the Driver:{0}?"];
         var parameters = new DialogParameters
         {
-            { nameof(DeleteConfirmation.ContentText), string.Format(deleteContent, dto.PlateNumber) }
+            { nameof(DeleteConfirmation.ContentText), string.Format(deleteContent, dto.Name) }
         };
         var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true, DisableBackdropClick = true };
         var dialog = DialogService.Show<DeleteConfirmation>(L["Delete"], parameters, options);
         var state = await dialog.Result;
         if (!state.Cancelled)
         {
-            var command = new DeleteShippingOrderCommand(new int[] {dto.Id });
+            var command = new DeleteDriverCommand(new int[] { dto.Id });
             var result = await _mediator.Send(command);
             await _table.ReloadServerData();
             Snackbar.Add($"{L["Deleted successfully"]}", MudBlazor.Severity.Info);
@@ -380,17 +342,17 @@
         var state = await dialog.Result;
         if (!state.Cancelled)
         {
-            var command = new DeleteShippingOrderCommand(_selectedItems.Select(x => x.Id).ToArray());
+            var command = new DeleteDriverCommand(_selectedItems.Select(x => x.Id).ToArray());
             var result = await _mediator.Send(command);
             await _table.ReloadServerData();
             Snackbar.Add($"{L["Deleted successfully"]}", MudBlazor.Severity.Info);
-            _selectedItems = new HashSet<ShippingOrderDto>();
+            _selectedItems = new HashSet<DriverDto>();
         }
     }
     private async Task OnExport()
     {
         _downloading = true;
-        var request = new ExportShippingOrdersQuery()
+        var request = new ExportDriversQuery()
             {
                 Keyword = _searchString,
                 OrderBy = string.IsNullOrEmpty(_table.TableContext.SortFieldLabel) ? "Id" : _table.TableContext.SortFieldLabel,
@@ -398,7 +360,7 @@
             };
         var result = await _mediator.Send(request);
         using var streamRef = new DotNetStreamReference(new MemoryStream(result));
-        await JS.InvokeVoidAsync("downloadFileFromStream", $"{L["ShippingOrders"]}.xlsx", streamRef);
+        await JS.InvokeVoidAsync("downloadFileFromStream", $"{L["Drivers"]}.xlsx", streamRef);
         _downloading = false;
     }
     private async Task OnImportData(InputFileChangeEventArgs e)
@@ -406,7 +368,7 @@
         _uploading = true;
         var stream = new MemoryStream();
         await e.File.OpenReadStream().CopyToAsync(stream);
-        var command = new ImportShippingOrdersCommand(e.File.Name,stream.ToArray()) ;
+        var command = new ImportDriversCommand(e.File.Name, stream.ToArray());
         var result = await _mediator.Send(command);
         if (result.Succeeded)
         {
@@ -421,10 +383,5 @@
             }
         }
         _uploading = false;
-    }
-
-    private Task OnFinish()
-    {
-        return Task.CompletedTask;
     }
 }

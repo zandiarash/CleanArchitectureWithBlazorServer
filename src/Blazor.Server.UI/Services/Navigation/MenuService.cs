@@ -41,12 +41,16 @@ public class MenuService : IMenuService
                     IsParent = true,
                     MenuItems = new List<MenuSectionSubItemModel>
                     {
+                        new() {
+                             Title = "Drivers",
+                             Href = "/tms/drivers",
+                             PageStatus = PageStatus.Completed
+                        },
                         new(){
                              Title = "Trucks",
                              Href = "/tms/trucks",
                              PageStatus = PageStatus.Completed,
                         }
-
                     }
                 },
             }

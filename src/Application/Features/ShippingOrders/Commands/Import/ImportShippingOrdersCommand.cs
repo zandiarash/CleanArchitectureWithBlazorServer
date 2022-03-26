@@ -53,7 +53,7 @@ public class ImportShippingOrdersCommandHandler :
             { _localizer["Starting Time"], (row,item) => item.StartingTime = row.IsNull(_localizer["Starting Time"])?null:Convert.ToDateTime (row[_localizer["Starting Time"]]?.ToString()) },
             { _localizer["Finish Time"], (row,item) => item.FinishTime = row.IsNull(_localizer["Finish Time"])?null:Convert.ToDateTime (row[_localizer["Finish Time"]]?.ToString()) },
             { _localizer["Plate Number"], (row,item) => item.PlateNumber = row[_localizer["PlateNumber"]]?.ToString() },
-            { _localizer["Driver"], (row,item) => item.Driver = row[_localizer["Driver"]]?.ToString() },
+            { _localizer["Driver Name"], (row,item) => item.DriverName = row[_localizer["DriverName"]]?.ToString() },
             { _localizer["Phone Number"], (row,item) => item.PhoneNumber = row[_localizer["Phone Number"]]?.ToString() },
             { _localizer["Dispatcher"], (row,item) => item.Dispatcher = row[_localizer["Dispatcher"]]?.ToString() },
             { _localizer["Description"], (row,item) => item.Description = row[_localizer["Description"]]?.ToString() },

@@ -33,7 +33,7 @@ namespace CleanArchitecture.Blazor.Application.Features.Drivers.Queries.Paginati
         public async Task<PaginatedData<DriverDto>> Handle(DriversWithPaginationQuery request, CancellationToken cancellationToken)
         {
 
-           var data = await _context.Drivers
+           var data = await _context.Drivers.Where(x => x.Name.Contains(request.Keyword) || x.Address.Contains(request.Keyword) || x.PhoneNumber.Contains(request.Keyword))
                 .OrderBy($"{request.OrderBy} {request.SortDirection}")
                 .ProjectTo<DriverDto>(_mapper.ConfigurationProvider)
                 .PaginatedDataAsync(request.PageNumber, request.PageSize);

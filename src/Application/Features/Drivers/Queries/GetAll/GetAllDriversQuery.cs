@@ -32,7 +32,6 @@ namespace CleanArchitecture.Blazor.Application.Features.Drivers.Queries.GetAll;
 
         public async Task<IEnumerable<DriverDto>> Handle(GetAllDriversQuery request, CancellationToken cancellationToken)
         {
-    
             var data = await _context.Drivers.OrderBy(x=>x.Name)
                          .ProjectTo<DriverDto>(_mapper.ConfigurationProvider)
                          .ToListAsync(cancellationToken);
