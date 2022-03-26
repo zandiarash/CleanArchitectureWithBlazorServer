@@ -249,7 +249,7 @@
     private bool _canImport;
     private bool _canExport;
     private bool _canFinish;
-    private Hashids hashids = new Hashids("Blazor",8);
+    private Hashids  hashids = new Hashids("Blazor",8);
     protected override async Task OnInitializedAsync()
     {
         Title = L["Shipping Orders"];
@@ -294,11 +294,11 @@
     }
     private async Task OnCreate()
     {
-
+       
         var user = (await AuthState).User;
         var command = new AddEditShippingOrderCommand()
             {
-                OrderNo=hashids.Encode(8),
+                OrderNo=hashids.EncodeLong(DateTime.Now.Ticks),
                 Status = "派单",
                 StartingTime = DateTime.Now,
                 Dispatcher = user.GetDisplayName()

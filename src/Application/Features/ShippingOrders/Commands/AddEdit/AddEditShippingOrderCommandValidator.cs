@@ -9,7 +9,7 @@ public class AddEditShippingOrderCommandValidator : AbstractValidator<AddEditShi
     {
 
         RuleFor(v => v.OrderNo)
-            .Length(8)
+            .Length(12)
             .NotEmpty();
         RuleFor(v => v.StartingTime)
                  .NotEmpty();
