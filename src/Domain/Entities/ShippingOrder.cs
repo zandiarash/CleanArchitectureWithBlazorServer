@@ -14,7 +14,9 @@ public  class ShippingOrder:AuditableEntity
     public int TruckId { get; set; }
     public virtual Truck Truck { get; set; } = default!;
     public string? PlateNumber { get; set; }
-    public string? Driver { get; set; }
+    public int DriverId { get; set; }
+    public virtual Driver Driver { get; set; } = default!;
+    public string? DriverName { get; set; }
     public string? PhoneNumber { get; set; }
     public string? Dispatcher { get; set; }
     public string? Description { get; set; }

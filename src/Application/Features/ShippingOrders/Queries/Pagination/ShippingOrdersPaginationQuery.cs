@@ -35,7 +35,7 @@ public class ShippingOrdersWithPaginationQueryHandler :
 
         var data = await _context.ShippingOrders.Where(x => x.OrderNo.Contains(request.Keyword)
         || x.Description.Contains(request.Keyword) || x.Remark.Contains(request.Keyword)
-        || x.Driver.Contains(request.Keyword))
+        || x.DriverName.Contains(request.Keyword))
              .OrderBy($"{request.OrderBy} {request.SortDirection}")
              .ProjectTo<ShippingOrderDto>(_mapper.ConfigurationProvider)
              .PaginatedDataAsync(request.PageNumber, request.PageSize);

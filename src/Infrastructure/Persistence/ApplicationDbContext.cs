@@ -41,6 +41,7 @@ public class ApplicationDbContext : IdentityDbContext<
     public DbSet<ShippingOrder> ShippingOrders { get; set; }
     public DbSet<CostDetail> CostDetails { get; set; }
     public DbSet<GoodsDetail> GoodsDetails { get; set; }
+    public DbSet<Driver> Drivers { get; set; }
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
     {
         var userId = await _currentUserService.UserId();
@@ -176,9 +177,9 @@ public class ApplicationDbContext : IdentityDbContext<
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        if (!optionsBuilder.IsConfigured)
-        {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=BlazorDashboardDb;Trusted_Connection=True;MultipleActiveResultSets=true;");
-        }
+        //if (!optionsBuilder.IsConfigured)
+        //{
+        //    optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=BlazorDashboardDb;Trusted_Connection=True;MultipleActiveResultSets=true;");
+        //}
     }
 }

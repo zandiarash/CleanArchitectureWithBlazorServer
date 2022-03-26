@@ -130,5 +130,10 @@ public static class ApplicationDbContextSeed
             context.Trucks.Add(new Domain.Entities.Truck() { PlateNumber = "浙CMM9120", VehicleType = "两翼车", Status = "正常", Driver = "李兵", Owner = "杭州天天运输公司", PhoneNumber = "11262698750", Description = "江淮 帅铃Q8 绿巨人 154马力 5.2米排半仓栅式轻卡(HFC5141CCYP91K1C6V)" });
             await context.SaveChangesAsync();
         }
+        if (!context.Drivers.Any())
+        {
+            context.Drivers.Add(new Domain.Entities.Driver() {Name="王师傅", PhoneNumber="1396266500", BrithDay=new DateTime(1972,1,15),Age=(DateTime.Now.Year - 1972), Address="上海市闵行区", IdentityNo="1234567890", DrivingNo="1234567890" , DrivingType="A", PayPeriod="月结", Remark="系统默认" });
+            await context.SaveChangesAsync();
+        }
     }
 }

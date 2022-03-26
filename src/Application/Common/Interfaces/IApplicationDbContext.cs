@@ -17,6 +17,7 @@ public interface IApplicationDbContext
     DbSet<ShippingOrder> ShippingOrders { get; set; }
     DbSet<CostDetail> CostDetails { get; set; }
     DbSet<GoodsDetail> GoodsDetails { get; set; }
+    DbSet<Driver> Drivers { get; set; }
     ChangeTracker ChangeTracker { get; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }
