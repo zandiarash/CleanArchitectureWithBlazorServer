@@ -1,5 +1,7 @@
 @page "/pages/products"
 
+@using CleanArchitecture.Blazor.Application.Features.KeyValues.DTOs
+@using CleanArchitecture.Blazor.Application.Features.KeyValues.Queries.ByName
 @using CleanArchitecture.Blazor.Application.Features.Products.Commands.Delete
 @using CleanArchitecture.Blazor.Application.Features.Products.Commands.Import
 @using CleanArchitecture.Blazor.Application.Features.Products.DTOs
@@ -206,6 +208,8 @@
     private bool _canDelete;
     private bool _canImport;
     private bool _canExport;
+
+    private IList<KeyValueDto> _datasource=new List<KeyValueDto>();
     protected override async Task OnInitializedAsync()
     {
         Title = L["Products"];
@@ -217,6 +221,7 @@
         _canImport = (await AuthService.AuthorizeAsync(state.User, Permissions.Products.Import)).Succeeded;
         _canExport = (await AuthService.AuthorizeAsync(state.User, Permissions.Products.Export)).Succeeded;
 
+        _datasource = await _mediator.Send(new GetAllKeyValuesQuery());
     }
     private async Task<TableData<ProductDto>> ServerReload(TableState state)
     {
@@ -251,6 +256,7 @@
         var command = new AddEditProductCommand();
         var parameters = new DialogParameters
             {
+                { nameof(_ProductFormDialog.datasource),_datasource },
                 { nameof(_ProductFormDialog.model),command },
             };
         var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
@@ -277,6 +283,7 @@
             };
         var parameters = new DialogParameters
             {
+                { nameof(_ProductFormDialog.datasource),_datasource },
                 { nameof(_ProductFormDialog.model),command },
             };
         var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
@@ -302,7 +309,7 @@
         var state = await dialog.Result;
         if (!state.Cancelled)
         {
-            var command = new DeleteProductCommand(new int[] { dto.Id}) ;
+            var command = new DeleteProductCommand(new int[] { dto.Id });
             var result = await _mediator.Send(command);
             await _table.ReloadServerData();
             Snackbar.Add($"{L["Deleted successfully"]}", MudBlazor.Severity.Info);
@@ -348,7 +355,7 @@
         var stream = new MemoryStream();
         await e.File.OpenReadStream().CopyToAsync(stream);
         var command = new ImportProductsCommand(e.File.Name, stream.ToArray());
-      
+
         var result = await _mediator.Send(command);
         if (result.Succeeded)
         {

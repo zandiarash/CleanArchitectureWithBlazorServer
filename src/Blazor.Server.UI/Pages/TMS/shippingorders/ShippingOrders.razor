@@ -2,6 +2,8 @@
 
 @using CleanArchitecture.Blazor.Application.Features.Drivers.DTOs
 @using CleanArchitecture.Blazor.Application.Features.Drivers.Queries.GetAll
+@using CleanArchitecture.Blazor.Application.Features.KeyValues.DTOs
+@using CleanArchitecture.Blazor.Application.Features.KeyValues.Queries.ByName
 @using CleanArchitecture.Blazor.Application.Features.ShippingOrders.Commands.Delete
 @using CleanArchitecture.Blazor.Application.Features.ShippingOrders.Commands.Import
 @using CleanArchitecture.Blazor.Application.Features.ShippingOrders.DTOs
@@ -237,6 +239,7 @@
     protected Task<AuthenticationState> AuthState { get; set; } = default!;
     private IEnumerable<TruckDto> _trucks = new List<TruckDto>();
     private IEnumerable<DriverDto> _drivers=new List<DriverDto>();
+    private IList<KeyValueDto> _datasource=new List<KeyValueDto>();
 
     private bool _canSearch;
     private bool _canCreate;
@@ -258,7 +261,7 @@
         _canFinish = (await AuthService.AuthorizeAsync(state.User, Permissions.ShippingOrders.Finish)).Succeeded;
         _trucks = await _mediator.Send(new GetAllTrucksQuery());
         _drivers = await _mediator.Send(new GetAllDriversQuery());
-
+        _datasource = await _mediator.Send(new GetAllKeyValuesQuery());
     }
     private async Task<TableData<ShippingOrderDto>> ServerReload(TableState state)
     {

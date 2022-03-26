@@ -12,6 +12,8 @@ public class CostDetail: AuditableEntity
     public virtual ShippingOrder ShippingOrder { get; set; } = default!;
     public string? Name { get; set; }
     public decimal? Cost { get; set; }
+    public string? Paid { get; set; }
+    public string? Cash { get; set; }
     public string? Remark { get; set; }
     public string? Picture { get; set; }
 }

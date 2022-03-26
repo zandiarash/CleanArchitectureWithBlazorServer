@@ -94,6 +94,12 @@ public static class ApplicationDbContextSeed
             context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "VehicleStatus", Value = "正常", Text = "正常", Description = "车辆状态" });
             context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "VehicleStatus", Value = "维修", Text = "维修", Description = "车辆状态" });
 
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Cash", Value = "现金", Text = "现金", Description = "现金/预存款" });
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Cash", Value = "预存款", Text = "预存款", Description = "现金/预存款" });
+
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Paid", Value = "已付", Text = "已付", Description = "已付/未付" });
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Paid", Value = "未付", Text = "未付", Description = "已付/未付" });
+
             context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "ShippingOrderStatus", Value = "派单", Text = "派单", Description = "发运单状态" });
             context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "ShippingOrderStatus", Value = "发运", Text = "发运", Description = "发运单状态" });
             context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "ShippingOrderStatus", Value = "卸货完成", Text = "卸货完成", Description = "发运单状态" });

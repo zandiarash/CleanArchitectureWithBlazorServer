@@ -1,4 +1,5 @@
 @using CleanArchitecture.Blazor.Application.Features.Drivers.DTOs
+@using CleanArchitecture.Blazor.Application.Features.KeyValues.DTOs
 @using CleanArchitecture.Blazor.Application.Features.KeyValues.Queries.ByName
 @using CleanArchitecture.Blazor.Application.Features.ShippingOrders.Commands.AddEdit
 @using CleanArchitecture.Blazor.Application.Features.Trucks.DTOs
@@ -21,7 +22,8 @@
                     </MudTextField>
                 </MudItem>
                 <MudItem xs="12" sm="6">
-                    <DictionaryAutocomplete Dictionary="ShippingOrderStatus"
+                    <DictionaryAutocomplete  DataSource="datasource"
+                                             Dictionary="ShippingOrderStatus"
                                             Label="@L["Status"]"
                                             ReadOnly="true"
                                             For="@(() => model.Status)"
@@ -257,7 +259,7 @@
                                 </RowTemplate>
                                 <RowEditingTemplate>
                                     <MudTd DataLabel="Name">
-                                        <DictionaryAutocomplete Dictionary="CostName" @bind-Value="@context.Name" Required />
+                                        <DictionaryAutocomplete DataSource="datasource" Dictionary="CostName" @bind-Value="@context.Name" Required />
                                     </MudTd>
                                     <MudTd DataLabel="Cost">
                                         <MudNumericField @bind-Value="@context.Cost" Required />
@@ -295,6 +297,7 @@
     [EditorRequired][Parameter] public AddEditShippingOrderCommand model { get; set; } = default!;
     [EditorRequired][Parameter] public IEnumerable<TruckDto> trucks { get; set; } = default!;
     [EditorRequired][Parameter] public IEnumerable<DriverDto> drivers { get; set; } = default!;
+    [EditorRequired] [Parameter] public IList<KeyValueDto> datasource { get; set; } = default!;
     private bool _editing;
     async Task Submit()
     {

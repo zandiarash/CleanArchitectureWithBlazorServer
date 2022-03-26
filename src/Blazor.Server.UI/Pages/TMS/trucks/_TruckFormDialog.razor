@@ -1,3 +1,4 @@
+@using CleanArchitecture.Blazor.Application.Features.KeyValues.DTOs
 @using CleanArchitecture.Blazor.Application.Features.KeyValues.Queries.ByName
 @using CleanArchitecture.Blazor.Application.Features.Trucks.Commands.AddEdit
 @using SixLabors.ImageSharp
@@ -18,13 +19,13 @@
                     </MudTextField>
                 </MudItem>
                  <MudItem xs="12" sm="6">
-                    <DictionaryAutocomplete Dictionary="VehicleStatus"
+                    <DictionaryAutocomplete DataSource="datasource" Dictionary="VehicleStatus"
                                      Label="@L["Status"]"
                                      For="@(() => model.Status)"
                                      @bind-Value="model.Status"></DictionaryAutocomplete>
                 </MudItem>
                 <MudItem xs="12" sm="6">
-                    <DictionaryAutocomplete Dictionary="VehicleType"
+                    <DictionaryAutocomplete DataSource="datasource" Dictionary="VehicleType"
                                      Label="@L["Vehicle Type"]"
                                      For="@(() => model.VehicleType)"
                                      ResetValueOnEmptyText="true"
@@ -76,6 +77,7 @@
     MudDialogInstance MudDialog { get; set; } = default!;
     AddEditTruckCommandValidator modelValidator = new AddEditTruckCommandValidator();
     [EditorRequired] [Parameter] public AddEditTruckCommand model { get; set; } = default!;
+    [EditorRequired] [Parameter] public IList<KeyValueDto> datasource { get; set; } = default!;
     async Task Submit()
     {
         await form.Validate();

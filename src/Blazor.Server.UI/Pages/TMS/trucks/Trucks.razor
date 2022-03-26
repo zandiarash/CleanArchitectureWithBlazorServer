@@ -1,5 +1,7 @@
 @page "/tms/trucks"
 
+@using CleanArchitecture.Blazor.Application.Features.KeyValues.DTOs
+@using CleanArchitecture.Blazor.Application.Features.KeyValues.Queries.ByName
 @using CleanArchitecture.Blazor.Application.Features.Trucks.Commands.Delete
 @using CleanArchitecture.Blazor.Application.Features.Trucks.Commands.Import
 @using CleanArchitecture.Blazor.Application.Features.Trucks.DTOs
@@ -207,7 +209,7 @@
     private ISender _mediator { get; set; } = default!;
     [CascadingParameter]
     protected Task<AuthenticationState> AuthState { get; set; } = default!;
-
+    private IList<KeyValueDto> _datasource=new List<KeyValueDto>();
 
     private bool _canSearch;
     private bool _canCreate;
@@ -225,7 +227,7 @@
         _canDelete = (await AuthService.AuthorizeAsync(state.User, Permissions.Trucks.Delete)).Succeeded;
         _canImport = (await AuthService.AuthorizeAsync(state.User, Permissions.Trucks.Import)).Succeeded;
         _canExport = (await AuthService.AuthorizeAsync(state.User, Permissions.Trucks.Export)).Succeeded;
-
+        _datasource = await _mediator.Send(new GetAllKeyValuesQuery());
     }
     private async Task<TableData<TruckDto>> ServerReload(TableState state)
     {
@@ -262,6 +264,7 @@
         };
         var parameters = new DialogParameters
             {
+                { nameof(_TruckFormDialog.datasource), _datasource },
                 { nameof(_TruckFormDialog.model),command },
             };
         var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
@@ -291,6 +294,7 @@
             };
         var parameters = new DialogParameters
             {
+                { nameof(_TruckFormDialog.datasource), _datasource },
                 { nameof(_TruckFormDialog.model),command },
             };
         var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
