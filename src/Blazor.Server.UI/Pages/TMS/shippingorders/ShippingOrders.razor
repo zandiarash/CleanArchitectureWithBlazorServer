@@ -13,6 +13,7 @@
 @using CleanArchitecture.Blazor.Application.Features.ShippingOrders.Commands.AddEdit
 @using CleanArchitecture.Blazor.Application.Features.Trucks.DTOs
 @using CleanArchitecture.Blazor.Application.Features.Trucks.Queries.GetAll
+@using HashidsNet
 
 @inject IJSRuntime JS
 @inject IStringLocalizer<ShippingOrders> L
@@ -248,6 +249,7 @@
     private bool _canImport;
     private bool _canExport;
     private bool _canFinish;
+    private Hashids hashids = new Hashids("Blazor",8);
     protected override async Task OnInitializedAsync()
     {
         Title = L["Shipping Orders"];
@@ -292,10 +294,11 @@
     }
     private async Task OnCreate()
     {
+
         var user = (await AuthState).User;
         var command = new AddEditShippingOrderCommand()
             {
-                OrderNo=DateTime.Now.ToString("yyMMdd"),
+                OrderNo=hashids.Encode(8),
                 Status = "派单",
                 StartingTime = DateTime.Now,
                 Dispatcher = user.GetDisplayName()
@@ -304,6 +307,7 @@
             {
                 { nameof(_ShippingOrderFormDialog.trucks),_trucks},
                 { nameof(_ShippingOrderFormDialog.drivers),_drivers},
+                { nameof(_ShippingOrderFormDialog.datasource),_datasource},
                 { nameof(_ShippingOrderFormDialog.model),command },
             };
         var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Large, FullWidth = true };
@@ -344,6 +348,7 @@
             {
                 { nameof(_ShippingOrderFormDialog.trucks),_trucks},
                 { nameof(_ShippingOrderFormDialog.drivers),_drivers},
+                { nameof(_ShippingOrderFormDialog.datasource),_datasource},
                 { nameof(_ShippingOrderFormDialog.model),command },
             };
         var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Large, FullWidth = true };
