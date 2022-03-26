@@ -141,6 +141,9 @@
   <data name="Dictionaries" xml:space="preserve">
     <value>Dictionaries</value>
   </data>
+  <data name="Drivers" xml:space="preserve">
+    <value>Drivers</value>
+  </data>
   <data name="E-Commerce" xml:space="preserve">
     <value>E-Commerce</value>
   </data>

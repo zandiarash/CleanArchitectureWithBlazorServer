@@ -1,3 +1,4 @@
+@using CleanArchitecture.Blazor.Application.Features.Drivers.DTOs
 @using CleanArchitecture.Blazor.Application.Features.KeyValues.Queries.ByName
 @using CleanArchitecture.Blazor.Application.Features.ShippingOrders.Commands.AddEdit
 @using CleanArchitecture.Blazor.Application.Features.Trucks.DTOs
@@ -41,13 +42,27 @@
                     </MudSelect>
                 </MudItem>
                 <MudItem xs="12" sm="4">
-                    <MudTextField Label="@L["Driver Name"]" @bind-Value="model.DriverName"
-                                  For="@(() => model.DriverName)">
-                    </MudTextField>
+                    <MudSelect T="string" Label="@L["Driver Name"]"
+                               For="@(() => model.DriverName)"
+                               Value="model.DriverName"
+                               Required="true"
+                               RequiredError="@L["Driver name is required!"]"
+                               ValueChanged="DriverName_Changed">
+                        @foreach (var driver in drivers)
+                        {
+                            <MudSelectItem Value="@driver.Name">
+                                <MudText>@driver.Name</MudText>
+                               <MudText Typo="Typo.body2">@driver.PhoneNumber</MudText>
+                            </MudSelectItem>
+                        }
+
+                    </MudSelect>
                 </MudItem>
                 <MudItem xs="12" sm="4">
                     <MudTextField Label="@L["Phone Number"]" @bind-Value="model.PhoneNumber"
-                                  For="@(() => model.PhoneNumber)">
+                                  For="@(() => model.PhoneNumber)"
+                                  Required="true"
+                                  RequiredError="@L["Driver name is required!"]" >
                     </MudTextField>
                 </MudItem>
                 <MudItem xs="12" sm="4">
@@ -279,7 +294,7 @@
     AddEditShippingOrderCommandValidator modelValidator = new AddEditShippingOrderCommandValidator();
     [EditorRequired][Parameter] public AddEditShippingOrderCommand model { get; set; } = default!;
     [EditorRequired][Parameter] public IEnumerable<TruckDto> trucks { get; set; } = default!;
-
+    [EditorRequired][Parameter] public IEnumerable<DriverDto> drivers { get; set; } = default!;
     private bool _editing;
     async Task Submit()
     {
@@ -296,11 +311,18 @@
         var truck = trucks.First(x => x.PlateNumber == value);
         model.TruckId = truck.Id;
         model.PlateNumber = truck.PlateNumber;
-        model.DriverName = truck.Driver;
-        model.PhoneNumber = truck.PhoneNumber;
-        StateHasChanged();
+        //model.DriverName = truck.Driver;
+        //model.PhoneNumber = truck.PhoneNumber;
+        //StateHasChanged();
     }
-
+    private void DriverName_Changed(string value)
+    {
+        var driver = drivers.First(x => x.Name == value);
+        model.DriverId = driver.Id;
+        model.DriverName = driver.Name;
+        model.PhoneNumber = driver.PhoneNumber;
+        //StateHasChanged();
+    }
     private async Task AddGoods()
     {
         await form.Validate();

@@ -10,9 +10,6 @@ namespace CleanArchitecture.Blazor.Application.Features.Drivers.Commands.Create;
         RuleFor(v => v.Name)
            .MaximumLength(256)
            .NotEmpty();
-        RuleFor(v => v.Address)
-                .MaximumLength(256)
-                .NotEmpty();
         RuleFor(v => v.PhoneNumber)
                 .MaximumLength(256)
                 .NotEmpty();

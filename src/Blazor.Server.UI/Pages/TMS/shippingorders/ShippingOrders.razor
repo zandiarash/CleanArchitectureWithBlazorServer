@@ -1,5 +1,7 @@
 @page "/tms/shippingorders"
 
+@using CleanArchitecture.Blazor.Application.Features.Drivers.DTOs
+@using CleanArchitecture.Blazor.Application.Features.Drivers.Queries.GetAll
 @using CleanArchitecture.Blazor.Application.Features.ShippingOrders.Commands.Delete
 @using CleanArchitecture.Blazor.Application.Features.ShippingOrders.Commands.Import
 @using CleanArchitecture.Blazor.Application.Features.ShippingOrders.DTOs
@@ -234,6 +236,7 @@
     [CascadingParameter]
     protected Task<AuthenticationState> AuthState { get; set; } = default!;
     private IEnumerable<TruckDto> _trucks = new List<TruckDto>();
+    private IEnumerable<DriverDto> _drivers=new List<DriverDto>();
 
     private bool _canSearch;
     private bool _canCreate;
@@ -253,8 +256,8 @@
         _canImport = (await AuthService.AuthorizeAsync(state.User, Permissions.ShippingOrders.Import)).Succeeded;
         _canExport = (await AuthService.AuthorizeAsync(state.User, Permissions.ShippingOrders.Export)).Succeeded;
         _canFinish = (await AuthService.AuthorizeAsync(state.User, Permissions.ShippingOrders.Finish)).Succeeded;
-        var cmd=new GetAllTrucksQuery();
-        _trucks = await _mediator.Send(cmd);
+        _trucks = await _mediator.Send(new GetAllTrucksQuery());
+        _drivers = await _mediator.Send(new GetAllDriversQuery());
 
     }
     private async Task<TableData<ShippingOrderDto>> ServerReload(TableState state)
@@ -296,7 +299,8 @@
             };
         var parameters = new DialogParameters
             {
-                { "trucks",_trucks},
+                { nameof(_ShippingOrderFormDialog.trucks),_trucks},
+                { nameof(_ShippingOrderFormDialog.drivers),_drivers},
                 { nameof(_ShippingOrderFormDialog.model),command },
             };
         var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Large, FullWidth = true };
@@ -335,7 +339,8 @@
             };
         var parameters = new DialogParameters
             {
-                { "trucks",_trucks},
+                { nameof(_ShippingOrderFormDialog.trucks),_trucks},
+                { nameof(_ShippingOrderFormDialog.drivers),_drivers},
                 { nameof(_ShippingOrderFormDialog.model),command },
             };
         var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Large, FullWidth = true };

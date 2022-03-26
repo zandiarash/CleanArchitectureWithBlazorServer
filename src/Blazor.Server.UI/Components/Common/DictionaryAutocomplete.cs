@@ -2,7 +2,6 @@ using CleanArchitecture.Blazor.Application.Features.KeyValues.DTOs;
 using CleanArchitecture.Blazor.Application.Features.KeyValues.Queries.ByName;
 using MediatR;
 using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.Localization;
 using MudBlazor;
 
 namespace Blazor.Server.UI.Components.Common;

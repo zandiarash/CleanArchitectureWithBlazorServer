@@ -8,11 +8,8 @@ public class AddEditDriverCommandValidator : AbstractValidator<AddEditDriverComm
     public AddEditDriverCommandValidator()
     {
         RuleFor(v => v.Name)
-          .MaximumLength(256)
-          .NotEmpty();
-        RuleFor(v => v.Address)
-                .MaximumLength(256)
-                .NotEmpty();
+                   .MaximumLength(256)
+                   .NotEmpty();
         RuleFor(v => v.PhoneNumber)
                 .MaximumLength(256)
                 .NotEmpty();
@@ -22,12 +19,12 @@ public class AddEditDriverCommandValidator : AbstractValidator<AddEditDriverComm
         RuleFor(v => v.BrithDay)
                .LessThan(DateTime.Now);
     }
-     public Func<object, string, Task<IEnumerable<string>>> ValidateValue => async (model, propertyName) =>
-     {
+    public Func<object, string, Task<IEnumerable<string>>> ValidateValue => async (model, propertyName) =>
+    {
         var result = await ValidateAsync(ValidationContext<AddEditDriverCommand>.CreateWithOptions((AddEditDriverCommand)model, x => x.IncludeProperties(propertyName)));
         if (result.IsValid)
             return Array.Empty<string>();
         return result.Errors.Select(e => e.ErrorMessage);
-     };
+    };
 }
 

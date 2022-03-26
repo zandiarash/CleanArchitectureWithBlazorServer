@@ -36,8 +36,8 @@ public class KeyValuesQueryByNameHandler : IRequestHandler<KeyValuesQueryByName,
     {
         var data = await _context.KeyValues.Where(x => x.Name == request.Name)
             .OrderBy(x=>x.Text)
-           .ProjectTo<KeyValueDto>(_mapper.ConfigurationProvider)
-           .ToListAsync(cancellationToken);
+            .ProjectTo<KeyValueDto>(_mapper.ConfigurationProvider)
+            .ToListAsync(cancellationToken);
         return data;
     }
 }

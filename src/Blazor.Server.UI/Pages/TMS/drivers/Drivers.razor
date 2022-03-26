@@ -132,7 +132,7 @@
                 <MudTh Style="width:80px">@L["Actions"]</MudTh>
                 <MudTh><MudTableSortLabel SortLabel="Name" T="DriverDto">@L["Driver Name"]</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="IdentityNo" T="DriverDto">@L["Identity No"]</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortLabel="BrithDay" T="DriverDto">@L["Brith Day"]</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="Age" T="DriverDto">@L["Age"]</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="DrivingNo" T="DriverDto">@L["Driving No"]</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="Remark" T="DriverDto">@L["Remark"]</MudTableSortLabel></MudTh>
             </HeaderContent>
@@ -172,9 +172,9 @@
                     <MudText>@context.IdentityNo</MudText>
                     <MudText Typo="Typo.body2">@context.Address</MudText>
                 </MudTd>
-                <MudTd DataLabel="@L["Brith Day"]">
-                    <MudText>@context.BrithDay</MudText>
-                    <MudText Typo="Typo.body2">@context.Age</MudText>
+                <MudTd DataLabel="@L["Age"]">
+                    <MudText>@context.Age</MudText>
+                    <MudText Typo="Typo.body2">@context.BrithDay?.ToShortDateString()</MudText>
                 </MudTd>
                 <MudTd DataLabel="@L["Driving No"]">
                     <MudText>@context.DrivingNo</MudText>
@@ -189,7 +189,7 @@
                 <MudText>@L["No matching records found"]</MudText>
             </NoRecordsContent>
             <LoadingContent>
-                <MudText>@L["Loading.."].</MudText>
+                <MudText>@L["Loading..."]</MudText>
             </LoadingContent>
             <PagerContent>
                 <MudTablePager />
@@ -289,7 +289,7 @@
                 BrithDay = dto.BrithDay,
                 Age = dto.Age,
                 DrivingNo = dto.DrivingNo,
-                DrivingType = dto.DrivingNo,
+                DrivingType = dto.DrivingType,
                 IdentityNo = dto.IdentityNo,
                 PayPeriod = dto.PayPeriod,
                 PhoneNumber = dto.PhoneNumber,

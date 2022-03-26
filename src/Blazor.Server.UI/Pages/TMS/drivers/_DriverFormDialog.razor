@@ -25,7 +25,7 @@
                     </MudTextField>
                 </MudItem>
                 <MudItem xs="12" sm="6">
-                    <MudTextField Label="@L["IdentityNo"]" @bind-Value="model.IdentityNo"
+                    <MudTextField Label="@L["Identity No"]" @bind-Value="model.IdentityNo"
                                   For="@(() => model.IdentityNo)"
                                   >
                     </MudTextField>
@@ -37,8 +37,9 @@
                     </MudTextField>
                 </MudItem>
                 <MudItem xs="12" sm="6">
-                    <MudDatePicker Label="@L["BrithDay"]" @bind-Value="model.BrithDay"
+                    <MudDatePicker Label="@L["Brithday"]" Date="model.BrithDay"
                                    For="@(() => model.BrithDay)"
+                                   DateChanged="@((s)=>ChangedDate(s))"
                                   >
                     </MudDatePicker>
                 </MudItem>
@@ -58,7 +59,10 @@
                     <DictionaryAutocomplete Dictionary="DrivingType"
                                      Label="@L["Driving Type"]"
                                      For="@(() => model.DrivingType)"
-                                     @bind-Value="model.DrivingType"></DictionaryAutocomplete>
+                                     @bind-Value="model.DrivingType"
+                                     Required="true"
+                                     RequiredError="@L["Driving type is required!"]"
+                    ></DictionaryAutocomplete>
                 </MudItem>
                 <MudItem xs="12" sm="6">
                     <DictionaryAutocomplete Dictionary="PayPeriod"
@@ -76,7 +80,7 @@
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">@L["Cancle"]</MudButton>
-        <MudButton Color="MudBlazor.Color.Primary" OnClick="Submit">@L["Ok"]</MudButton>
+        <MudButton Color="MudBlazor.Color.Primary" OnClick="Submit">@L["OK"]</MudButton>
     </DialogActions>
 </MudDialog>
 
@@ -94,6 +98,20 @@
             MudDialog.Close(DialogResult.Ok(true));
         }
 
+    }
+    void ChangedDate(DateTime? dt)
+    {
+        if (dt is not null)
+        {
+            var age = DateTime.Now.Year - dt.Value.Year;
+            model.BrithDay = dt;
+            model.Age = age;
+        }
+        else
+        {
+            model.BrithDay = null;
+            model.Age = null;
+        }
     }
     void Cancel() => MudDialog.Cancel();
 }
