@@ -26,7 +26,7 @@ public class IdentityAuthenticationService : AuthenticationStateProvider, IAuthe
     }
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {
-        var principal = new ClaimsPrincipal();
+        var principal = new ClaimsPrincipal(new ClaimsIdentity());
         try
         {
             var storedClaimsIdentity = await _protectedLocalStorage.GetAsync<string>(CLAIMSIDENTITY);
