@@ -10,7 +10,7 @@ public class IdentityAuthenticationService : AuthenticationStateProvider, IAuthe
     private readonly ProtectedLocalStorage _protectedLocalStorage;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<ApplicationRole> _roleManager;
-    private const string KEY = "Identity";
+    private const string KEY = "Basic";
     private const string USERID = "UserId";
     private const string USERNAME = "UserName";
     private const string CLAIMSIDENTITY = "ClaimsIdentity";
