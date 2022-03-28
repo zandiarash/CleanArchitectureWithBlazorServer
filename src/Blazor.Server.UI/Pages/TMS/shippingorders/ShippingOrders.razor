@@ -39,6 +39,7 @@
                     <MudHidden Breakpoint="Breakpoint.SmAndDown">
                         <MudButton DisableElevation Variant="Variant.Outlined"
                                    Size="Size.Small"
+                                   Disabled="@_loading"
                                    OnClick="@(()=>OnRefresh())"
                                    StartIcon="@Icons.Material.Filled.Refresh" IconColor="Color.Surface" Color="Color.Primary"
                                    Style="margin-right: 4px; margin-bottom:4px">@L["Refresh"]</MudButton>
@@ -115,7 +116,7 @@
                     </MudHidden>
                     <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
                         <MudMenu AnchorOrigin="Origin.BottomLeft" StartIcon="@Icons.Filled.KeyboardCommandKey" EndIcon="@Icons.Filled.KeyboardArrowDown" Label="@L["Actions"]" Color="Color.Primary" Variant="Variant.Filled">
-                            <MudMenuItem OnClick="@(()=>OnRefresh())">@L["Refresh"]</MudMenuItem>
+                            <MudMenuItem Disabled="@_loading" OnClick="@(()=>OnRefresh())">@L["Refresh"]</MudMenuItem>
                             @if (_canCreate)
                             {
                                 <MudMenuItem OnClick="OnCreate">@L["Create"]</MudMenuItem>
@@ -239,8 +240,8 @@
     [CascadingParameter]
     protected Task<AuthenticationState> AuthState { get; set; } = default!;
     private IEnumerable<TruckDto> _trucks = new List<TruckDto>();
-    private IEnumerable<DriverDto> _drivers=new List<DriverDto>();
-    private IList<KeyValueDto> _datasource=new List<KeyValueDto>();
+    private IEnumerable<DriverDto> _drivers = new List<DriverDto>();
+    private IList<KeyValueDto> _datasource = new List<KeyValueDto>();
 
     private bool _canSearch;
     private bool _canCreate;
@@ -249,7 +250,7 @@
     private bool _canImport;
     private bool _canExport;
     private bool _canFinish;
-    private Hashids  hashids = new Hashids("Blazor",8);
+    private Hashids hashids = new Hashids("Blazor", 8);
     protected override async Task OnInitializedAsync()
     {
         Title = L["Shipping Orders"];
@@ -267,19 +268,24 @@
     }
     private async Task<TableData<ShippingOrderDto>> ServerReload(TableState state)
     {
-        _loading = true;
-        var request = new ShippingOrdersWithPaginationQuery()
-            {
-                Keyword = _searchString,
-                OrderBy = string.IsNullOrEmpty(state.SortLabel) ? "Id" : state.SortLabel,
-                SortDirection = (state.SortDirection == SortDirection.None ? SortDirection.Descending.ToString() : state.SortDirection.ToString()),
-                PageNumber = state.Page + 1,
-                PageSize = state.PageSize
-            };
-        var result = await _mediator.Send(request);
-        _loading = false;
-        return new TableData<ShippingOrderDto>() { TotalItems = result.TotalItems, Items = result.Items };
-
+        try
+        {
+            _loading = true;
+            var request = new ShippingOrdersWithPaginationQuery()
+                {
+                    Keyword = _searchString,
+                    OrderBy = string.IsNullOrEmpty(state.SortLabel) ? "Id" : state.SortLabel,
+                    SortDirection = (state.SortDirection == SortDirection.None ? SortDirection.Descending.ToString() : state.SortDirection.ToString()),
+                    PageNumber = state.Page + 1,
+                    PageSize = state.PageSize
+                };
+            var result = await _mediator.Send(request);
+            return new TableData<ShippingOrderDto>() { TotalItems = result.TotalItems, Items = result.Items };
+        }
+        finally
+        {
+            _loading = false;
+        }
     }
     private async Task OnSearch(string text)
     {
@@ -294,11 +300,11 @@
     }
     private async Task OnCreate()
     {
-       
+
         var user = (await AuthState).User;
         var command = new AddEditShippingOrderCommand()
             {
-                OrderNo=hashids.EncodeLong(DateTime.Now.Ticks),
+                OrderNo = hashids.EncodeLong(DateTime.Now.Ticks),
                 Status = "派单",
                 StartingTime = DateTime.Now,
                 Dispatcher = user.GetDisplayName()
@@ -342,7 +348,7 @@
                 GrossMargin = orderdto.GrossMargin,
                 Remark = orderdto.Remark,
                 CostDetailDtos = orderdto.CostDetailDtos,
-                GoodsDetailDtos =  orderdto.GoodsDetailDtos
+                GoodsDetailDtos = orderdto.GoodsDetailDtos
             };
         var parameters = new DialogParameters
             {
@@ -374,7 +380,7 @@
         var state = await dialog.Result;
         if (!state.Cancelled)
         {
-            var command = new DeleteShippingOrderCommand(new int[] {dto.Id });
+            var command = new DeleteShippingOrderCommand(new int[] { dto.Id });
             var result = await _mediator.Send(command);
             await _table.ReloadServerData();
             Snackbar.Add($"{L["Deleted successfully"]}", MudBlazor.Severity.Info);
@@ -419,7 +425,7 @@
         _uploading = true;
         var stream = new MemoryStream();
         await e.File.OpenReadStream().CopyToAsync(stream);
-        var command = new ImportShippingOrdersCommand(e.File.Name,stream.ToArray()) ;
+        var command = new ImportShippingOrdersCommand(e.File.Name, stream.ToArray());
         var result = await _mediator.Send(command);
         if (result.Succeeded)
         {
@@ -440,4 +446,4 @@
     {
         return Task.CompletedTask;
     }
-}
+    }

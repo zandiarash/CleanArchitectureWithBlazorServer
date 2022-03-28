@@ -19,7 +19,7 @@ public static class DependencyInjection
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseInMemoryDatabase("BlazorDashboardDb")
-               );
+                );
         }
         else
         {
@@ -27,7 +27,7 @@ public static class DependencyInjection
                 options.UseSqlServer(
                     configuration.GetConnectionString("DefaultConnection"),
                     b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName))
-               );
+                ,ServiceLifetime.Transient, ServiceLifetime.Transient);
             services.AddDatabaseDeveloperPageExceptionFilter();
         }
 
