@@ -8,7 +8,8 @@
 @inject IStringLocalizer<Trucks> L
 <MudDialog>
     <DialogContent>
-        <MudForm Model="model" @ref="form" Validation="@(modelValidator.ValidateValue)">
+        <MudContainer Style="max-height:450px; overflow-y: scroll">
+             <MudForm Model="model" @ref="form" Validation="@(modelValidator.ValidateValue)">
             <MudGrid>
                 <MudItem xs="12" sm="6">
                     <MudTextField Label="@L["Plate Number"]" @bind-Value="model.PlateNumber"
@@ -64,6 +65,8 @@
                 </MudItem>
             </MudGrid>
         </MudForm>
+        </MudContainer>
+       
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">@L["Cancle"]</MudButton>

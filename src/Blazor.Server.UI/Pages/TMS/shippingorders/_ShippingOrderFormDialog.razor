@@ -11,7 +11,8 @@
 @inject IStringLocalizer<ShippingOrders> L
 <MudDialog>
     <DialogContent>
-        <MudForm Model="model" @ref="form" Validation="@(modelValidator.ValidateValue)">
+        <MudContainer Style="max-height:840px; overflow-y: scroll">
+             <MudForm Model="model" @ref="form" Validation="@(modelValidator.ValidateValue)">
             <MudGrid>
                 <MudItem xs="12" sm="6">
                     <MudTextField Label="@L["Order No"]" @bind-Value="model.OrderNo"
@@ -277,6 +278,8 @@
                 </MudItem>
             </MudGrid>
         </MudForm>
+        </MudContainer>
+       
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">@L["Cancle"]</MudButton>
