@@ -35,6 +35,7 @@ using CleanArchitecture.Blazor.Infrastructure.Extensions;
 using Blazor.Server.UI.Components.Common;
 using Blazor.Server.UI.Components.Dialogs;
 using CleanArchitecture.Blazor.Infrastructure.Hubs;
+using CleanArchitecture.Blazor.Application.Common.Interfaces.Identity;
 
 namespace Blazor.Server.UI.Shared;
 
@@ -46,6 +47,8 @@ public partial class UserLoginState : IAsyncDisposable
     private NavigationManager _navigationManager { get; set; } = default!;
     [Inject]
     private AuthenticationStateProvider _authenticationStateProvider { get; set; } = default!;
+
+    private IIdentityService _identityService { get; set; }=default!;
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
@@ -56,7 +59,7 @@ public partial class UserLoginState : IAsyncDisposable
         var state = await _authState;
         if (state.User.Identity is not null)
         {
-            await Service.UpdateLiveStatus(state.User.GetUserId(), false);
+            await _identityService.UpdateLiveStatus(state.User.GetUserId(), false);
         }
         if (_client is not null)
         {
@@ -72,6 +75,7 @@ public partial class UserLoginState : IAsyncDisposable
     private HubClient? _client = null;
     protected override async Task OnInitializedAsync()
     {
+        _identityService = ScopedServices.GetRequiredService<IIdentityService>();
         var state = await _authState;
         if (state.User.Identity != null && state.User.Identity.IsAuthenticated)
         {
@@ -80,13 +84,13 @@ public partial class UserLoginState : IAsyncDisposable
             _client.LoggedOut += _client_LoggedOut;
             _client.LoggedIn += _client_LoggedIn;
             await _client.StartAsync();
-            await Service.UpdateLiveStatus(state.User.GetUserId(), true);
+            await _identityService.UpdateLiveStatus(state.User.GetUserId(), true);
         }
         _authenticationStateProvider.AuthenticationStateChanged += _authenticationStateProvider_AuthenticationStateChanged;
     }
     private void _authenticationStateProvider_AuthenticationStateChanged(Task<AuthenticationState> authenticationState)
     {
-        Task.Run(async () =>
+        InvokeAsync(async () =>
         {
             var state = await authenticationState;
             if (state.User.Identity != null && state.User.Identity.IsAuthenticated)
@@ -101,7 +105,7 @@ public partial class UserLoginState : IAsyncDisposable
                 _client.LoggedOut += _client_LoggedOut;
                 _client.LoggedIn += _client_LoggedIn;
                 await _client.StartAsync();
-                await Service.UpdateLiveStatus(state.User.GetUserId(), true);
+                await _identityService.UpdateLiveStatus(state.User.GetUserId(), true);
 
             }
         });
@@ -110,7 +114,7 @@ public partial class UserLoginState : IAsyncDisposable
     {
         InvokeAsync(async () =>
         {
-            var username = await Service.GetUserNameAsync(e);
+            var username = await _identityService.GetUserNameAsync(e);
             Snackbar.Add($"{username} login.", MudBlazor.Severity.Info);
             StateHasChanged();
         });
@@ -120,7 +124,7 @@ public partial class UserLoginState : IAsyncDisposable
     {
         InvokeAsync(async () =>
         {
-            var username = await Service.GetUserNameAsync(e);
+            var username = await _identityService.GetUserNameAsync(e);
             Snackbar.Add($"{username} logout.", MudBlazor.Severity.Normal);
             StateHasChanged();
         });
