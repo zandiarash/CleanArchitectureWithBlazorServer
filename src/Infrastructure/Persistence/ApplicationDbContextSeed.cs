@@ -78,6 +78,12 @@ public static class ApplicationDbContextSeed
         }
         if (!context.KeyValues.Any())
         {
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Unit", Value = "EA", Text = "EA", Description = "Unit of product" });
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Unit", Value = "KM", Text = "KM", Description = "Unit of product" });
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Unit", Value = "PC", Text = "PC", Description = "Unit of product" });
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Unit", Value = "KG", Text = "KG", Description = "Unit of product" });
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Unit", Value = "ST", Text = "ST", Description = "Unit of product" });
+
             context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "VehicleType", Value = "厢式货车", Text = "厢式货车", Description = "车辆类型" });
             context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "VehicleType", Value = "平板式货车", Text = "平板式货车", Description = "车辆类型" });
             context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "VehicleType", Value = "自卸车", Text = "自卸车", Description = "车辆类型" });
