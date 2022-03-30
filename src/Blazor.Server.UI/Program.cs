@@ -80,7 +80,8 @@ using (var scope = app.Services.CreateScope())
 
     try
     {
-        var context = services.GetRequiredService<ApplicationDbContext>();
+        var dbfactory = services.GetRequiredService<IDbContextFactory<ApplicationDbContext>>();
+        var context =await dbfactory.CreateDbContextAsync();
 
         if (context.Database.IsSqlServer())
         {

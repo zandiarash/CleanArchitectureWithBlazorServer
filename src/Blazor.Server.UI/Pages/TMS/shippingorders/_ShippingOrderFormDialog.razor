@@ -11,7 +11,7 @@
 @inject IStringLocalizer<ShippingOrders> L
 <MudDialog>
     <DialogContent>
-        <MudContainer Style="max-height:840px; overflow-y: scroll">
+        <MudContainer>
              <MudForm Model="model" @ref="form" Validation="@(modelValidator.ValidateValue)">
             <MudGrid>
                 <MudItem xs="12" sm="6">
