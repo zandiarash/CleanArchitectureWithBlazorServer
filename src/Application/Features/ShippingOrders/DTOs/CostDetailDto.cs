@@ -17,6 +17,8 @@ public class CostDetailDto : IMapFrom<CostDetail>
     public int ShippingOrderId { get; set; }
     public string? Name { get; set; }
     public decimal? Cost { get; set; }
+    public string? Paid { get; set; }
+    public string? Cash { get; set; }
     public string? Remark { get; set; }
     public string? Picture { get; set; }
 }

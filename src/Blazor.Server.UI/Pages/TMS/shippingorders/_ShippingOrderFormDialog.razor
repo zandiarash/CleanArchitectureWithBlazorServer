@@ -233,18 +233,20 @@
                                       Breakpoint="Breakpoint.Sm">
                                 <HeaderContent>
                                     <MudTh>@L["Name"]</MudTh>
+                                    <MudTh>@L["Paid"]</MudTh>
+                                    <MudTh>@L["Cash"]</MudTh>
                                     <MudTh>@L["Cost"]</MudTh>
                                     <MudTh>@L["Remark"]</MudTh>
                                     <MudTh></MudTh>
                                 </HeaderContent>
                                 <ColGroup>
-                                    <col style="width:50%;" />
+                                    <col style="width:220px;" />
                                     <col style="width:150px" />
-                                    <col style="width:30%" />
-                                    <col style="width:30px" />
+                                    <col style="width:150px" />
+                                    <col style="width:160px" />
                                 </ColGroup>
                                 <RowTemplate>
-                                    <MudTd DataLabel="Name">
+                                    <MudTd DataLabel="@L["Name"]">
                                         @if (!string.IsNullOrEmpty(context.Name))
                                         {
                                             @context.Name
@@ -254,15 +256,23 @@
                                             @L["typing cost"]
                                         }
                                     </MudTd>
-                                    <MudTd DataLabel="Cost">@context.Cost</MudTd>
-                                    <MudTd DataLabel="Remark">@context.Remark</MudTd>
+                                    <MudTd DataLabel="@L["Paid"]">@context.Paid</MudTd>
+                                    <MudTd DataLabel="@L["Cash"]">@context.Cash</MudTd>
+                                    <MudTd DataLabel="@L["Cost"]">@context.Cost</MudTd>
+                                    <MudTd DataLabel="@L["Remark"]">@context.Remark</MudTd>
                                     <MudTd DataLabel="_delete"><MudIconButton Size="MudBlazor.Size.Small" Color="MudBlazor.Color.Secondary" OnClick="@(()=>DeleteCost(context))" Icon="@Icons.Material.Outlined.Delete" /></MudTd>
                                 </RowTemplate>
                                 <RowEditingTemplate>
-                                    <MudTd DataLabel="Name">
-                                        <DictionaryAutocomplete DataSource="datasource" Dictionary="CostName" @bind-Value="@context.Name" Required />
+                                    <MudTd DataLabel="@L["Name"]">
+                                         <DictionaryAutocomplete DataSource="datasource" Dictionary="CostName" @bind-Value="@context.Name" Required />
                                     </MudTd>
-                                    <MudTd DataLabel="Cost">
+                                    <MudTd DataLabel="@L["Paid"]">
+                                        <DictionaryAutocomplete DataSource="datasource" Dictionary="Paid" @bind-Value="@context.Paid"  />
+                                    </MudTd>
+                                    <MudTd DataLabel="@L["Cash"]">
+                                        <DictionaryAutocomplete DataSource="datasource" Dictionary="Cash" @bind-Value="@context.Cash"  />
+                                    </MudTd>
+                                    <MudTd DataLabel="@L["Cost"]">
                                         <MudNumericField @bind-Value="@context.Cost" Required />
                                     </MudTd>
                                     <MudTd DataLabel="Remark">
