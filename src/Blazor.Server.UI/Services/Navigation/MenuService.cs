@@ -30,6 +30,11 @@ public class MenuService : IMenuService
                              Title = "Shipping Orders",
                              Href = "/tms/shippingorders",
                              PageStatus = PageStatus.Completed,
+                        },
+                        new(){
+                             Title = "Products",
+                             Href = "/pages/products",
+                             PageStatus = PageStatus.Completed,
                         }
                     }
                 },
