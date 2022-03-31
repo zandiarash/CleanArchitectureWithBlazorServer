@@ -58,7 +58,7 @@ public class Theme
             {
                 Default = new Default
                 {
-                    FontSize = ".825rem",
+                    FontSize = ".8125rem",
                     FontWeight = 400,
                     LineHeight = 1.43,
                     LetterSpacing = "normal",
@@ -108,7 +108,7 @@ public class Theme
                 },
                 Button = new Button
                 {
-                    FontSize = ".825rem",
+                    FontSize = ".8125rem",
                     FontWeight = 500,
                     LineHeight = 1.75,
                     LetterSpacing = ".02857em",
@@ -139,7 +139,7 @@ public class Theme
                 },
                 Body2 = new Body2
                 {
-                    FontSize = ".825rem",
+                    FontSize = ".8125rem",
                     FontWeight = 400,
                     LineHeight = 1.43,
                     LetterSpacing = ".01071em"
