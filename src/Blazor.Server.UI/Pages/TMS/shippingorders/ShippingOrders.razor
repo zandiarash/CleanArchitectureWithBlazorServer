@@ -25,6 +25,54 @@
 </style>
 <ErrorBoundary>
     <ChildContent>
+        <MudExpansionPanel @bind-IsExpanded="_advancedSearchExpanded"
+                           Style="padding:10px!important; margin-bottom:10px!important;border-radius: var(--mud-default-borderradius) !important;"
+                           Class="mud-elevation-25" Text="@L["Advanced Search"]">
+            <MudGrid>
+                <MudItem xs="12" sm="6" md="3">
+                    <MudTextField T="string" Class=""
+                                  Placeholder="@L["Search for Order No."]"
+                                  Style="flex:none!important;margin:0px!important">
+                    </MudTextField>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="3">
+                    <MudTextField T="string" Class=""
+                                  Placeholder="@L["Search for Status"]"
+                                  Style="flex:none!important;margin:0px!important">
+                    </MudTextField>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="3">
+                    <MudTextField T="string" Class=""
+                                  Placeholder="@L["Search for Plate Number"]" Adornment="Adornment.Start"
+                                  AdornmentIcon="@Icons.Material.Filled.LocalShipping" IconSize="Size.Medium"
+                                  Style="flex:none!important;margin:0px!important">
+                    </MudTextField>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="3">
+                    <MudTextField T="string" Class=""
+                                  Placeholder="@L["Search for Driver"]" Adornment="Adornment.Start"
+                                  AdornmentIcon="@Icons.Material.Filled.Person" IconSize="Size.Medium"
+                                  Style="flex:none!important;margin:0px!important">
+                    </MudTextField>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="3">
+                    <MudTextField T="string" Class=""
+                                  Placeholder="@L["Search for Trip"]" Adornment="Adornment.Start"
+                                  AdornmentIcon="@Icons.Filled.AllInclusive" IconSize="Size.Medium"
+                                  Style="flex:none!important;margin:0px!important">
+                    </MudTextField>
+                </MudItem>                
+                <MudItem xs="12" sm="6" md="3">
+                    <MudDateRangePicker Label="@L["Search for Pickup Time"]"  />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="3">
+                    <MudDateRangePicker Label="@L["Search for Delivery Time"]"  />
+                </MudItem>
+                
+
+            </MudGrid>
+        </MudExpansionPanel>
+
         <MudTable ServerData="@(new Func<TableState, Task<TableData<ShippingOrderDto>>>(ServerReload))"
                   FixedHeader="true"
                   FixedFooter="true"
@@ -197,9 +245,9 @@
                     <MudText>@context.OrderNo</MudText>
                     <MudText Typo="Typo.body2">@(new MarkupString(context.Description??""))</MudText>
                 </MudTd>
-                <MudTd DataLabel="@L["Starting Time"]">
-                    <MudText Typo="Typo.body2">发车时间: @context.StartingTime?.Date.ToShortDateString()</MudText>
-                    <MudText Typo="Typo.body2">返回时间: @context.FinishTime?.Date.ToShortDateString()</MudText>
+                <MudTd DataLabel="@L["Pickup/Delivery Time"]">
+                    <MudText Typo="Typo.body2">@L["Pickup Time"]: @context.StartingTime?.Date.ToShortDateString()</MudText>
+                    <MudText Typo="Typo.body2">@L["Delivery Time"]: @context.FinishTime?.Date.ToShortDateString()</MudText>
                 </MudTd>
                 <MudTd DataLabel="@L["Plate Number"]">@context.PlateNumber</MudTd>
                 <MudTd DataLabel="@L["Driver"]">
@@ -242,6 +290,8 @@
     private IEnumerable<TruckDto> _trucks = new List<TruckDto>();
     private IEnumerable<DriverDto> _drivers = new List<DriverDto>();
     private IList<KeyValueDto> _datasource = new List<KeyValueDto>();
+
+    private bool _advancedSearchExpanded;
 
     private bool _canSearch;
     private bool _canCreate;
@@ -332,7 +382,7 @@
         var command = new AddEditShippingOrderCommand()
             {
                 Id = orderdto.Id,
-                DriverId=orderdto.DriverId,
+                DriverId = orderdto.DriverId,
                 TruckId = orderdto.TruckId,
                 Dispatcher = orderdto.Dispatcher,
                 PlateNumber = orderdto.PlateNumber,

@@ -153,6 +153,9 @@
   <data name="Delivery Address" xml:space="preserve">
     <value>Delivery Address</value>
   </data>
+  <data name="Delivery Time" xml:space="preserve">
+    <value>Delivery Time</value>
+  </data>
   <data name="Dispatcher" xml:space="preserve">
     <value>Dispatcher</value>
   </data>
@@ -222,8 +225,14 @@
   <data name="Pickup Address" xml:space="preserve">
     <value>Pickup Address</value>
   </data>
+  <data name="Pickup Time" xml:space="preserve">
+    <value>Pickup Time</value>
+  </data>
   <data name="Pickup/Delivery Address" xml:space="preserve">
     <value>Pickup/Delivery Address</value>
+  </data>
+  <data name="Pickup/Delivery Time" xml:space="preserve">
+    <value>Pickup/Delivery Time</value>
   </data>
   <data name="Plate Number" xml:space="preserve">
     <value>Plate Number</value>

@@ -267,4 +267,13 @@
   <data name="You're sure you want to delete the selected items:{0}?" xml:space="preserve">
     <value>你确定要删除选中的运单{0}?</value>
   </data>
+  <data name="Delivery Time" xml:space="preserve">
+    <value>送达时间</value>
+  </data>
+  <data name="Pickup Time" xml:space="preserve">
+    <value>提货时间</value>
+  </data>
+  <data name="Pickup/Delivery Time" xml:space="preserve">
+    <value>提货/送达时间</value>
+  </data>
 </root>
