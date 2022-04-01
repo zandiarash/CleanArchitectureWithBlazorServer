@@ -120,7 +120,7 @@
   <data name="Actions" xml:space="preserve">
     <value>操作</value>
   </data>
-  <data name="Cancle" xml:space="preserve">
+  <data name="Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
   <data name="Cash Advance" xml:space="preserve">
@@ -275,5 +275,35 @@
   </data>
   <data name="Pickup/Delivery Time" xml:space="preserve">
     <value>提货/送达时间</value>
+  </data>
+  <data name="Advanced Search" xml:space="preserve">
+    <value>高级查询</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>清除</value>
+  </data>
+  <data name="Search for Delivery Time" xml:space="preserve">
+    <value>按送达时间查询</value>
+  </data>
+  <data name="Search for Driver" xml:space="preserve">
+    <value>按司机查询</value>
+  </data>
+  <data name="Search for Order No." xml:space="preserve">
+    <value>按运单号查询</value>
+  </data>
+  <data name="Search for Pickup Time" xml:space="preserve">
+    <value>按提货时间查询</value>
+  </data>
+  <data name="Search for Plate Number" xml:space="preserve">
+    <value>按车牌查询</value>
+  </data>
+  <data name="Search for status" xml:space="preserve">
+    <value>按状态查询</value>
+  </data>
+  <data name="Search for trip" xml:space="preserve">
+    <value>按运输方式查询</value>
+  </data>
+  <data name="Trip" xml:space="preserve">
+    <value>运输方式</value>
   </data>
 </root>

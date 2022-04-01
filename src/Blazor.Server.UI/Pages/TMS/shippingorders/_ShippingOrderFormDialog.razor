@@ -14,7 +14,7 @@
         <MudContainer>
              <MudForm Model="model" @ref="form" Validation="@(modelValidator.ValidateValue)">
             <MudGrid>
-                <MudItem xs="12" sm="6">
+                <MudItem xs="12" sm="4">
                     <MudTextField Label="@L["Order No"]" @bind-Value="model.OrderNo"
                                   ReadOnly="@(model.Id>0?true:false)"
                                   For="@(() => model.OrderNo)"
@@ -22,7 +22,15 @@
                                   RequiredError="@L["Order number is required!"]">
                     </MudTextField>
                 </MudItem>
-                <MudItem xs="12" sm="6">
+                <MudItem xs="12" sm="4">
+                    <DictionaryAutocomplete  DataSource="datasource"
+                                             Dictionary="Trip"
+                                            Label="@L["Trip"]"
+                                            ReadOnly="false"
+                                            For="@(() => model.Trip)"
+                                            @bind-Value="model.Trip"></DictionaryAutocomplete>
+                </MudItem>
+                <MudItem xs="12" sm="4">
                     <DictionaryAutocomplete  DataSource="datasource"
                                              Dictionary="ShippingOrderStatus"
                                             Label="@L["Status"]"
@@ -292,7 +300,7 @@
        
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">@L["Cancle"]</MudButton>
+        <MudButton OnClick="Cancel">@L["Cancel"]</MudButton>
         <MudButton Color="MudBlazor.Color.Primary" OnClick="Submit">@L["Ok"]</MudButton>
     </DialogActions>
 </MudDialog>

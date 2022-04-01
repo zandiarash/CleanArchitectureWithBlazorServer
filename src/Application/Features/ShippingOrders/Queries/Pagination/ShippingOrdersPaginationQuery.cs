@@ -19,6 +19,10 @@ public class ShippingOrdersWithPaginationQuery : PaginationFilter, IRequest<Pagi
     public DateTime? DeliveryTime1 { get; set; }
     public DateTime? PickupTime2 { get; set; }
     public DateTime? DeliveryTime2 { get; set; }
+    public override string ToString()
+    {
+        return $"{base.ToString()},OrderNo:{OrderNo},Trip:{Trip},Status:{Status},Driver:{Driver},PlateNumber:{PlateNumber},Dispatcher:{Dispatcher},PickupTime1:{PickupTime1},DeliveryTime1:{DeliveryTime1},PickupTime2:{PickupTime2},DeliveryTime2:{DeliveryTime2}";
+    }
     public string CacheKey => ShippingOrderCacheKey.GetPagtionCacheKey($"{this}");
     public MemoryCacheEntryOptions? Options => new MemoryCacheEntryOptions().AddExpirationToken(new CancellationChangeToken(ShippingOrderCacheKey.SharedExpiryTokenSource.Token));
 }

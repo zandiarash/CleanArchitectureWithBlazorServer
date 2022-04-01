@@ -1,0 +1,101 @@
+@using CleanArchitecture.Blazor.Application.Features.KeyValues.DTOs
+@using CleanArchitecture.Blazor.Application.Features.ShippingOrders.Queries.Pagination
+@inject IStringLocalizer<ShippingOrders> L
+<MudExpansionPanel @bind-IsExpanded="_advancedSearchExpanded"
+                   Style="padding:10px!important; margin-bottom:10px!important;border-radius: var(--mud-default-borderradius) !important;"
+                   Class="mud-elevation-25" Text="@L["Advanced Search"]">
+    <MudGrid>
+        <MudItem xs="12" sm="6" md="3">
+            <MudTextField @bind-Value="TRequest.OrderNo" Clearable="true"
+                          Placeholder="@L["Search for Order No."]"
+                          TextChanged="OnSearchStringChanged">
+            </MudTextField>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <DictionaryAutocomplete DataSource="DataSource"
+                                    Dictionary="ShippingOrderStatus"
+                                    Placeholder="@L["Search for status"]"
+                                    @bind-Value="TRequest.Status"
+                                    TextChanged="OnSearchStringChanged">
+            </DictionaryAutocomplete>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudTextField @bind-Value="TRequest.PlateNumber" Clearable="true"
+                          Placeholder="@L["Search for Plate Number"]" Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.LocalShipping" IconSize="Size.Medium"
+                          TextChanged="OnSearchStringChanged">
+            </MudTextField>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudTextField @bind-Value="TRequest.Driver" Clearable="true"
+                          Placeholder="@L["Search for Driver"]" Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Person" IconSize="Size.Medium"
+                          TextChanged="OnSearchStringChanged">
+            </MudTextField>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <DictionaryAutocomplete DataSource="DataSource"
+                                    Dictionary="Trip"
+                                    Placeholder="@L["Search for trip"]"
+                                    @bind-Value="TRequest.Trip"
+                                    TextChanged="OnSearchStringChanged">
+            </DictionaryAutocomplete>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudDateRangePicker @ref="_picker1" Label="@L["Search for Pickup Time"]" Clearable="true" DateRangeChanged="OnDateRangeChanged1">
+                <PickerActions>
+                    <MudButton Class="mr-auto align-self-start" OnClick="@(() => _picker1.Clear())">@L["Clear"]</MudButton>
+                    <MudButton OnClick="@(() => _picker1.Close(false))">@L["Cancel"]</MudButton>
+                    <MudButton Color="Color.Primary" OnClick="@(() => _picker1.Close())">@L["Ok"]</MudButton>
+                </PickerActions>
+            </MudDateRangePicker>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudDateRangePicker @ref="_picker2" Label="@L["Search for Delivery Time"]" Clearable="true" DateRangeChanged="OnDateRangeChanged2" >
+                <MudDateRangePicker Label="@L["Search for Pickup Time"]" Clearable="true" DateRangeChanged="OnDateRangeChanged1">
+                <PickerActions>
+                    <MudButton Class="mr-auto align-self-start" OnClick="@(() => _picker2.Clear())">@L["Clear"]</MudButton>
+                    <MudButton OnClick="@(() => _picker2.Close(false))">@L["Cancel"]</MudButton>
+                    <MudButton Color="Color.Primary" OnClick="@(() => _picker2.Close())">@L["Ok"]</MudButton>
+                </PickerActions>
+            </MudDateRangePicker>
+            </MudDateRangePicker>
+        </MudItem>
+
+
+    </MudGrid>
+</MudExpansionPanel>
+
+@code {
+    [EditorRequired][Parameter] public ShippingOrdersWithPaginationQuery TRequest { get; set; } = default!;
+    [EditorRequired][Parameter] public EventCallback<string> OnFilterChanged { get; set; }
+    [EditorRequired][Parameter] public IList<KeyValueDto> DataSource { get; set; } = default!;
+    private bool _advancedSearchExpanded { get; set; }
+    private MudDateRangePicker _picker1;
+    private MudDateRangePicker _picker2;
+    private async Task OnSearchStringChanged(string str)
+    {
+        if (_advancedSearchExpanded)
+        {
+            await OnFilterChanged.InvokeAsync(str);
+        }
+    }
+    private async Task OnDateRangeChanged1(DateRange dateRange)
+    {
+        TRequest.PickupTime1 = dateRange?.Start;
+        TRequest.PickupTime2 = dateRange?.End;
+        if (_advancedSearchExpanded)
+        {
+            await OnFilterChanged.InvokeAsync(dateRange?.ToString());
+        }
+    }
+    private async Task OnDateRangeChanged2(DateRange dateRange)
+    {
+        TRequest.DeliveryTime1 = dateRange?.Start;
+        TRequest.DeliveryTime2 = dateRange?.End;
+        if (_advancedSearchExpanded)
+        {
+            await OnFilterChanged.InvokeAsync(dateRange.ToString());
+        }
+    }
+}

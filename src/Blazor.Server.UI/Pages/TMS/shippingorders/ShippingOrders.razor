@@ -25,55 +25,8 @@
 </style>
 <ErrorBoundary>
     <ChildContent>
-
-        <MudExpansionPanel @bind-IsExpanded="_advancedSearchExpanded"
-                           Style="padding:10px!important; margin-bottom:10px!important;border-radius: var(--mud-default-borderradius) !important;"
-                           Class="mud-elevation-25" Text="@L["Advanced Search"]">
-            <MudGrid>
-                <MudItem xs="12" sm="6" md="3">
-                    <MudTextField @bind-Value="_query.OrderNo"
-                                  Placeholder="@L["Search for Order No."]"
-                                  TextChanged="OnSearchStringChanged">
-                    </MudTextField>
-                </MudItem>
-                <MudItem xs="12" sm="6" md="3">
-                    <DictionaryAutocomplete DataSource="_datasource"
-                                            Dictionary="ShippingOrderStatus"
-                                            @bind-Value="_query.Status"
-                                            TextChanged="OnSearchStringChanged">
-                    </DictionaryAutocomplete>
-                </MudItem>
-                <MudItem xs="12" sm="6" md="3">
-                    <MudTextField @bind-Value="_query.PlateNumber"
-                                  Placeholder="@L["Search for Plate Number"]" Adornment="Adornment.Start"
-                                  AdornmentIcon="@Icons.Material.Filled.LocalShipping" IconSize="Size.Medium"
-                                  TextChanged="OnSearchStringChanged">
-                    </MudTextField>
-                </MudItem>
-                <MudItem xs="12" sm="6" md="3">
-                    <MudTextField @bind-Value="_query.Driver"
-                                  Placeholder="@L["Search for Driver"]" Adornment="Adornment.Start"
-                                  AdornmentIcon="@Icons.Material.Filled.Person" IconSize="Size.Medium"
-                                  TextChanged="OnSearchStringChanged">
-                    </MudTextField>
-                </MudItem>
-                <MudItem xs="12" sm="6" md="3">
-                    <DictionaryAutocomplete DataSource="_datasource"
-                                            Dictionary="Trip"
-                                            @bind-Value="_query.Trip"
-                                            TextChanged="OnSearchStringChanged">
-                    </DictionaryAutocomplete>
-                </MudItem>
-                <MudItem xs="12" sm="6" md="3">
-                    <MudDateRangePicker Label="@L["Search for Pickup Time"]" DateRangeChanged="OnDateRangeChanged1" />
-                </MudItem>
-                <MudItem xs="12" sm="6" md="3">
-                    <MudDateRangePicker Label="@L["Search for Delivery Time"]" DateRangeChanged="OnDateRangeChanged2" />
-                </MudItem>
-
-
-            </MudGrid>
-        </MudExpansionPanel>
+        <AdvanceSearchShippingOrdersComponent DataSource="_datasource" OnFilterChanged="OnFilterChanged" TRequest="_query"></AdvanceSearchShippingOrdersComponent>
+        
 
         <MudTable ServerData="@(new Func<TableState, Task<TableData<ShippingOrderDto>>>(ServerReload))"
                   FixedHeader="true"
@@ -207,7 +160,8 @@
                 <MudTh Style="width:80px">@L["Actions"]</MudTh>
                 <MudTh><MudTableSortLabel SortLabel="Status" T="ShippingOrderDto">@L["Status"]</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="PlateNumber" T="ShippingOrderDto">@L["Order No"]</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortLabel="StartingTime" T="ShippingOrderDto">@L["Starting Time"]</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="Trip" T="ShippingOrderDto">@L["Trip"]</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="StartingTime" T="ShippingOrderDto">@L["Pickup/Delivery Time"]</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="PlateNumber" T="ShippingOrderDto">@L["Plate Number"]</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="DriverName" T="ShippingOrderDto">@L["Driver"]</MudTableSortLabel></MudTh>
                 <MudTh Style="text-align:right"><MudTableSortLabel SortLabel="Freight" T="ShippingOrderDto">@L["Freight"]</MudTableSortLabel></MudTh>
@@ -247,6 +201,7 @@
                     <MudText>@context.OrderNo</MudText>
                     <MudText Typo="Typo.body2">@(new MarkupString(context.Description??""))</MudText>
                 </MudTd>
+                <MudTd DataLabel="@L["Trip"]">@context.Trip</MudTd>
                 <MudTd DataLabel="@L["Pickup/Delivery Time"]">
                     <MudText Typo="Typo.body2">@L["Pickup Time"]: @context.StartingTime?.Date.ToShortDateString()</MudText>
                     <MudText Typo="Typo.body2">@L["Delivery Time"]: @context.FinishTime?.Date.ToShortDateString()</MudText>
@@ -325,6 +280,7 @@
     {
         try
         {
+            _selectedItems = new HashSet<ShippingOrderDto>();
             _loading = true;
             _query.Keyword = _searchString;
             _query.OrderBy = string.IsNullOrEmpty(state.SortLabel) ? "Id" : state.SortLabel;
@@ -339,39 +295,11 @@
             _loading = false;
         }
     }
-    private void OnSearchStringChanged()
+    private void OnFilterChanged(string s)
     {
         InvokeAsync(async () =>
         {
-            if (_advancedSearchExpanded)
-            {
-                await _table.ReloadServerData();
-            }
-        });
-    }
-    private void OnDateRangeChanged1(DateRange dateRange)
-    {
-        InvokeAsync(async () =>
-        {
-            _query.PickupTime1 = dateRange.Start;
-            _query.PickupTime2 = dateRange.End;
-            if (_advancedSearchExpanded)
-            {
-                await _table.ReloadServerData();
-            }
-        });
-
-    }
-    private void OnDateRangeChanged2(DateRange dateRange)
-    {
-        InvokeAsync(async () =>
-        {
-            _query.DeliveryTime1 = dateRange.Start;
-            _query.DeliveryTime2 = dateRange.End;
-            if (_advancedSearchExpanded)
-            {
-                await _table.ReloadServerData();
-            }
+            await _table.ReloadServerData();
         });
     }
     private async Task OnSearch(string text)
@@ -381,7 +309,7 @@
     }
     private async Task OnRefresh()
     {
-        _selectedItems = new HashSet<ShippingOrderDto>();
+        
         _searchString = string.Empty;
         await _table.ReloadServerData();
     }

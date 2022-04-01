@@ -120,7 +120,7 @@
   <data name="Actions" xml:space="preserve">
     <value>操作</value>
   </data>
-  <data name="Cancle" xml:space="preserve">
+  <data name="Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
   <data name="Create" xml:space="preserve">
