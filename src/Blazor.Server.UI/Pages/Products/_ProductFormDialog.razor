@@ -25,11 +25,11 @@
                                   @bind-Value="model.Description"></MudTextField>
                 </MudItem>
                 <MudItem xs="12" sm="4">
-                    <DictionaryAutocomplete Dictionary="Brand" DataSource="datasource"
+                    <BrandAutocomplete 
                                      Label="@L["Brand"]"
                                      For="@(() => model.Brand)"
                                      ResetValueOnEmptyText="true"
-                                     @bind-Value="model.Brand"></DictionaryAutocomplete>
+                                     @bind-Value="model.Brand"></BrandAutocomplete>
                 </MudItem>
                 <MudItem xs="12" sm="4">
                     <MudNumericField Label="@L["Price"]"
@@ -40,12 +40,11 @@
                                      @bind-Value="model.Price"></MudNumericField>
                 </MudItem>
                 <MudItem xs="12" sm="4">
-                    <DictionaryAutocomplete Dictionary="Unit"
-                                     DataSource="datasource"
+                    <UnitAutocomplete 
                                      Label="@L["Unit"]"
                                      For="@(() => model.Unit)"
                                      ResetValueOnEmptyText="true"
-                                     @bind-Value="model.Unit"></DictionaryAutocomplete>
+                                     @bind-Value="model.Unit"></UnitAutocomplete>
                 </MudItem>
                 <MudItem>
                     <InputFile id="fileInput" OnChange="UploadFiles" hidden multiple accept=".jpg, .jpeg, .png" />
@@ -80,7 +79,8 @@
     [Inject] private IUploadService _uploadService { get; set; } = default!;
     AddEditProductCommandValidator modelValidator = new AddEditProductCommandValidator();
     [EditorRequired] [Parameter] public AddEditProductCommand model { get; set; } = default!;
-    [EditorRequired] [Parameter] public IList<KeyValueDto> datasource { get; set; } = default!;
+    [EditorRequired] [Parameter] public IEnumerable<KeyValueDto> datasource { get; set; } = default!;
+
     private IList<string>? _prictures = null;
 
     private async Task UploadFiles(InputFileChangeEventArgs e)
