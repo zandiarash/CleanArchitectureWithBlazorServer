@@ -20,6 +20,7 @@
 </style>
 <ErrorBoundary>
     <ChildContent>
+        <AdvancedSearchComponent Query="query" OnFilterChanged="OnFilterChanged"></AdvancedSearchComponent>
         <MudTable ServerData="@(new Func<TableState, Task<TableData<ProductDto>>>(ServerReload))"
                   FixedHeader="true"
                   FixedFooter="true"
@@ -199,9 +200,11 @@
     private bool _downloading;
     [Inject]
     private ISender _mediator { get; set; } = default!;
+    private IEnumerable<KeyValueDto> _datasource = default!;
     [CascadingParameter]
     protected Task<AuthenticationState> AuthState { get; set; } = default!;
 
+    private ProductsWithPaginationQuery query { get; set; } = new();
 
     private bool _canSearch;
     private bool _canCreate;
@@ -209,8 +212,6 @@
     private bool _canDelete;
     private bool _canImport;
     private bool _canExport;
-
-    private IList<KeyValueDto> _datasource=new List<KeyValueDto>();
     protected override async Task OnInitializedAsync()
     {
         Title = L["Products"];
@@ -221,7 +222,6 @@
         _canDelete = (await AuthService.AuthorizeAsync(state.User, Permissions.Products.Delete)).Succeeded;
         _canImport = (await AuthService.AuthorizeAsync(state.User, Permissions.Products.Import)).Succeeded;
         _canExport = (await AuthService.AuthorizeAsync(state.User, Permissions.Products.Export)).Succeeded;
-
         _datasource = await _mediator.Send(new GetAllKeyValuesQuery());
     }
     private async Task<TableData<ProductDto>> ServerReload(TableState state)
@@ -229,15 +229,12 @@
         try
         {
             _loading = true;
-            var request = new ProductsWithPaginationQuery()
-                {
-                    Keyword = _searchString,
-                    OrderBy = string.IsNullOrEmpty(state.SortLabel) ? "Id" : state.SortLabel,
-                    SortDirection = (state.SortDirection == SortDirection.None ? SortDirection.Descending.ToString() : state.SortDirection.ToString()),
-                    PageNumber = state.Page + 1,
-                    PageSize = state.PageSize
-                };
-            var result = await _mediator.Send(request);
+            query.Keyword = _searchString;
+            query.OrderBy = string.IsNullOrEmpty(state.SortLabel) ? "Id" : state.SortLabel;
+            query.SortDirection = (state.SortDirection == SortDirection.None ? SortDirection.Descending.ToString() : state.SortDirection.ToString());
+            query.PageNumber = state.Page + 1;
+            query.PageSize = state.PageSize;
+            var result = await _mediator.Send(query);
             return new TableData<ProductDto>() { TotalItems = result.TotalItems, Items = result.Items };
         }
         finally
@@ -246,15 +243,24 @@
         }
 
     }
+    private void OnFilterChanged()
+    {
+        InvokeAsync(async () =>
+        {
+
+            await _table.ReloadServerData();
+        });
+    }
     private async Task OnSearch(string text)
     {
-        _selectedItems = new HashSet<ProductDto>();
+        _selectedItems = new();
         _searchString = text;
         await _table.ReloadServerData();
     }
     private async Task OnRefresh()
     {
-        _selectedItems = new HashSet<ProductDto>();
+        _selectedItems = new HashSet<ProductDto>
+        ();
         _searchString = string.Empty;
         await _table.ReloadServerData();
     }
@@ -263,11 +269,12 @@
         var command = new AddEditProductCommand();
         var parameters = new DialogParameters
             {
-                { nameof(_ProductFormDialog.datasource),_datasource },
-                { nameof(_ProductFormDialog.model),command },
+        { nameof(_ProductFormDialog.datasource),_datasource },
+        { nameof(_ProductFormDialog.model),command },
             };
         var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
-        var dialog = DialogService.Show<_ProductFormDialog>(L["Create a new product"], parameters, options);
+        var dialog = DialogService.Show<_ProductFormDialog>
+        (L["Create a new product"], parameters, options);
         var state = await dialog.Result;
         if (!state.Cancelled)
         {
@@ -289,12 +296,13 @@
                 Price = dto.Price
             };
         var parameters = new DialogParameters
-            {
-                { nameof(_ProductFormDialog.datasource),_datasource },
-                { nameof(_ProductFormDialog.model),command },
-            };
+                {
+            { nameof(_ProductFormDialog.datasource),_datasource },
+            { nameof(_ProductFormDialog.model),command },
+                };
         var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
-        var dialog = DialogService.Show<_ProductFormDialog>(L["Edit the product"], parameters, options);
+        var dialog = DialogService.Show<_ProductFormDialog>
+        (L["Edit the product"], parameters, options);
         var state = await dialog.Result;
         if (!state.Cancelled)
         {
@@ -308,11 +316,12 @@
     {
         var deleteContent = L["You're sure you want to delete the product:{0}?"];
         var parameters = new DialogParameters
-        {
-            { nameof(DeleteConfirmation.ContentText), string.Format(deleteContent, dto.Name) }
-        };
+                    {
+                { nameof(DeleteConfirmation.ContentText), string.Format(deleteContent, dto.Name) }
+                    };
         var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true, DisableBackdropClick = true };
-        var dialog = DialogService.Show<DeleteConfirmation>(L["Delete"], parameters, options);
+        var dialog = DialogService.Show<DeleteConfirmation>
+        (L["Delete"], parameters, options);
         var state = await dialog.Result;
         if (!state.Cancelled)
         {
@@ -327,11 +336,12 @@
     {
         var deleteContent = L["You're sure you want to delete the selected items:{0}?"];
         var parameters = new DialogParameters
-        {
-            { nameof(DeleteConfirmation.ContentText), string.Format(deleteContent,_selectedItems.Count) }
-        };
+                        {
+                    { nameof(DeleteConfirmation.ContentText), string.Format(deleteContent,_selectedItems.Count) }
+                        };
         var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true, DisableBackdropClick = true };
-        var dialog = DialogService.Show<DeleteConfirmation>(L["Delete"], parameters, options);
+        var dialog = DialogService.Show<DeleteConfirmation>
+        (L["Delete"], parameters, options);
         var state = await dialog.Result;
         if (!state.Cancelled)
         {
@@ -339,7 +349,8 @@
             var result = await _mediator.Send(command);
             await _table.ReloadServerData();
             Snackbar.Add($"{L["Deleted successfully"]}", MudBlazor.Severity.Info);
-            _selectedItems = new HashSet<ProductDto>();
+            _selectedItems = new HashSet<ProductDto>
+            ();
         }
     }
     private async Task OnExport()
@@ -378,4 +389,4 @@
         }
         _uploading = false;
     }
-}
+    }
