@@ -25,50 +25,52 @@
 </style>
 <ErrorBoundary>
     <ChildContent>
+
         <MudExpansionPanel @bind-IsExpanded="_advancedSearchExpanded"
                            Style="padding:10px!important; margin-bottom:10px!important;border-radius: var(--mud-default-borderradius) !important;"
                            Class="mud-elevation-25" Text="@L["Advanced Search"]">
             <MudGrid>
                 <MudItem xs="12" sm="6" md="3">
-                    <MudTextField T="string" Class=""
+                    <MudTextField @bind-Value="_query.OrderNo"
                                   Placeholder="@L["Search for Order No."]"
-                                  Style="flex:none!important;margin:0px!important">
+                                  TextChanged="OnSearchStringChanged">
                     </MudTextField>
                 </MudItem>
                 <MudItem xs="12" sm="6" md="3">
-                    <MudTextField T="string" Class=""
-                                  Placeholder="@L["Search for Status"]"
-                                  Style="flex:none!important;margin:0px!important">
-                    </MudTextField>
+                    <DictionaryAutocomplete DataSource="_datasource"
+                                            Dictionary="ShippingOrderStatus"
+                                            @bind-Value="_query.Status"
+                                            TextChanged="OnSearchStringChanged">
+                    </DictionaryAutocomplete>
                 </MudItem>
                 <MudItem xs="12" sm="6" md="3">
-                    <MudTextField T="string" Class=""
+                    <MudTextField @bind-Value="_query.PlateNumber"
                                   Placeholder="@L["Search for Plate Number"]" Adornment="Adornment.Start"
                                   AdornmentIcon="@Icons.Material.Filled.LocalShipping" IconSize="Size.Medium"
-                                  Style="flex:none!important;margin:0px!important">
+                                  TextChanged="OnSearchStringChanged">
                     </MudTextField>
                 </MudItem>
                 <MudItem xs="12" sm="6" md="3">
-                    <MudTextField T="string" Class=""
+                    <MudTextField @bind-Value="_query.Driver"
                                   Placeholder="@L["Search for Driver"]" Adornment="Adornment.Start"
                                   AdornmentIcon="@Icons.Material.Filled.Person" IconSize="Size.Medium"
-                                  Style="flex:none!important;margin:0px!important">
+                                  TextChanged="OnSearchStringChanged">
                     </MudTextField>
                 </MudItem>
                 <MudItem xs="12" sm="6" md="3">
-                    <MudTextField T="string" Class=""
-                                  Placeholder="@L["Search for Trip"]" Adornment="Adornment.Start"
-                                  AdornmentIcon="@Icons.Filled.AllInclusive" IconSize="Size.Medium"
-                                  Style="flex:none!important;margin:0px!important">
-                    </MudTextField>
-                </MudItem>                
-                <MudItem xs="12" sm="6" md="3">
-                    <MudDateRangePicker Label="@L["Search for Pickup Time"]"  />
+                    <DictionaryAutocomplete DataSource="_datasource"
+                                            Dictionary="Trip"
+                                            @bind-Value="_query.Trip"
+                                            TextChanged="OnSearchStringChanged">
+                    </DictionaryAutocomplete>
                 </MudItem>
                 <MudItem xs="12" sm="6" md="3">
-                    <MudDateRangePicker Label="@L["Search for Delivery Time"]"  />
+                    <MudDateRangePicker Label="@L["Search for Pickup Time"]" DateRangeChanged="OnDateRangeChanged1" />
                 </MudItem>
-                
+                <MudItem xs="12" sm="6" md="3">
+                    <MudDateRangePicker Label="@L["Search for Delivery Time"]" DateRangeChanged="OnDateRangeChanged2" />
+                </MudItem>
+
 
             </MudGrid>
         </MudExpansionPanel>
@@ -301,6 +303,9 @@
     private bool _canExport;
     private bool _canFinish;
     private Hashids hashids = new Hashids("Blazor", 8);
+
+    private ShippingOrdersWithPaginationQuery _query = new();
+
     protected override async Task OnInitializedAsync()
     {
         Title = L["Shipping Orders"];
@@ -321,21 +326,53 @@
         try
         {
             _loading = true;
-            var request = new ShippingOrdersWithPaginationQuery()
-                {
-                    Keyword = _searchString,
-                    OrderBy = string.IsNullOrEmpty(state.SortLabel) ? "Id" : state.SortLabel,
-                    SortDirection = (state.SortDirection == SortDirection.None ? SortDirection.Descending.ToString() : state.SortDirection.ToString()),
-                    PageNumber = state.Page + 1,
-                    PageSize = state.PageSize
-                };
-            var result = await _mediator.Send(request);
+            _query.Keyword = _searchString;
+            _query.OrderBy = string.IsNullOrEmpty(state.SortLabel) ? "Id" : state.SortLabel;
+            _query.SortDirection = (state.SortDirection == SortDirection.None ? SortDirection.Descending.ToString() : state.SortDirection.ToString());
+            _query.PageNumber = state.Page + 1;
+            _query.PageSize = state.PageSize;
+            var result = await _mediator.Send(_query);
             return new TableData<ShippingOrderDto>() { TotalItems = result.TotalItems, Items = result.Items };
         }
         finally
         {
             _loading = false;
         }
+    }
+    private void OnSearchStringChanged()
+    {
+        InvokeAsync(async () =>
+        {
+            if (_advancedSearchExpanded)
+            {
+                await _table.ReloadServerData();
+            }
+        });
+    }
+    private void OnDateRangeChanged1(DateRange dateRange)
+    {
+        InvokeAsync(async () =>
+        {
+            _query.PickupTime1 = dateRange.Start;
+            _query.PickupTime2 = dateRange.End;
+            if (_advancedSearchExpanded)
+            {
+                await _table.ReloadServerData();
+            }
+        });
+
+    }
+    private void OnDateRangeChanged2(DateRange dateRange)
+    {
+        InvokeAsync(async () =>
+        {
+            _query.DeliveryTime1 = dateRange.Start;
+            _query.DeliveryTime2 = dateRange.End;
+            if (_advancedSearchExpanded)
+            {
+                await _table.ReloadServerData();
+            }
+        });
     }
     private async Task OnSearch(string text)
     {

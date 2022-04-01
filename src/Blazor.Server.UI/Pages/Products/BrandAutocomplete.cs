@@ -10,8 +10,6 @@ namespace Blazor.Server.UI.Pages.Products;
 public class BrandAutocomplete : MudAutocomplete<string>
 {
     [Inject]
-    private IStringLocalizer<BrandAutocomplete> L { get; set; } = default!;
-    [Inject]
     private ISender _mediator { get; set; } = default!;
 
     private List<KeyValueDto> _brands = new();

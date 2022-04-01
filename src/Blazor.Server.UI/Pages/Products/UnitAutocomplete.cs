@@ -10,8 +10,6 @@ namespace Blazor.Server.UI.Pages.Products;
 public class UnitAutocomplete : MudAutocomplete<string>
 {
     [Inject]
-    private IStringLocalizer<UnitAutocomplete> L { get; set; } = default!;
-    [Inject]
     private ISender _mediator { get; set; } = default!;
 
     private List<KeyValueDto> _units= new();

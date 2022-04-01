@@ -16,6 +16,8 @@ public  class ShippingOrderDto : IMapFrom<ShippingOrder>
     }
     public int Id { get; set; }
     public string? OrderNo { get; set; }
+
+    public string? Trip { get; set; }
     public DateTime? StartingTime { get; set; }
     public DateTime? FinishTime { get; set; }
     public int TruckId { get; set; }

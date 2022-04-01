@@ -11,6 +11,7 @@ public  class ShippingOrder:AuditableEntity
     public string? OrderNo { get; set; }
     public DateTime? StartingTime { get; set; }
     public DateTime? FinishTime { get; set; }
+    public string? Trip { get; set; }
     public int TruckId { get; set; }
     public virtual Truck Truck { get; set; } = default!;
     public string? PlateNumber { get; set; }
