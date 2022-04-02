@@ -32,6 +32,8 @@ public class Visitor : AuditableEntity, IHasDomainEvent, IAuditTrial
     public bool? PrivacyPolicy { get; set; }
     public bool? Promise { get; set; }
 
+    public bool? Apppoved { get; set; }
+
     public virtual ICollection<VisitorHistory> VisitorHistories { get; set; }=new HashSet<VisitorHistory>();
     public List<DomainEvent> DomainEvents { get; set; } = new();
 }

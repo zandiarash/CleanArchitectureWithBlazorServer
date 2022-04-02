@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using CleanArchitecture.Blazor.Infrastructure.Services.Authentication;
 using Microsoft.AspNetCore.Components.Server.Circuits;
 using CleanArchitecture.Blazor.Infrastructure.Services.Picklist;
+using HashidsNet;
 
 namespace CleanArchitecture.Blazor.Infrastructure;
 
@@ -33,7 +34,7 @@ public static class DependencyInjection
             });
             services.AddDatabaseDeveloperPageExceptionFilter();
         }
-
+        services.AddSingleton(sp => new Hashids("Blazor.net"));
         services.Configure<DashbordSettings>(configuration.GetSection(DashbordSettings.SectionName));
         services.AddSingleton(s => s.GetRequiredService<IOptions<DashbordSettings>>().Value);
         services.AddScoped<IDbContextFactory<ApplicationDbContext>,BlazorContextFactory<ApplicationDbContext>>();

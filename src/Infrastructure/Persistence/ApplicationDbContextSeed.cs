@@ -3,6 +3,7 @@
 
 using CleanArchitecture.Blazor.Application.Common.Extensions;
 using CleanArchitecture.Blazor.Infrastructure.Constants.Role;
+using HashidsNet;
 using System.Reflection;
 
 
@@ -107,13 +108,45 @@ public static class ApplicationDbContextSeed
             context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "ActiveStatus", Value = "Inactive ", Text = "Inactive", Description = "Active Status" });
            
             await context.SaveChangesAsync();
-          
         }
         if (!context.Products.Any())
         {
             context.Products.Add(new Domain.Entities.Product() { Brand= "Apple", Name = "IPhone 13 Pro", Description= "Apple iPhone 13 Pro smartphone. Announced Sep 2021. Features 6.1″ display, Apple A15 Bionic chipset, 3095 mAh battery, 1024 GB storage.", Unit="EA",Price=999.98m });
             context.Products.Add(new Domain.Entities.Product() { Brand = "MI", Name = "MI 12 Pro", Description = "Xiaomi 12 Pro Android smartphone. Announced Dec 2021. Features 6.73″ display, Snapdragon 8 Gen 1 chipset, 4600 mAh battery, 256 GB storage.", Unit = "EA", Price = 199.00m });
             context.Products.Add(new Domain.Entities.Product() { Brand = "Logitech",  Name = "MX KEYS Mini", Description = "Logitech MX Keys Mini Introducing MX Keys Mini – a smaller, smarter, and mightier keyboard made for creators. Type with confidence on a keyboard crafted for efficiency, stability, and...", Unit = "PA", Price = 99.90m });
+            await context.SaveChangesAsync();
+        }
+        if (!context.Departments.Any())
+        {
+            context.Departments.Add(new Domain.Entities.Department() { Name = "Service", Status = "Active" });
+            context.Departments.Add(new Domain.Entities.Department() { Name = "IT", Status = "Active" });
+            context.Departments.Add(new Domain.Entities.Department() { Name = "Marketing", Status = "Active" });
+            context.Departments.Add(new Domain.Entities.Department() { Name = "Operation", Status = "Active" });
+            await context.SaveChangesAsync();
+        }
+        if (!context.Designations.Any())
+        {
+            context.Designations.Add(new Domain.Entities.Designation() { Name = "HR Director", Status = "Active" });
+            context.Designations.Add(new Domain.Entities.Designation() { Name = "Production Manager", Status = "Active" });
+            context.Designations.Add(new Domain.Entities.Designation() { Name = "General HR Manager", Status = "Active" });
+            context.Designations.Add(new Domain.Entities.Designation() { Name = "Chief Human Resource Officer", Status = "Active" });
+            await context.SaveChangesAsync();
+        }
+        if (!context.Employees.Any())
+        {
+            var depId = context.Departments.First().Id;
+            var desId = context.Designations.First().Id;
+            context.Employees.Add(new Domain.Entities.Employee() { Name="Mike Brown",Email= "Brown.Mike@gmail.com",PhoneNumber="021-76888098", DepartmentId= depId, DesignationId= desId, Gender= "Female", About="Nice" });
+            await context.SaveChangesAsync();
+        }
+        if (!context.Visitors.Any())
+        {
+            var depId = context.Departments.First().Id;
+            var desId = context.Designations.First().Id;
+            var empId=context.Employees.First().Id;
+            var hashids = new Hashids("Blazor.net");
+            var hash = hashids.EncodeLong(DateTime.Now.Ticks);
+            context.Visitors.Add(new Domain.Entities.Visitor() { Name = "Mike Brown", Email = "Brown.Mike@gmail.com", PhoneNumber = "021-76888098", DesignationId = desId, Gender = "Female", Purpose = "Meeting",Comment="have a meeting...", Address="China", PrivacyPolicy=true, Promise=true,  ExpectedDate= DateTime.Now, ExpectedTime=new TimeSpan(12,0,0), CompanyName="Google Inc.", EmployeeId= empId , QrCode= hash});
             await context.SaveChangesAsync();
         }
     }
