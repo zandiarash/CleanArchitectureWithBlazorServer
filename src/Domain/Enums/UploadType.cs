@@ -11,6 +11,8 @@ public enum UploadType : byte
     Product,
     [Description(@"ProfilePictures")]
     ProfilePicture,
+    [Description(@"EmployeePictures")]
+    EmployeePicture,
     [Description(@"Documents")]
     Document
 }

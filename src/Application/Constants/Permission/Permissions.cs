@@ -16,6 +16,7 @@ public static class Permissions
         public const string Search = "Permissions.AuditTrails.Search";
         public const string Export = "Permissions.AuditTrails.Export";
     }
+
     [DisplayName("Logs")]
     [Description("Logs Permissions")]
     public static class Logs
@@ -23,6 +24,17 @@ public static class Permissions
         public const string View = "Permissions.Logs.View";
         public const string Search = "Permissions.Logs.Search";
         public const string Export = "Permissions.Logs.Export";
+    }
+    [DisplayName("Employees")]
+    [Description("Employees Permissions")]
+    public static class Employees
+    {
+        public const string View = "Permissions.Employees.View";
+        public const string Create = "Permissions.Employees.Create";
+        public const string Edit = "Permissions.Employees.Edit";
+        public const string Delete = "Permissions.Employees.Delete";
+        public const string Search = "Permissions.Employees.Search";
+
     }
     [DisplayName("Designations")]
     [Description("Designations Permissions")]
