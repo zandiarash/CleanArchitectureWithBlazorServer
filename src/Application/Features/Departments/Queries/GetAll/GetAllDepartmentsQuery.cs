@@ -32,7 +32,7 @@ namespace CleanArchitecture.Blazor.Application.Features.Departments.Queries.GetA
 
         public async Task<IEnumerable<DepartmentDto>> Handle(GetAllDepartmentsQuery request, CancellationToken cancellationToken)
         {
-            var data = await _context.Departments
+            var data = await _context.Departments.OrderBy(x => x.Name)
                          .ProjectTo<DepartmentDto>(_mapper.ConfigurationProvider)
                          .ToListAsync(cancellationToken);
             return data;

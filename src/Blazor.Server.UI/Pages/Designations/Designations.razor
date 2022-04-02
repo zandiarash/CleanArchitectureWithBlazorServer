@@ -1,14 +1,12 @@
-@page "/visitor/departments"
-
-
-@using CleanArchitecture.Blazor.Application.Features.Departments.Commands.Delete
-@using CleanArchitecture.Blazor.Application.Features.Departments.DTOs
-@using CleanArchitecture.Blazor.Application.Features.Departments.Queries.Pagination
-@using CleanArchitecture.Blazor.Application.Features.Departments.Commands.AddEdit
+@page "/visitor/designations"
+@using CleanArchitecture.Blazor.Application.Features.Designations.Commands.Delete
+@using CleanArchitecture.Blazor.Application.Features.Designations.DTOs
+@using CleanArchitecture.Blazor.Application.Features.Designations.Queries.Pagination
+@using CleanArchitecture.Blazor.Application.Features.Designations.Commands.AddEdit
 
 @inject IJSRuntime JS
-@inject IStringLocalizer<Departments> L
-@attribute [Authorize(Policy = Permissions.Departments.View)]
+@inject IStringLocalizer<Designations> L
+@attribute [Authorize(Policy = Permissions.Designations.View)]
 <PageTitle>@Title</PageTitle>
 <style>
     .mud-table-toolbar {
@@ -17,7 +15,7 @@
 </style>
 <ErrorBoundary>
     <ChildContent>
-        <MudTable ServerData="@(new Func<TableState, Task<TableData<DepartmentDto>>>(ServerReload))"
+        <MudTable ServerData="@(new Func<TableState, Task<TableData<DesignationDto>>>(ServerReload))"
                   FixedHeader="true"
                   FixedFooter="true"
                   Height="calc(100vh - 265px)"
@@ -27,7 +25,7 @@
                   Hover="true" @ref="_table">
             <ToolBarContent>
                 <div class="justify-start pt-3">
-                    <MudText Typo="Typo.h6">@L["Departments"]</MudText>
+                    <MudText Typo="Typo.h6">@L["Designations"]</MudText>
                     <MudHidden Breakpoint="Breakpoint.SmAndDown">
                         <MudButton DisableElevation Variant="Variant.Outlined"
                                    Size="Size.Small"
@@ -39,8 +37,8 @@
                         {
                             <MudButton DisableElevation Variant="Variant.Outlined" Color="Color.Primary"
                                    StartIcon="@Icons.Material.Filled.Add"
-                                   Disabled="@_loading"
                                    Size="Size.Small"
+                                   Disabled="@_loading"
                                    OnClick="OnCreate"
                                    Style="margin-right: 4px; margin-bottom:4px"
                                    IconColor="Color.Surface">@L["Create"]</MudButton>
@@ -130,8 +128,8 @@
             </ColGroup>
             <HeaderContent>
                 <MudTh Style="width:80px">@L["Actions"]</MudTh>
-                <MudTh><MudTableSortLabel SortLabel="Name" T="DepartmentDto">@L["Name"]</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortLabel="Status" T="DepartmentDto">@L["Status"]</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="Name" T="DesignationDto">@L["Name"]</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="Status" T="DesignationDto">@L["Status"]</MudTableSortLabel></MudTh>
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel="@L["Actions"]">
@@ -180,8 +178,8 @@
 </ErrorBoundary>
 @code {
     public string? Title { get; private set; }
-    private HashSet<DepartmentDto> _selectedItems = new HashSet<DepartmentDto>();
-    private MudTable<DepartmentDto> _table = default!;
+    private HashSet<DesignationDto> _selectedItems = new HashSet<DesignationDto>();
+    private MudTable<DesignationDto> _table = default!;
     private int _totalItems;
     private string _searchString = string.Empty;
     private bool _loading;
@@ -192,7 +190,7 @@
     [CascadingParameter]
     protected Task<AuthenticationState> AuthState { get; set; } = default!;
 
-    private DepartmentsWithPaginationQuery query { get; set; } = new();
+    private DesignationsWithPaginationQuery query { get; set; } = new();
 
     private bool _canSearch;
     private bool _canCreate;
@@ -202,17 +200,17 @@
     private bool _canExport;
     protected override async Task OnInitializedAsync()
     {
-        Title = L["Departments"];
+        Title = L["Designations"];
         var state = await AuthState;
-        _canCreate = (await AuthService.AuthorizeAsync(state.User, Permissions.Departments.Create)).Succeeded;
-        _canSearch = (await AuthService.AuthorizeAsync(state.User, Permissions.Departments.Search)).Succeeded;
-        _canEdit = (await AuthService.AuthorizeAsync(state.User, Permissions.Departments.Edit)).Succeeded;
-        _canDelete = (await AuthService.AuthorizeAsync(state.User, Permissions.Departments.Delete)).Succeeded;
+        _canCreate = (await AuthService.AuthorizeAsync(state.User, Permissions.Designations.Create)).Succeeded;
+        _canSearch = (await AuthService.AuthorizeAsync(state.User, Permissions.Designations.Search)).Succeeded;
+        _canEdit = (await AuthService.AuthorizeAsync(state.User, Permissions.Designations.Edit)).Succeeded;
+        _canDelete = (await AuthService.AuthorizeAsync(state.User, Permissions.Designations.Delete)).Succeeded;
         _canImport = false;
         _canExport = false;
 
     }
-    private async Task<TableData<DepartmentDto>> ServerReload(TableState state)
+    private async Task<TableData<DesignationDto>> ServerReload(TableState state)
     {
         try
         {
@@ -223,7 +221,7 @@
             query.PageNumber = state.Page + 1;
             query.PageSize = state.PageSize;
             var result = await _mediator.Send(query);
-            return new TableData<DepartmentDto>() { TotalItems = result.TotalItems, Items = result.Items };
+            return new TableData<DesignationDto>() { TotalItems = result.TotalItems, Items = result.Items };
         }
         finally
         {
@@ -246,14 +244,14 @@
     }
     private async Task OnCreate()
     {
-        var command = new AddEditDepartmentCommand();
+        var command = new AddEditDesignationCommand();
         var parameters = new DialogParameters
             {
-        { nameof(_DepartmentFormDialog.model),command },
+        { nameof(_DesignationFormDialog.model),command },
             };
         var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true };
-        var dialog = DialogService.Show<_DepartmentFormDialog>
-        (L["Create a new department"], parameters, options);
+        var dialog = DialogService.Show<_DesignationFormDialog>
+        (L["Create a new designation"], parameters, options);
         var state = await dialog.Result;
         if (!state.Cancelled)
         {
@@ -262,9 +260,9 @@
             Snackbar.Add($"{L["Create successfully"]}", MudBlazor.Severity.Info);
         }
     }
-    private async Task OnEdit(DepartmentDto dto)
+    private async Task OnEdit(DesignationDto dto)
     {
-        var command = new AddEditDepartmentCommand()
+        var command = new AddEditDesignationCommand()
             {
                 Id = dto.Id,
                 Name = dto.Name,
@@ -272,11 +270,11 @@
             };
         var parameters = new DialogParameters
                 {
-            { nameof(_DepartmentFormDialog.model),command },
+            { nameof(_DesignationFormDialog.model),command },
                 };
         var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true };
-        var dialog = DialogService.Show<_DepartmentFormDialog>
-        (L["Edit the department"], parameters, options);
+        var dialog = DialogService.Show<_DesignationFormDialog>
+        (L["Edit the designation"], parameters, options);
         var state = await dialog.Result;
         if (!state.Cancelled)
         {
@@ -286,9 +284,9 @@
         }
     }
 
-    private async Task OnDelete(DepartmentDto dto)
+    private async Task OnDelete(DesignationDto dto)
     {
-        var deleteContent = L["You're sure you want to delete the department:{0}?"];
+        var deleteContent = L["You're sure you want to delete the designation:{0}?"];
         var parameters = new DialogParameters
                     {
                 { nameof(DeleteConfirmation.ContentText), string.Format(deleteContent, dto.Name) }
@@ -299,7 +297,7 @@
         var state = await dialog.Result;
         if (!state.Cancelled)
         {
-            var command = new DeleteDepartmentCommand(new int[] { dto.Id });
+            var command = new DeleteDesignationCommand(new int[] { dto.Id });
             var result = await _mediator.Send(command);
             await _table.ReloadServerData();
             Snackbar.Add($"{L["Deleted successfully"]}", MudBlazor.Severity.Info);
@@ -319,11 +317,11 @@
         var state = await dialog.Result;
         if (!state.Cancelled)
         {
-            var command = new DeleteDepartmentCommand(_selectedItems.Select(x => x.Id).ToArray());
+            var command = new DeleteDesignationCommand(_selectedItems.Select(x => x.Id).ToArray());
             var result = await _mediator.Send(command);
             await _table.ReloadServerData();
             Snackbar.Add($"{L["Deleted successfully"]}", MudBlazor.Severity.Info);
-            _selectedItems = new HashSet<DepartmentDto>
+            _selectedItems = new HashSet<DesignationDto>
             ();
         }
     }
