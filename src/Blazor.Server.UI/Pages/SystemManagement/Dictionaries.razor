@@ -60,7 +60,7 @@
                     }
                     @if (_canDelete)
                     {
-                        <MudButton DisableElevation Variant="Variant.Outlined" Color="Color.Error"
+                        <MudButton DisableElevation Variant="Variant.Outlined" Color="Color.Secondary"
                                StartIcon="@Icons.Material.Filled.Delete"
                                Disabled="@(!(_selectedItems.Count>0) || _editing)"
                                OnClick="OnDeleteChecked"
@@ -138,7 +138,7 @@
             </RowTemplate>
             <RowEditingTemplate>
                 <MudTd DataLabel="Name">
-                   <MudAutocomplete @bind-Value="@context.Name" CoerceText="true" CoerceValue="true" SearchFunc="searchName" Required />
+                   <MudAutocomplete @bind-Value="@context.Name" Clearable="true" CoerceText="true" CoerceValue="true" SearchFunc="searchName" Required />
                 </MudTd>
                 <MudTd DataLabel="Value">
                     <MudTextField @bind-Value="@context.Value" Required />
@@ -219,6 +219,7 @@
     {
         try{
             _loading = true;
+            _editing = false;
             var cmd = new GetAllKeyValuesQuery();
             KeyValueList = await _mediator.Send(cmd);
             _selectedItems=new HashSet<KeyValueDto>();;
