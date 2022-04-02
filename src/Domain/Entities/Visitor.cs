@@ -13,6 +13,7 @@ public class Visitor : AuditableEntity, IHasDomainEvent, IAuditTrial
     public string? Email { get; set; }
     public string? PhoneNumber { get; set; }
     public string? IdentificationNo { get; set; }
+    public string? LicensePlateNumber { get; set; }
     public string? Address { get; set; }
     public string? Gender { get; set; }
     public string? CompanyName { get; set; }
@@ -29,10 +30,12 @@ public class Visitor : AuditableEntity, IHasDomainEvent, IAuditTrial
     public string? Avatar { get; set; }
     public string? TripCode { get; set; }
     public string? HealthCode { get; set; }
+    public string? NucleicAcidTestReport { get; set; }
     public bool? PrivacyPolicy { get; set; }
     public bool? Promise { get; set; }
 
     public bool? Apppoved { get; set; }
+    public string? ApprovalOutcome { get; set; }
 
     public virtual ICollection<VisitorHistory> VisitorHistories { get; set; }=new HashSet<VisitorHistory>();
     public List<DomainEvent> DomainEvents { get; set; } = new();
