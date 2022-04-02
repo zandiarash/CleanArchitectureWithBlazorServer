@@ -98,6 +98,14 @@ public static class ApplicationDbContextSeed
             context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Purpose", Value = "Conferences ", Text = "Conferences", Description = "Visitor's Purpose" });
             context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Purpose", Value = "Working ", Text = "Working", Description = "Visitor's Purpose" });
             context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Purpose", Value = "Others ", Text = "Others", Description = "Visitor's Purpose" });
+
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Gender", Value = "Male ", Text = "Male", Description = "Visitor's Gender" });
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Gender", Value = "Female ", Text = "Female", Description = "Visitor's Gender" });
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Gender", Value = "Unknown ", Text = "Unknown", Description = "Visitor's Gender" });
+
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "ActiveStatus", Value = "Active ", Text = "Active", Description = "Active Status" });
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "ActiveStatus", Value = "Inactive ", Text = "Inactive", Description = "Active Status" });
+           
             await context.SaveChangesAsync();
           
         }

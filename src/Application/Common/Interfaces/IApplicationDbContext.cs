@@ -15,6 +15,13 @@ public interface IApplicationDbContext
     DbSet<Document> Documents { get; set; }
     DbSet<KeyValue> KeyValues { get; set; }
     DbSet<Product> Products { get; set; }
+
+    DbSet<Department> Departments { get; set; }
+    DbSet<Designation> Designations { get; set; }
+    DbSet<Employee> Employees { get; set; }
+    DbSet<Visitor> Visitors { get; set; }
+    DbSet<VisitorHistory> VisitorHistories { get; set; }
+
     ChangeTracker ChangeTracker { get; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

@@ -27,8 +27,15 @@ public class MenuService : IMenuService
                 },
                 new()
                 {
+                    Title = "Designations",
+                    Icon = Icons.Material.Filled.Fitbit,
+                    Href = "/visitor/designations",
+                    PageStatus = PageStatus.Completed
+                },
+                new()
+                {
                     Title = "Employees",
-                    Icon = Icons.Material.Filled.Person,
+                    Icon = Icons.Material.Filled.AssignmentInd,
                     Href = "/visitor/employees",
                     PageStatus = PageStatus.Completed
                 },
@@ -51,7 +58,7 @@ public class MenuService : IMenuService
                     Title = "Histories",
                     Icon = Icons.Material.Filled.History,
                     Href = "/visitor/histories",
-                    PageStatus = PageStatus.ComingSoon
+                    PageStatus = PageStatus.Completed
                 }
             }
         },
