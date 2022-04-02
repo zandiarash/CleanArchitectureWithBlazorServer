@@ -24,8 +24,28 @@ public static class Permissions
         public const string Search = "Permissions.Logs.Search";
         public const string Export = "Permissions.Logs.Export";
     }
-    
+    [DisplayName("Designations")]
+    [Description("Designations Permissions")]
+    public static class Designations
+    {
+        public const string View = "Permissions.Designations.View";
+        public const string Create = "Permissions.Designations.Create";
+        public const string Edit = "Permissions.Designations.Edit";
+        public const string Delete = "Permissions.Designations.Delete";
+        public const string Search = "Permissions.Designations.Search";
 
+    }
+    [DisplayName("Departments")]
+    [Description("Departments Permissions")]
+    public static class Departments
+    {
+        public const string View = "Permissions.Departments.View";
+        public const string Create = "Permissions.Departments.Create";
+        public const string Edit = "Permissions.Departments.Edit";
+        public const string Delete = "Permissions.Departments.Delete";
+        public const string Search = "Permissions.Departments.Search";
+
+    }
     [DisplayName("Products")]
     [Description("Products Permissions")]
     public static class Products

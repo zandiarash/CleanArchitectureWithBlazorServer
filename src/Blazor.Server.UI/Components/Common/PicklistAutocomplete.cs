@@ -63,6 +63,7 @@ public enum Picklist
 {
     Status,
     Unit,
-    Brand
+    Brand,
+    ActiveStatus
 }
 
