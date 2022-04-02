@@ -63,6 +63,15 @@ public enum Picklist
 {
     Status,
     Unit,
-    Brand
+    Brand,
+    VehicleStatus,
+    VehicleType,
+    DrivingType,
+    Trip,
+    PayPeriod,
+    ShippingOrderStatus,
+    CostName,
+    Paid,
+    Cash
 }
 

@@ -58,19 +58,19 @@
                     </MudTextField>
                 </MudItem>
                  <MudItem xs="12" sm="6">
-                    <DictionaryAutocomplete Dictionary="DrivingType" DataSource="datasource"
+                    <PicklistAutocomplete Picklist="Picklist.DrivingType"
                                      Label="@L["Driving Type"]"
                                      For="@(() => model.DrivingType)"
                                      @bind-Value="model.DrivingType"
                                      Required="true"
                                      RequiredError="@L["Driving type is required!"]"
-                    ></DictionaryAutocomplete>
+                    ></PicklistAutocomplete>
                 </MudItem>
                 <MudItem xs="12" sm="6">
-                    <DictionaryAutocomplete Dictionary="PayPeriod" DataSource="datasource"
+                    <PicklistAutocomplete Picklist="Picklist.PayPeriod"
                                      Label="@L["Pay Period"]"
                                      For="@(() => model.PayPeriod)"
-                                     @bind-Value="model.PayPeriod"></DictionaryAutocomplete>
+                                     @bind-Value="model.PayPeriod"></PicklistAutocomplete>
                 </MudItem>
                 <MudItem xs="12">
                     <MudTextField Label="@L["Remark"]"

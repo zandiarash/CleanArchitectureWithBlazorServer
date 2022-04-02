@@ -12,12 +12,11 @@
             </MudTextField>
         </MudItem>
         <MudItem xs="12" sm="6" md="3">
-            <DictionaryAutocomplete DataSource="DataSource"
-                                    Dictionary="ShippingOrderStatus"
+            <PicklistAutocomplete  Picklist="Picklist.ShippingOrderStatus"
                                     Placeholder="@L["Search for status"]"
                                     @bind-Value="TRequest.Status"
                                     TextChanged="OnSearchStringChanged">
-            </DictionaryAutocomplete>
+            </PicklistAutocomplete>
         </MudItem>
         <MudItem xs="12" sm="6" md="3">
             <MudTextField @bind-Value="TRequest.PlateNumber" Clearable="true"
@@ -34,12 +33,11 @@
             </MudTextField>
         </MudItem>
         <MudItem xs="12" sm="6" md="3">
-            <DictionaryAutocomplete DataSource="DataSource"
-                                    Dictionary="Trip"
+            <PicklistAutocomplete   Picklist="Picklist.Trip"
                                     Placeholder="@L["Search for trip"]"
                                     @bind-Value="TRequest.Trip"
                                     TextChanged="OnSearchStringChanged">
-            </DictionaryAutocomplete>
+            </PicklistAutocomplete>
         </MudItem>
         <MudItem xs="12" sm="6" md="3">
             <MudDateRangePicker @ref="_picker1" Label="@L["Search for Pickup Time"]" Clearable="true" DateRangeChanged="OnDateRangeChanged1">

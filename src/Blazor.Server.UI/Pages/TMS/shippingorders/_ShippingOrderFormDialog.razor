@@ -23,20 +23,18 @@
                     </MudTextField>
                 </MudItem>
                 <MudItem xs="12" sm="4">
-                    <DictionaryAutocomplete  DataSource="datasource"
-                                             Dictionary="Trip"
+                    <PicklistAutocomplete   Picklist="Picklist.Trip"
                                             Label="@L["Trip"]"
                                             ReadOnly="false"
                                             For="@(() => model.Trip)"
-                                            @bind-Value="model.Trip"></DictionaryAutocomplete>
+                                            @bind-Value="model.Trip"></PicklistAutocomplete>
                 </MudItem>
                 <MudItem xs="12" sm="4">
-                    <DictionaryAutocomplete  DataSource="datasource"
-                                             Dictionary="ShippingOrderStatus"
+                    <PicklistAutocomplete  Picklist="Picklist.ShippingOrderStatus"
                                             Label="@L["Status"]"
                                             ReadOnly="false"
                                             For="@(() => model.Status)"
-                                            @bind-Value="model.Status"></DictionaryAutocomplete>
+                                            @bind-Value="model.Status"></PicklistAutocomplete>
                 </MudItem>
                 <MudItem xs="12" sm="4">
                     <MudSelect T="string" Label="@L["Truck"]"
@@ -272,13 +270,13 @@
                                 </RowTemplate>
                                 <RowEditingTemplate>
                                     <MudTd DataLabel="@L["Name"]">
-                                         <DictionaryAutocomplete DataSource="datasource" Dictionary="CostName" @bind-Value="@context.Name" Required />
+                                         <PicklistAutocomplete Picklist="Picklist.CostName" @bind-Value="@context.Name" Required />
                                     </MudTd>
                                     <MudTd DataLabel="@L["Paid"]">
-                                        <DictionaryAutocomplete DataSource="datasource" Dictionary="Paid" @bind-Value="@context.Paid"  />
+                                        <PicklistAutocomplete Picklist="Picklist.Paid"  @bind-Value="@context.Paid"  />
                                     </MudTd>
                                     <MudTd DataLabel="@L["Cash"]">
-                                        <DictionaryAutocomplete DataSource="datasource" Dictionary="Cash" @bind-Value="@context.Cash"  />
+                                        <PicklistAutocomplete Picklist="Picklist.Cash" @bind-Value="@context.Cash"  />
                                     </MudTd>
                                     <MudTd DataLabel="@L["Cost"]">
                                         <MudNumericField @bind-Value="@context.Cost" Required />

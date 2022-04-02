@@ -20,17 +20,18 @@
                     </MudTextField>
                 </MudItem>
                  <MudItem xs="12" sm="6">
-                    <DictionaryAutocomplete DataSource="datasource" Dictionary="VehicleStatus"
+
+                    <PicklistAutocomplete Picklist="Picklist.VehicleStatus"
                                      Label="@L["Status"]"
                                      For="@(() => model.Status)"
-                                     @bind-Value="model.Status"></DictionaryAutocomplete>
+                                     @bind-Value="model.Status"></PicklistAutocomplete>
                 </MudItem>
                 <MudItem xs="12" sm="6">
-                    <DictionaryAutocomplete DataSource="datasource" Dictionary="VehicleType"
+                    <PicklistAutocomplete Picklist="Picklist.VehicleType"
                                      Label="@L["Vehicle Type"]"
                                      For="@(() => model.VehicleType)"
                                      ResetValueOnEmptyText="true"
-                                     @bind-Value="model.VehicleType"></DictionaryAutocomplete>
+                                     @bind-Value="model.VehicleType"></PicklistAutocomplete>
                 </MudItem>
                 <MudItem xs="12" sm="6">
                     <MudTextField Label="@L["Trailer Number"]" @bind-Value="model.TrailerNumber"

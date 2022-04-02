@@ -5,9 +5,9 @@ using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Http;
 using CleanArchitecture.Blazor.Infrastructure.Services.Authentication;
 using Microsoft.AspNetCore.Components.Server.Circuits;
+using CleanArchitecture.Blazor.Infrastructure.Services.Picklist;
 
 namespace CleanArchitecture.Blazor.Infrastructure;
 
@@ -31,13 +31,6 @@ public static class DependencyInjection
             services.AddDatabaseDeveloperPageExceptionFilter();
         }
 
-
-        services.Configure<CookiePolicyOptions>(options =>
-        {
-            // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-            options.CheckConsentNeeded = context => true;
-            options.MinimumSameSitePolicy = SameSiteMode.Strict;
-        });
         services.Configure<DashbordSettings>(configuration.GetSection(DashbordSettings.SectionName));
         services.AddSingleton(s => s.GetRequiredService<IOptions<DashbordSettings>>().Value);
         services.AddScoped<IDbContextFactory<ApplicationDbContext>,BlazorContextFactory<ApplicationDbContext>>();
@@ -56,14 +49,15 @@ public static class DependencyInjection
         services.AddScoped<IdentityAuthenticationService>();
         services.AddScoped<AuthenticationStateProvider>(sp => sp.GetRequiredService<IdentityAuthenticationService>());
         services.AddScoped<ICurrentUserService, CurrentUserService>();
-        services.AddTransient<IDateTime, DateTimeService>();
-        services.AddTransient<IExcelService, ExcelService>();
-        services.AddTransient<IUploadService, UploadService>();
-        services.AddTransient<IIdentityService, IdentityService>();
+        services.AddScoped<IPicklistService, PicklistService>();
+        services.AddScoped<IDateTime, DateTimeService>();
+        services.AddScoped<IExcelService, ExcelService>();
+        services.AddScoped<IUploadService, UploadService>();
+        services.AddScoped<IIdentityService, IdentityService>();
         services.Configure<AppConfigurationSettings>(configuration.GetSection("AppConfigurationSettings"));
         services.Configure<MailSettings>(configuration.GetSection("MailSettings"));
-        services.AddTransient<IMailService, SMTPMailService>();
-        services.AddTransient<IDictionaryService, DictionaryService>();
+        services.AddScoped<IMailService, SMTPMailService>();
+        
         services.AddAuthentication();
         services.Configure<IdentityOptions>(options =>
         {
@@ -76,13 +70,6 @@ public static class DependencyInjection
             options.Lockout.AllowedForNewUsers = true;
 
         });
-        services.ConfigureApplicationCookie(options =>
-        {
-            options.ExpireTimeSpan = TimeSpan.FromDays(30);
-            options.Cookie.HttpOnly = true;
-            options.SlidingExpiration = true;
-        });
-
         services.AddAuthorization(options =>
         {
             options.AddPolicy("CanPurge", policy => policy.RequireRole("Administrator"));
