@@ -11,7 +11,7 @@ public class Theme
 
             Palette = new Palette
             {
-                Primary = "#2d4275",
+                Primary = "#283593",
                 Black = "#0A0E19",
                 Success = "#64A70B",
                 Secondary = "#ff4081ff",
@@ -27,7 +27,7 @@ public class Theme
             },
             PaletteDark = new Palette
             {
-                Primary = "#7e6fff",
+                Primary = "#1A237E",
                 Black = "#27272f",
                 Background = "rgb(21,27,34)",
                 BackgroundGrey = "#27272f",

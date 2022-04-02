@@ -52,13 +52,13 @@ public static class DependencyInjection
         services.AddScoped<AuthenticationStateProvider>(sp => sp.GetRequiredService<IdentityAuthenticationService>());
         services.AddScoped<IPicklistService,PicklistService>();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
-        services.AddTransient<IDateTime, DateTimeService>();
-        services.AddTransient<IExcelService, ExcelService>();
-        services.AddTransient<IUploadService, UploadService>();
-        services.AddTransient<IIdentityService, IdentityService>();
+        services.AddScoped<IDateTime, DateTimeService>();
+        services.AddScoped<IExcelService, ExcelService>();
+        services.AddScoped<IUploadService, UploadService>();
+        services.AddScoped<IIdentityService, IdentityService>();
         services.Configure<AppConfigurationSettings>(configuration.GetSection("AppConfigurationSettings"));
         services.Configure<MailSettings>(configuration.GetSection("MailSettings"));
-        services.AddTransient<IMailService, SMTPMailService>();
+        services.AddScoped<IMailService, SMTPMailService>();
         services.AddAuthentication();
         services.Configure<IdentityOptions>(options =>
         {

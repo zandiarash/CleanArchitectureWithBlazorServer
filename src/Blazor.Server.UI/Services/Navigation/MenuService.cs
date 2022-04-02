@@ -14,49 +14,43 @@ public class MenuService : IMenuService
             {
                 new()
                 {
-                    Title = "Home",
-                    Icon = Icons.Material.Filled.Home,
+                    Title = "Deshbord",
+                    Icon = Icons.Material.Filled.Dashboard,
                     Href = "/"
                 },
                 new()
                 {
-                    Title = "E-Commerce",
-                    Icon = Icons.Material.Filled.ShoppingCart,
-                    PageStatus = PageStatus.Completed,
-                    IsParent = true,
-                    MenuItems = new List<MenuSectionSubItemModel>
-                    {
-                        new(){
-                             Title = "Products",
-                             Href = "/pages/products",
-                             PageStatus = PageStatus.Completed,
-                        },
-                        new(){
-                             Title = "Customers",
-                             Href = "/pages/customers",
-                             PageStatus = PageStatus.ComingSoon,
-                        }
-                    }
+                    Title = "Departments",
+                    Icon = Icons.Material.Filled.Apartment,
+                    Href = "/visitor/departments",
+                    PageStatus = PageStatus.Completed
                 },
                 new()
                 {
-                    Title = "Analytics",
-                    Icon = Icons.Material.Filled.Analytics,
-                    Href = "/analytics",
-                    PageStatus = PageStatus.ComingSoon
+                    Title = "Employees",
+                    Icon = Icons.Material.Filled.Person,
+                    Href = "/visitor/employees",
+                    PageStatus = PageStatus.Completed
                 },
                 new()
                 {
-                    Title = "Banking",
-                    Icon = Icons.Material.Filled.Money,
-                    Href = "/banking",
-                    PageStatus = PageStatus.ComingSoon
+                    Title = "Visitors",
+                    Icon = Icons.Material.Filled.DirectionsRun,
+                    Href = "/visitor/Visitors",
+                    PageStatus = PageStatus.Completed
+                },
+                 new()
+                {
+                    Title = "Pre-registers",
+                    Icon = Icons.Material.Filled.Bookmarks,
+                    Href = "/visitor/preregisters",
+                    PageStatus = PageStatus.Completed
                 },
                 new()
                 {
-                    Title = "Booking",
-                    Icon = Icons.Material.Filled.CalendarToday,
-                    Href = "/booking",
+                    Title = "Histories",
+                    Icon = Icons.Material.Filled.History,
+                    Href = "/visitor/histories",
                     PageStatus = PageStatus.ComingSoon
                 }
             }

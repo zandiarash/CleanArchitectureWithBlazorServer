@@ -71,7 +71,6 @@ builder.Services.AddScoped<LayoutService>();
 builder.Services.AddScoped<IUserPreferencesService, UserPreferencesService>();
 builder.Services.AddScoped<IMenuService, MenuService>();
 builder.Services.AddTransient<INotificationService, InMemoryNotificationService>();
-builder.Services.AddTransient<IArticlesService, ArticlesService>();
 builder.Services.AddGoogleAnalytics("G-PRYNCB61NV");
 
 var app = builder.Build();
