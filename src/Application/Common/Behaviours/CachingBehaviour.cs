@@ -21,11 +21,18 @@ public class CachingBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest,
     }
     public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
     {
-        _logger.LogTrace("{Name} is caching with {@Request}.", nameof(request),request);
-        var response = await _cache.GetOrAddAsync(
-            request.CacheKey,
-            async () => await next(),
-            request.Options);
-        return response;
+        if (!string.IsNullOrEmpty(request.CacheKey))
+        {
+            _logger.LogTrace("{Name} is caching with {@Request}.", nameof(request), request);
+            var response = await _cache.GetOrAddAsync(
+                request.CacheKey,
+                async () => await next(),
+                request.Options);
+            return response;
+        }
+        else
+        {
+           return await next();
+        }
     }
 }

@@ -131,7 +131,7 @@
             </ColGroup>
             <HeaderContent>
                 <MudTh Style="width:80px">@L["Actions"]</MudTh>
-                <MudTh><MudTableSortLabel SortLabel="QrCode" T="VisitorDto">@L["QrCode"]</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="PassCode" T="VisitorDto">@L["Pass Code"]</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="Name" T="VisitorDto">@L["Name"]</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="PhoneNumber" T="VisitorDto">@L["Phone Number"]</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="IdentificationNo" T="VisitorDto">@L["Identification No."]</MudTableSortLabel></MudTh>
@@ -169,7 +169,7 @@
                         </MudButton>
                     }
                 </MudTd>
-                <MudTd HideSmall="true" DataLabel="@L["QrCode"]">@context.PassCode</MudTd>
+                <MudTd HideSmall="true" DataLabel="@L["Pass Code"]">@context.PassCode</MudTd>
                 <MudTd DataLabel="@L["Visitor's' Name"]">
                     <MudText>@context.Name</MudText>
                     <MudText Typo="Typo.body2">@context.CompanyName</MudText>
@@ -181,7 +181,6 @@
 
                 <MudTd DataLabel="@L["Identification No."]">
                     <MudText>@context.IdentificationNo</MudText>
-                    <MudText Typo="Typo.body2">@context.Address</MudText>
                 </MudTd>
                 <MudTd DataLabel="@L["Purpose"]">@context.Purpose</MudTd>
                 <MudTd DataLabel="@L["Employee"]">
@@ -332,6 +331,7 @@
             {
                 Id = dto.Id,
                 Name = dto.Name,
+                PassCode=dto.PassCode,
                 QrCode = dto.QrCode,
                 Email = dto.Email,
                 PhoneNumber = dto.PhoneNumber,

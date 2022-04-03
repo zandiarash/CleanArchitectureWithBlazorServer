@@ -8,7 +8,6 @@ namespace CleanArchitecture.Blazor.Application.Features.Visitors.Commands.AddEdi
 
 public class AddEditVisitorCommand : VisitorDto, IRequest<Result<int>>, IMapFrom<Visitor>, ICacheInvalidator
 {
-    public string CacheKey => VisitorCacheKey.GetAllCacheKey;
     public CancellationTokenSource? SharedExpiryTokenSource => VisitorCacheKey.SharedExpiryTokenSource;
 }
 
