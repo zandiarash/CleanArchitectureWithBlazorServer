@@ -45,10 +45,53 @@ public class VisitorsWithPaginationQueryHandler :
 
     public async Task<PaginatedData<VisitorDto>> Handle(VisitorsWithPaginationQuery request, CancellationToken cancellationToken)
     {
-        var data = await _context.Visitors
+        var data = await _context.Visitors.Specify(new SearchVisitorSpecification(request))
           .OrderBy($"{request.OrderBy} {request.SortDirection}")
           .ProjectTo<VisitorDto>(_mapper.ConfigurationProvider)
           .PaginatedDataAsync(request.PageNumber, request.PageSize);
         return data;
+    }
+
+}
+
+public class SearchVisitorSpecification : Specification<Visitor>
+{
+    public SearchVisitorSpecification(VisitorsWithPaginationQuery query)
+    {
+        AddInclude(x => x.Employee);
+        AddInclude(x => x.Designation);
+        Criteria = q => q.Name != null;
+        if (!string.IsNullOrEmpty(query.Keyword))
+        {
+            And(x => x.Name.Contains(query.Keyword) || x.Comment.Contains(query.Keyword) || x.CompanyName.Contains(query.Keyword));
+        }
+        if (!string.IsNullOrEmpty(query.Name))
+        {
+            And(x => x.Name.Contains(query.Name));
+        }
+        if (!string.IsNullOrEmpty(query.LicensePlateNumber))
+        {
+            And(x => x.LicensePlateNumber.Contains(query.LicensePlateNumber));
+        }
+        if (!string.IsNullOrEmpty(query.CompanyName))
+        {
+            And(x => x.CompanyName.Contains(query.CompanyName));
+        }
+        if (!string.IsNullOrEmpty(query.Employee))
+        {
+            And(x => x.Employee.Name.Contains(query.Employee));
+        }
+        if (!string.IsNullOrEmpty(query.Purpose))
+        {
+            And(x => x.Purpose==query.Purpose);
+        }
+        if(query.Approved is not null)
+        {
+            And(x => x.Apppoved == query.Approved);
+        }
+        if (query.ExpectedDate1 is not null && query.ExpectedDate2 is not null)
+        {
+            And(x => x.ExpectedDate >= query.ExpectedDate1 && x.ExpectedDate < query.ExpectedDate2.Value.AddDays(1));
+        }
     }
 }

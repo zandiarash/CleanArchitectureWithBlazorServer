@@ -41,6 +41,7 @@
                         {
                             <MudButton DisableElevation Variant="Variant.Outlined" Color="Color.Primary"
                                    StartIcon="@Icons.Material.Filled.Add"
+                                   Disabled="@_loading"
                                    Size="Size.Small"
                                    OnClick="OnCreate"
                                    Style="margin-right: 4px; margin-bottom:4px"
@@ -103,7 +104,7 @@
                             <MudMenuItem Disabled="@_loading" OnClick="@(()=>OnRefresh())">@L["Refresh"]</MudMenuItem>
                             @if (_canCreate)
                             {
-                                <MudMenuItem OnClick="OnCreate">@L["Create"]</MudMenuItem>
+                                <MudMenuItem Disabled="@_loading" OnClick="OnCreate">@L["Create"]</MudMenuItem>
                             }
                             @if (_canDelete)
                             {
@@ -196,19 +197,19 @@
                     <MudText Typo="Typo.body2">@context.CheckoutDate</MudText>
                 </MudTd>
                 <MudTd DataLabel="@L["Trip Code"]">
-                    @if (context.TripCode is not null)
+                    @if(context.TripCode is not null)
                     {
                         <MudTooltip Text="@L["Trip Code"]">
                             <MudIconButton Icon="@Icons.Material.Filled.Route" aria-label="@L["Trip Code"]" Title="@L["Trip Code"]" />
                         </MudTooltip>
                     }
-                    @if (context.HealthCode is not null)
+                    @if(context.HealthCode is not null)
                     {
                         <MudTooltip Text="@L["Health Code"]">
                             <MudIconButton Icon="@Icons.Material.Filled.MonitorHeart" aria-label="@L["Health Code"]" Title="@L["Health Code"]" />
                         </MudTooltip>
                     }
-                    @if (context.NucleicAcidTestReport is not null)
+                    @if(context.NucleicAcidTestReport is not null)
                     {
                         <MudTooltip Text="@L["Nucleic Acid Test Report"]">
                             <MudIconButton Icon="@Icons.Material.Filled.FactCheck" aria-label="@L["Nucleic Acid Test Report"]" Title="@L["Nucleic Acid Test Report"]" />
