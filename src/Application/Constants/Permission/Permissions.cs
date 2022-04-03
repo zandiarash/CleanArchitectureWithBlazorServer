@@ -25,6 +25,19 @@ public static class Permissions
         public const string Search = "Permissions.Logs.Search";
         public const string Export = "Permissions.Logs.Export";
     }
+    [DisplayName("Visitors")]
+    [Description("Visitors Permissions")]
+    public static class Visitors
+    {
+        public const string View = "Permissions.Visitors.View";
+        public const string Create = "Permissions.Visitors.Create";
+        public const string Edit = "Permissions.Visitors.Edit";
+        public const string Delete = "Permissions.Visitors.Delete";
+        public const string Search = "Permissions.Visitors.Search";
+        public const string Approve = "Permissions.Visitors.Approve";
+        public const string Checkin = "Permissions.Visitors.Checkin";
+        public const string Checkout = "Permissions.Visitors.Checkout";
+    }
     [DisplayName("Employees")]
     [Description("Employees Permissions")]
     public static class Employees

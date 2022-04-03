@@ -136,7 +136,7 @@ public static class ApplicationDbContextSeed
         {
             var depId = context.Departments.First().Id;
             var desId = context.Designations.First().Id;
-            context.Employees.Add(new Domain.Entities.Employee() { Name="Mike Brown",Email= "Brown.Mike@gmail.com",PhoneNumber="021-76888098", DepartmentId= depId, DesignationId= desId, Gender= "Female", About="Nice" });
+            context.Employees.Add(new Domain.Entities.Employee() { Name="Mike Brown",Email= "Brown.Mike@gmail.com",PhoneNumber="021-76888098",  DepartmentId= depId, DesignationId= desId, Gender= "Female", About="Nice" });
             await context.SaveChangesAsync();
         }
         if (!context.Visitors.Any())
@@ -146,7 +146,7 @@ public static class ApplicationDbContextSeed
             var empId=context.Employees.First().Id;
             var hashids = new Hashids("Blazor.net");
             var hash = hashids.EncodeLong(DateTime.Now.Ticks);
-            context.Visitors.Add(new Domain.Entities.Visitor() { Name = "Mike Brown", Email = "Brown.Mike@gmail.com", PhoneNumber = "021-76888098", DesignationId = desId, Gender = "Female", Purpose = "Meeting",Comment="have a meeting...", Address="China", PrivacyPolicy=true, Promise=true,  ExpectedDate= DateTime.Now, ExpectedTime=new TimeSpan(12,0,0), CompanyName="Google Inc.", EmployeeId= empId , QrCode= hash});
+            context.Visitors.Add(new Domain.Entities.Visitor() { Name = "Mike Brown", Email = "Brown.Mike@gmail.com", PhoneNumber = "021-76888098", IdentificationNo="3205830000000001", DesignationId = desId, Gender = "Female", Purpose = "Meeting",Comment="have a meeting...", Address="China", PrivacyPolicy=true, Promise=true,  ExpectedDate= DateTime.Now, ExpectedTime=new TimeSpan(12,0,0), CompanyName="Google Inc.", EmployeeId= empId , PassCode= hash});
             await context.SaveChangesAsync();
         }
     }

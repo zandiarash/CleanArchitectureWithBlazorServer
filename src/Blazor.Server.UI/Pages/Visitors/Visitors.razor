@@ -1,15 +1,15 @@
-@page "/pages/products"
+@page "/visitor/visitors"
 
-@using CleanArchitecture.Blazor.Application.Features.Products.Commands.Delete
-@using CleanArchitecture.Blazor.Application.Features.Products.Commands.Import
-@using CleanArchitecture.Blazor.Application.Features.Products.DTOs
-@using CleanArchitecture.Blazor.Application.Features.Products.Queries.Export
-@using CleanArchitecture.Blazor.Application.Features.Products.Queries.Pagination
-@using CleanArchitecture.Blazor.Application.Features.Products.Commands.AddEdit
+
+@using CleanArchitecture.Blazor.Application.Features.Visitors.Commands.Delete
+@using CleanArchitecture.Blazor.Application.Features.Visitors.DTOs
+@using CleanArchitecture.Blazor.Application.Features.Visitors.Queries.Pagination
+@using CleanArchitecture.Blazor.Application.Features.Visitors.Commands.AddEdit
+@using HashidsNet
 
 @inject IJSRuntime JS
-@inject IStringLocalizer<Products> L
-@attribute [Authorize(Policy = Permissions.Products.View)]
+@inject IStringLocalizer<Visitors> L
+@attribute [Authorize(Policy = Permissions.Visitors.View)]
 <PageTitle>@Title</PageTitle>
 <style>
     .mud-table-toolbar {
@@ -18,8 +18,8 @@
 </style>
 <ErrorBoundary>
     <ChildContent>
-        <AdvancedSearchProductsComponent TRequest="query" OnFilterChanged="OnFilterChanged"></AdvancedSearchProductsComponent>
-        <MudTable ServerData="@(new Func<TableState, Task<TableData<ProductDto>>>(ServerReload))"
+        <AdvancedSearchVisitorsComponent TRequest="query" OnFilterChanged="OnFilterChanged"></AdvancedSearchVisitorsComponent>
+        <MudTable ServerData="@(new Func<TableState, Task<TableData<VisitorDto>>>(ServerReload))"
                   FixedHeader="true"
                   FixedFooter="true"
                   Height="calc(100vh - 265px)"
@@ -29,7 +29,7 @@
                   Hover="true" @ref="_table">
             <ToolBarContent>
                 <div class="justify-start pt-3">
-                    <MudText Typo="Typo.h6">@L["Product"]</MudText>
+                    <MudText Typo="Typo.h6">@L["Visitors"]</MudText>
                     <MudHidden Breakpoint="Breakpoint.SmAndDown">
                         <MudButton DisableElevation Variant="Variant.Outlined"
                                    Size="Size.Small"
@@ -131,11 +131,16 @@
             </ColGroup>
             <HeaderContent>
                 <MudTh Style="width:80px">@L["Actions"]</MudTh>
-                <MudTh><MudTableSortLabel SortLabel="Brand" T="ProductDto">@L["Brand Name"]</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortLabel="Name" T="ProductDto">@L["Product Name"]</MudTableSortLabel></MudTh>
-                <MudTh Style="text-align:right"><MudTableSortLabel SortLabel="Price" T="ProductDto">@L["Price"]</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortLabel="Unit" T="ProductDto">@L["Unit"]</MudTableSortLabel></MudTh>
-
+                <MudTh><MudTableSortLabel SortLabel="QrCode" T="VisitorDto">@L["QrCode"]</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="Name" T="VisitorDto">@L["Name"]</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="PhoneNumber" T="VisitorDto">@L["Phone Number"]</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="IdentificationNo" T="VisitorDto">@L["Identification No."]</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="Purpose" T="VisitorDto">@L["Purpose"]</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="Employee" T="VisitorDto">@L["Employee"]</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="ExpectedDate" T="VisitorDto">@L["Expected Date"]</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="CheckinDate" T="VisitorDto">@L["Checkin Date"]</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="TripCode" T="VisitorDto">@L["Trip Code"]</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="Apppoved" T="VisitorDto">@L["Apppoved"]</MudTableSortLabel></MudTh>
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel="@L["Actions"]">
@@ -164,13 +169,47 @@
                         </MudButton>
                     }
                 </MudTd>
-                <MudTd HideSmall="true" DataLabel="@L["Brand Name"]">@context.Brand</MudTd>
-                <MudTd DataLabel="@L["Product Name"]">
+                <MudTd HideSmall="true" DataLabel="@L["QrCode"]">@context.PassCode</MudTd>
+                <MudTd DataLabel="@L["Visitor's' Name"]">
                     <MudText>@context.Name</MudText>
-                    <MudText Typo="Typo.body2">@context.Description</MudText>
+                    <MudText Typo="Typo.body2">@context.CompanyName</MudText>
                 </MudTd>
-                <MudTd DataLabel="@L["Price"]" Style="text-align:right">@context.Price.ToString("C2")</MudTd>
-                <MudTd DataLabel="@L["Unit"]">@context.Unit</MudTd>
+                <MudTd DataLabel="@L["Visitor's' Phone Number"]">
+                    <MudText>@context.PhoneNumber</MudText>
+                    <MudText Typo="Typo.body2">@context.Email</MudText>
+                </MudTd>
+
+                <MudTd DataLabel="@L["Identification No."]">
+                    <MudText>@context.IdentificationNo</MudText>
+                    <MudText Typo="Typo.body2">@context.Address</MudText>
+                </MudTd>
+                <MudTd DataLabel="@L["Purpose"]">@context.Purpose</MudTd>
+                <MudTd DataLabel="@L["Employee"]">
+                    <MudText>@context.Employee</MudText>
+                    <MudText Typo="Typo.body2">@context.EmployeeDesignation</MudText>
+                </MudTd>
+                <MudTd DataLabel="@L["Expected Date"]">
+                    <MudText>@context.ExpectedDate</MudText>
+                    <MudText Typo="Typo.body2">@context.ExpectedTime</MudText>
+                </MudTd>
+                <MudTd DataLabel="@L["Checkin Date"]">
+                    <MudText Typo="Typo.body2">@context.CheckinDate</MudText>
+                    <MudText Typo="Typo.body2">@context.CheckoutDate</MudText>
+                </MudTd>
+                <MudTd DataLabel="@L["Trip Code"]">
+                    <MudTooltip Text="@L["Trip Code"]">
+                        <MudIcon Icon="@Icons.Material.Filled.Route" Title="@L["Trip Code"]" />
+                    </MudTooltip>
+                    <MudTooltip Text="@L["Health Code"]">
+                        <MudIcon Icon="@Icons.Material.Filled.MonitorHeart" Title="@L["Health Code"]" />
+                    </MudTooltip>
+                    <MudTooltip Text="@L["Nucleic Acid Test Report"]">
+                        <MudIcon Icon="@Icons.Material.Filled.FactCheck" Title="@L["Nucleic Acid Test Report"]" />
+                    </MudTooltip>
+                </MudTd>
+                <MudTd DataLabel="@L["Apppoved"]">
+                    <MudCheckBox Disabled="true" Checked="@context.Apppoved"></MudCheckBox>
+                </MudTd>
             </RowTemplate>
             <NoRecordsContent>
                 <MudText>@L["No matching records found"]</MudText>
@@ -189,8 +228,8 @@
 </ErrorBoundary>
 @code {
     public string? Title { get; private set; }
-    private HashSet<ProductDto> _selectedItems = new HashSet<ProductDto>();
-    private MudTable<ProductDto> _table = default!;
+    private HashSet<VisitorDto> _selectedItems = new HashSet<VisitorDto>();
+    private MudTable<VisitorDto> _table = default!;
     private int _totalItems;
     private string _searchString = string.Empty;
     private bool _loading;
@@ -198,11 +237,12 @@
     private bool _downloading;
     [Inject]
     private ISender _mediator { get; set; } = default!;
-
+    [Inject]
+    private Hashids hashids { get; set; } = default!;
     [CascadingParameter]
     protected Task<AuthenticationState> AuthState { get; set; } = default!;
 
-    private ProductsWithPaginationQuery query { get; set; } = new();
+    private VisitorsWithPaginationQuery query { get; set; } = new();
 
     private bool _canSearch;
     private bool _canCreate;
@@ -212,16 +252,17 @@
     private bool _canExport;
     protected override async Task OnInitializedAsync()
     {
-        Title = L["Products"];
+        Title = L["Visitors"];
         var state = await AuthState;
-        _canCreate = (await AuthService.AuthorizeAsync(state.User, Permissions.Products.Create)).Succeeded;
-        _canSearch = (await AuthService.AuthorizeAsync(state.User, Permissions.Products.Search)).Succeeded;
-        _canEdit = (await AuthService.AuthorizeAsync(state.User, Permissions.Products.Edit)).Succeeded;
-        _canDelete = (await AuthService.AuthorizeAsync(state.User, Permissions.Products.Delete)).Succeeded;
-        _canImport = (await AuthService.AuthorizeAsync(state.User, Permissions.Products.Import)).Succeeded;
-        _canExport = (await AuthService.AuthorizeAsync(state.User, Permissions.Products.Export)).Succeeded;
+        _canCreate = (await AuthService.AuthorizeAsync(state.User, Permissions.Visitors.Create)).Succeeded;
+        _canSearch = (await AuthService.AuthorizeAsync(state.User, Permissions.Visitors.Search)).Succeeded;
+        _canEdit = (await AuthService.AuthorizeAsync(state.User, Permissions.Visitors.Edit)).Succeeded;
+        _canDelete = (await AuthService.AuthorizeAsync(state.User, Permissions.Visitors.Delete)).Succeeded;
+        _canImport = false;
+        _canExport = false;
+
     }
-    private async Task<TableData<ProductDto>> ServerReload(TableState state)
+    private async Task<TableData<VisitorDto>> ServerReload(TableState state)
     {
         try
         {
@@ -232,7 +273,7 @@
             query.PageNumber = state.Page + 1;
             query.PageSize = state.PageSize;
             var result = await _mediator.Send(query);
-            return new TableData<ProductDto>() { TotalItems = result.TotalItems, Items = result.Items };
+            return new TableData<VisitorDto>() { TotalItems = result.TotalItems, Items = result.Items };
         }
         finally
         {
@@ -240,11 +281,7 @@
         }
 
     }
-    //private  async Task OnFilterChanged(string s)
-    //{
-    //      await _table.ReloadServerData();
 
-    //}
     private void OnFilterChanged(string s)
     {
         InvokeAsync(async () =>
@@ -266,14 +303,21 @@
     }
     private async Task OnCreate()
     {
-        var command = new AddEditProductCommand();
+        var command = new AddEditVisitorCommand()
+            {
+                PassCode = hashids.EncodeLong(DateTime.Now.Ticks),
+                Apppoved = false,
+                PrivacyPolicy = true,
+                Promise = true
+            };
         var parameters = new DialogParameters
             {
-         { nameof(_ProductFormDialog.model),command },
+
+        { nameof(_VisitorFormDialog.model),command },
             };
         var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
-        var dialog = DialogService.Show<_ProductFormDialog>
-        (L["Create a new product"], parameters, options);
+        var dialog = DialogService.Show<_VisitorFormDialog>
+        (L["Create a new Visitor"], parameters, options);
         var state = await dialog.Result;
         if (!state.Cancelled)
         {
@@ -282,25 +326,46 @@
             Snackbar.Add($"{L["Create successfully"]}", MudBlazor.Severity.Info);
         }
     }
-    private async Task OnEdit(ProductDto dto)
+    private async Task OnEdit(VisitorDto dto)
     {
-        var command = new AddEditProductCommand()
+        var command = new AddEditVisitorCommand()
             {
                 Id = dto.Id,
                 Name = dto.Name,
-                Brand = dto.Brand,
-                Description = dto.Description,
-                Pictures = dto.Pictures,
-                Unit = dto.Unit,
-                Price = dto.Price
+                QrCode = dto.QrCode,
+                Email = dto.Email,
+                PhoneNumber = dto.PhoneNumber,
+                IdentificationNo = dto.IdentificationNo,
+                LicensePlateNumber = dto.LicensePlateNumber,
+                Address = dto.Address,
+                Gender = dto.Gender,
+                CompanyName = dto.CompanyName,
+                Purpose = dto.Purpose,
+                Comment = dto.Comment,
+                DesignationId = dto.DesignationId,
+                EmployeeId = dto.EmployeeId,
+                CheckinDate = dto.CheckinDate,
+                CheckoutDate = dto.CheckoutDate,
+                ExpectedDate = dto.ExpectedDate,
+                ExpectedTime = dto.ExpectedTime,
+                Avatar = dto.Avatar,
+                TripCode = dto.TripCode,
+                HealthCode = dto.HealthCode,
+                NucleicAcidTestReport = dto.NucleicAcidTestReport,
+                Status = dto.Status,
+                Apppoved = dto.Apppoved,
+                ApprovalOutcome = dto.ApprovalOutcome,
+                PrivacyPolicy = dto.PrivacyPolicy,
+                Promise = dto.Promise
+
             };
         var parameters = new DialogParameters
                 {
-            { nameof(_ProductFormDialog.model),command },
+            { nameof(_VisitorFormDialog.model),command },
                 };
         var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true };
-        var dialog = DialogService.Show<_ProductFormDialog>
-        (L["Edit the product"], parameters, options);
+        var dialog = DialogService.Show<_VisitorFormDialog>
+        (L["Edit the Visitor"], parameters, options);
         var state = await dialog.Result;
         if (!state.Cancelled)
         {
@@ -310,9 +375,9 @@
         }
     }
 
-    private async Task OnDelete(ProductDto dto)
+    private async Task OnDelete(VisitorDto dto)
     {
-        var deleteContent = L["You're sure you want to delete the product:{0}?"];
+        var deleteContent = L["You're sure you want to delete the Visitor:{0}?"];
         var parameters = new DialogParameters
                     {
                 { nameof(DeleteConfirmation.ContentText), string.Format(deleteContent, dto.Name) }
@@ -323,7 +388,7 @@
         var state = await dialog.Result;
         if (!state.Cancelled)
         {
-            var command = new DeleteProductCommand(new int[] { dto.Id });
+            var command = new DeleteVisitorCommand(new int[] { dto.Id });
             var result = await _mediator.Send(command);
             await _table.ReloadServerData();
             Snackbar.Add($"{L["Deleted successfully"]}", MudBlazor.Severity.Info);
@@ -343,48 +408,20 @@
         var state = await dialog.Result;
         if (!state.Cancelled)
         {
-            var command = new DeleteProductCommand(_selectedItems.Select(x => x.Id).ToArray());
+            var command = new DeleteVisitorCommand(_selectedItems.Select(x => x.Id).ToArray());
             var result = await _mediator.Send(command);
             await _table.ReloadServerData();
             Snackbar.Add($"{L["Deleted successfully"]}", MudBlazor.Severity.Info);
-            _selectedItems = new HashSet<ProductDto>
+            _selectedItems = new HashSet<VisitorDto>
             ();
         }
     }
-    private async Task OnExport()
+    private void OnExport()
     {
-        _downloading = true;
-        var request = new ExportProductsQuery()
-            {
-                Keyword = _searchString,
-                OrderBy = string.IsNullOrEmpty(_table.TableContext.SortFieldLabel) ? "Id" : _table.TableContext.SortFieldLabel,
-                SortDirection = (_table.TableContext.SortDirection == SortDirection.None ? SortDirection.Descending.ToString() : _table.TableContext.SortDirection.ToString()),
-            };
-        var result = await _mediator.Send(request);
-        using var streamRef = new DotNetStreamReference(new MemoryStream(result));
-        await JS.InvokeVoidAsync("downloadFileFromStream", $"{L["Products"]}.xlsx", streamRef);
-        _downloading = false;
-    }
-    private async Task OnImportData(InputFileChangeEventArgs e)
-    {
-        _uploading = true;
-        var stream = new MemoryStream();
-        await e.File.OpenReadStream().CopyToAsync(stream);
-        var command = new ImportProductsCommand(e.File.Name, stream.ToArray());
 
-        var result = await _mediator.Send(command);
-        if (result.Succeeded)
-        {
-            await _table.ReloadServerData();
-            Snackbar.Add($"{L["Import data successfully"]}", MudBlazor.Severity.Info);
-        }
-        else
-        {
-            foreach (var msg in result.Errors)
-            {
-                Snackbar.Add($"{msg}", MudBlazor.Severity.Error);
-            }
-        }
-        _uploading = false;
+    }
+    private void OnImportData(InputFileChangeEventArgs e)
+    {
+
     }
     }

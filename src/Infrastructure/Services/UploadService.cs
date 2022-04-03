@@ -16,6 +16,11 @@ public class UploadService : IUploadService
             var folder = request.UploadType.ToDescriptionString();
             var folderName = Path.Combine("Files", folder);
             var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+            if (!string.IsNullOrEmpty(request.Folder))
+            {
+                folderName = Path.Combine(folderName, request.Folder);
+                pathToSave = Path.Combine(pathToSave, request.Folder);
+            }
             bool exists = Directory.Exists(pathToSave);
             if (!exists) Directory.CreateDirectory(pathToSave);
             var fileName = request.FileName.Trim('"');

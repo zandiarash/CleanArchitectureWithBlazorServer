@@ -65,6 +65,7 @@ public enum Picklist
     Unit,
     Brand,
     Gender,
+    Purpose,
     ActiveStatus
 }
 

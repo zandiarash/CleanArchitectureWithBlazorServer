@@ -43,7 +43,7 @@ public class MenuService : IMenuService
                 {
                     Title = "Visitors",
                     Icon = Icons.Material.Filled.DirectionsRun,
-                    Href = "/visitor/Visitors",
+                    Href = "/visitor/visitors",
                     PageStatus = PageStatus.Completed
                 },
                  new()
