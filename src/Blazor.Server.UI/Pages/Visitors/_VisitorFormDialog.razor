@@ -17,6 +17,7 @@
                 <MudItem xs="12" sm="6" md="4">
                     <MudTextField Label="@L["Visitor's Name"]" @bind-Value="model.Name"
                                   For="@(() => model.Name)"
+                                  Disabled="@(model.Apppoved==true)"
                                   Required="true"
                                   RequiredError="@L["product name is required!"]">
                     </MudTextField>
@@ -24,16 +25,19 @@
                 <MudItem xs="12" sm="6" md="8">
                     <MudTextField Label="@L["Company Name"]"
                                   For="@(() => model.CompanyName)"
+                                  Disabled="@(model.Apppoved==true)"
                                   @bind-Value="model.CompanyName"></MudTextField>
                 </MudItem>
                 <MudItem xs="12" sm="6" md="4">
                     <MudTextField Label="@L["License Plate Number"]"
                                   For="@(() => model.LicensePlateNumber)"
+                                  Disabled="@(model.Apppoved==true)"
                                   @bind-Value="model.LicensePlateNumber"></MudTextField>
                 </MudItem>
                 <MudItem xs="12" sm="6" md="4">
                     <MudTextField Label="@L["Email"]"
                                   For="@(() => model.Email)"
+                                  Disabled="@(model.Apppoved==true)"
                                   Required="true"
                                   RequiredError="@L["email is required!"]"
                                   @bind-Value="model.Email"></MudTextField>
@@ -41,6 +45,7 @@
                 <MudItem xs="12" sm="6" md="4">
                     <MudTextField Label="@L["Phone Number"]"
                                   For="@(() => model.PhoneNumber)"
+                                  Disabled="@(model.Apppoved==true)"
                                   Required="true"
                                   RequiredError="@L["Phone Number is required!"]"
                                   @bind-Value="model.PhoneNumber"></MudTextField>
@@ -48,12 +53,14 @@
                 <MudItem xs="12" sm="6" md="4">
                     <MudTextField Label="@L["Identification No."]"
                                   For="@(() => model.IdentificationNo)"
+                                  Disabled="@(model.Apppoved==true)"
                                   Required="true"
                                   RequiredError="@L["Identification No. is required!"]"
                                   @bind-Value="model.IdentificationNo"></MudTextField>
                 </MudItem>
                 <MudItem xs="12" sm="6" md="4">
                     <PicklistAutocomplete Picklist="Picklist.Gender"
+                                          Disabled="@(model.Apppoved==true)"
                                           Label="@L["Gender"]"
                                           For="@(() => model.Gender)"
                                           ResetValueOnEmptyText="true"
@@ -63,6 +70,7 @@
                 <MudItem xs="12" sm="6" md="4">
                     <PicklistAutocomplete Picklist="Picklist.Purpose"
                                           Label="@L["Purpose"]"
+                                          Disabled="@(model.Apppoved==true)"
                                           Required="true"
                                           RequiredError="@L["purpose is required!"]"
                                           For="@(() => model.Purpose)"
@@ -72,6 +80,7 @@
                 <MudItem xs="12" sm="6" md="4">
                     <EmployeeAutocomplete Label="@L["Select Employee"]"
                                           Required="true"
+                                          Disabled="@(model.Apppoved==true)"
                                           RequiredError="@L["employee is required!"]"
                                           For="@(() => model.EmployeeId)"
                                           ResetValueOnEmptyText="true"
@@ -79,6 +88,7 @@
                 </MudItem>
                 <MudItem xs="12" sm="6" md="4">
                     <MudDatePicker Label="@L["Expected Date"]"
+                                   Disabled="@(model.Apppoved==true)"
                                    Required="true"
                                    RequiredError="@L["expected date is required!"]"
                                    For="@(() => model.ExpectedDate)"
@@ -87,6 +97,7 @@
                 <MudItem xs="12" sm="6" md="4">
                     <MudTimePicker Label="@L["Expected Time"]"
                                    Required="true"
+                                   Disabled="@(model.Apppoved==true)"
                                    RequiredError="@L["expected time is required!"]"
                                    AmPm="true" TimeFormat="h:mm tt"
                                    For="@(() => model.ExpectedTime)"
@@ -95,6 +106,7 @@
                 <MudItem xs="12" sm="6" >
                     <MudTextField Label="@L["Address"]"
                                   Lines="2"
+                                  Disabled="@(model.Apppoved==true)"
                                   For="@(() => model.Address)"
                                   @bind-Value="model.Address"></MudTextField>
                 </MudItem>
@@ -102,17 +114,20 @@
                     <MudTextField Label="@L["Comment"]"
                                   For="@(() => model.Comment)"
                                   Lines="2"
+                                  Disabled="@(model.Apppoved==true)"
                                   @bind-Value="model.Comment"></MudTextField>
                 </MudItem>
 
                 
                 <MudItem xs="12" sm="6" md="4">
                     <MudCheckBox Label="@L["Has apppoved"]"
+                                 Disabled="@(model.Apppoved==true)"
                                  For="@(() => model.Apppoved)" ReadOnly="true"
                                  @bind-Checked="model.Apppoved"></MudCheckBox>
                 </MudItem>
                 <MudItem xs="12">
                     <MudTextField Label="@L["Approval Outcome"]"
+                                  Disabled="@(model.Apppoved==true)"
                                   For="@(() => model.ApprovalOutcome)"
                                   @bind-Value="model.ApprovalOutcome"></MudTextField>
                 </MudItem>
@@ -124,8 +139,7 @@
                                 <MudText Typo="Typo.body2">@L["This QR code for your pass card"]</MudText>
                             </MudCardContent>
                             <MudCardActions>
-                               
-                                <MudButton Variant="Variant.Text"  Color="MudBlazor.Color.Primary">@L["Generate a QRCODE"]</MudButton>
+                                <MudButton Variant="Variant.Text" Disabled="@(model.Apppoved==true)"  Color="MudBlazor.Color.Primary">@model.PassCode</MudButton>
                             </MudCardActions>
                         </MudCard>
                         <MudCard Style="width:200px">
@@ -135,7 +149,7 @@
                             </MudCardContent>
                             <MudCardActions>
                                  <InputFile id="photoInput" OnChange="UploadAvatarPhoto" hidden accept=".jpg, .jpeg, .png" />
-                                <MudButton HtmlTag="label" for="photoInput" Variant="Variant.Text" Color="MudBlazor.Color.Primary">@L["Upload a Photo"]</MudButton>
+                                <MudButton HtmlTag="label" for="photoInput" Disabled="@(model.Apppoved==true)" Variant="Variant.Text" Color="MudBlazor.Color.Primary">@L["Upload a Photo"]</MudButton>
                             </MudCardActions>
                         </MudCard>
                         <MudCard Style="width:200px">
@@ -145,7 +159,7 @@
                             </MudCardContent>
                             <MudCardActions>
                                 <InputFile id="healthcodeInput" OnChange="UploadHealthCodePhoto" hidden accept=".jpg, .jpeg, .png" />
-                                <MudButton HtmlTag="label" for="healthcodeInput" Variant="Variant.Text" Color="MudBlazor.Color.Primary">@L["Upload a health code"]</MudButton>
+                                <MudButton HtmlTag="label" for="healthcodeInput" Disabled="@(model.Apppoved==true)" Variant="Variant.Text" Color="MudBlazor.Color.Primary">@L["Upload a health code"]</MudButton>
                             </MudCardActions>
                         </MudCard>
                         <MudCard Style="width:200px">
@@ -155,7 +169,7 @@
                             </MudCardContent>
                             <MudCardActions>
                                 <InputFile id="tripcodeInput" OnChange="UploadTripCodePhoto" hidden accept=".jpg, .jpeg, .png" />
-                                <MudButton HtmlTag="label" for="tripcodeInput" Variant="Variant.Text" Color="MudBlazor.Color.Primary">@L["Upload a trip code"]</MudButton>
+                                <MudButton HtmlTag="label" for="tripcodeInput" Disabled="@(model.Apppoved==true)" Variant="Variant.Text" Color="MudBlazor.Color.Primary">@L["Upload a trip code"]</MudButton>
                             </MudCardActions>
                         </MudCard>
                         <MudCard Style="width:200px">
@@ -165,7 +179,7 @@
                             </MudCardContent>
                             <MudCardActions>
                                 <InputFile id="testreportInput" OnChange="UploadTestReportPhoto" hidden accept=".jpg, .jpeg, .png" />
-                                <MudButton HtmlTag="label" for="testreportInput" Variant="Variant.Text" Color="MudBlazor.Color.Primary">@L["Upload a nucleic acid test report"]</MudButton>
+                                <MudButton HtmlTag="label" for="testreportInput" Disabled="@(model.Apppoved==true)" Variant="Variant.Text" Color="MudBlazor.Color.Primary">@L["Upload a nucleic acid test report"]</MudButton>
                             </MudCardActions>
                         </MudCard>
                     </div>
@@ -173,12 +187,14 @@
                 <MudItem xs="12" sm="6" >
                     <MudCheckBox Label="@L["Agree Privacy Policy"]"
                                  For="@(() => model.PrivacyPolicy)"
+                                 Disabled="@(model.Apppoved==true)"
                                  Required="true" RequiredError="You must agree"
                                  @bind-Checked="model.PrivacyPolicy"></MudCheckBox>
                 </MudItem>
                 <MudItem xs="12" sm="6" >
                     <MudCheckBox Label="@L["I promise the truth"]"
                                  For="@(() => model.Promise)"
+                                 Disabled="@(model.Apppoved==true)"
                                  Required="true" RequiredError="You must promise"
                                  @bind-Checked="model.Promise"></MudCheckBox>
                 </MudItem>
@@ -358,6 +374,31 @@
         await form.Validate();
         if (form.IsValid)
         {
+            if (model.Promise != true)
+            {
+                Snackbar.Add($"You must promise", MudBlazor.Severity.Error);
+                return;
+            }
+            if (model.PrivacyPolicy != true)
+            {
+                Snackbar.Add($"You must agree", MudBlazor.Severity.Error);
+                return;
+            }
+            if (string.IsNullOrEmpty(model.Avatar))
+            {
+                Snackbar.Add($"You must upload photo", MudBlazor.Severity.Error);
+                return;
+            }
+            if (string.IsNullOrEmpty(model.HealthCode))
+            {
+                Snackbar.Add($"You must upload health code", MudBlazor.Severity.Error);
+                return;
+            }
+            if (string.IsNullOrEmpty(model.TripCode))
+            {
+                Snackbar.Add($"You must upload trip code", MudBlazor.Severity.Error);
+                return;
+            }
             MudDialog.Close(DialogResult.Ok(true));
         }
 

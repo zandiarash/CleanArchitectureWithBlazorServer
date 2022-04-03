@@ -188,7 +188,7 @@
                     <MudText Typo="Typo.body2">@context.EmployeeDesignation</MudText>
                 </MudTd>
                 <MudTd DataLabel="@L["Expected Date"]">
-                    <MudText>@context.ExpectedDate</MudText>
+                    <MudText>@context.ExpectedDate?.Date.ToShortDateString()</MudText>
                     <MudText Typo="Typo.body2">@context.ExpectedTime</MudText>
                 </MudTd>
                 <MudTd DataLabel="@L["Checkin Date"]">
@@ -196,15 +196,24 @@
                     <MudText Typo="Typo.body2">@context.CheckoutDate</MudText>
                 </MudTd>
                 <MudTd DataLabel="@L["Trip Code"]">
-                    <MudTooltip Text="@L["Trip Code"]">
-                        <MudIcon Icon="@Icons.Material.Filled.Route" Title="@L["Trip Code"]" />
-                    </MudTooltip>
-                    <MudTooltip Text="@L["Health Code"]">
-                        <MudIcon Icon="@Icons.Material.Filled.MonitorHeart" Title="@L["Health Code"]" />
-                    </MudTooltip>
-                    <MudTooltip Text="@L["Nucleic Acid Test Report"]">
-                        <MudIcon Icon="@Icons.Material.Filled.FactCheck" Title="@L["Nucleic Acid Test Report"]" />
-                    </MudTooltip>
+                    @if (context.TripCode is not null)
+                    {
+                        <MudTooltip Text="@L["Trip Code"]">
+                            <MudIconButton Icon="@Icons.Material.Filled.Route" aria-label="@L["Trip Code"]" Title="@L["Trip Code"]" />
+                        </MudTooltip>
+                    }
+                    @if (context.HealthCode is not null)
+                    {
+                        <MudTooltip Text="@L["Health Code"]">
+                            <MudIconButton Icon="@Icons.Material.Filled.MonitorHeart" aria-label="@L["Health Code"]" Title="@L["Health Code"]" />
+                        </MudTooltip>
+                    }
+                    @if (context.NucleicAcidTestReport is not null)
+                    {
+                        <MudTooltip Text="@L["Nucleic Acid Test Report"]">
+                            <MudIconButton Icon="@Icons.Material.Filled.FactCheck" aria-label="@L["Nucleic Acid Test Report"]" Title="@L["Nucleic Acid Test Report"]" />
+                        </MudTooltip>
+                    }
                 </MudTd>
                 <MudTd DataLabel="@L["Apppoved"]">
                     <MudCheckBox Disabled="true" Checked="@context.Apppoved"></MudCheckBox>
@@ -331,7 +340,7 @@
             {
                 Id = dto.Id,
                 Name = dto.Name,
-                PassCode=dto.PassCode,
+                PassCode = dto.PassCode,
                 QrCode = dto.QrCode,
                 Email = dto.Email,
                 PhoneNumber = dto.PhoneNumber,

@@ -94,7 +94,7 @@ public static class ApplicationDbContextSeed
             context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Unit", Value = "KG", Text = "KG", Description = "Unit of product" });
             context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Unit", Value = "ST", Text = "ST", Description = "Unit of product" });
 
-            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Purpose", Value = "Meetting", Text = "Meetting", Description = "Visitor's Purpose" });
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Purpose", Value = "Meeting", Text = "Meeting", Description = "Visitor's Purpose" });
             context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Purpose", Value = "Interview ", Text = "Interview", Description = "Visitor's Purpose" });
             context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Purpose", Value = "Conferences ", Text = "Conferences", Description = "Visitor's Purpose" });
             context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Purpose", Value = "Working ", Text = "Working", Description = "Visitor's Purpose" });
