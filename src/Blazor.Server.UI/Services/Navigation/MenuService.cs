@@ -51,7 +51,7 @@ public class MenuService : IMenuService
                     Title = "Pre-registers",
                     Icon = Icons.Material.Filled.Bookmarks,
                     Href = "/visitor/preregisters",
-                    PageStatus = PageStatus.ComingSoon
+                    PageStatus = PageStatus.Completed
                 },
                  new()
                 {

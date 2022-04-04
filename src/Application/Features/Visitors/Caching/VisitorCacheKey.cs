@@ -9,7 +9,11 @@ public static class VisitorCacheKey
     public static string GetPagtionCacheKey(string parameters) {
         return $"VisitorsWithPaginationQuery,{parameters}";
     }
-        static VisitorCacheKey()
+    public static string Search(string keyword)
+    {
+        return $"SearchVisitorQuery:{keyword}";
+    }
+    static VisitorCacheKey()
     {
         SharedExpiryTokenSource = new CancellationTokenSource(new TimeSpan(3,0,0));
     }

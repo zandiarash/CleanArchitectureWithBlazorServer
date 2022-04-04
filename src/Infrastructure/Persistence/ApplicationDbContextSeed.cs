@@ -152,5 +152,31 @@ public static class ApplicationDbContextSeed
             context.Visitors.Add(new Domain.Entities.Visitor() { Name = "Json Mic", Email = "Json.mic@gmail.com", PhoneNumber = "021-76888098", IdentificationNo="3205830000000001", DesignationId = desId, Gender = "Female", Purpose = "Meeting",Comment="have a meeting...", Address="China", PrivacyPolicy=true, Promise=true,  ExpectedDate= DateTime.Now, ExpectedTime=new TimeSpan(12,0,0), CompanyName="Google Inc.", EmployeeId= empId , PassCode= hash});
             await context.SaveChangesAsync();
         }
+        if (!context.Sites.Any())
+        {
+            context.Sites.Add(new Domain.Entities.Site() { Name="Kunshan Center", Address= "in southeastern Jiangsu province with Shanghai bordering its eastern border and Suzhou on its western boundary" });
+            context.Sites.Add(new Domain.Entities.Site() { Name = "Suzhou CBD", Address = "Located in the heart of the western central business district (CBD) of Suzhou Industrial Park" });
+            await context.SaveChangesAsync();
+        }
+        if (!context.CheckinPoints.Any())
+        {
+            var site=context.Sites.First();
+            context.CheckinPoints.Add(new Domain.Entities.CheckinPoint() { Name = "Main Gate",  Description="changjiang road 180 no.", SiteId=site.Id });
+            context.CheckinPoints.Add(new Domain.Entities.CheckinPoint() { Name = "Gate 1 South", Description = "heilongjiang road 210 no.", SiteId = site.Id });
+            context.CheckinPoints.Add(new Domain.Entities.CheckinPoint() { Name = "Gate 2 South", Description = "heilongjiang road 212 no.", SiteId = site.Id });
+            context.CheckinPoints.Add(new Domain.Entities.CheckinPoint() { Name = "Floor 2", Description = "R&D center", SiteId = site.Id });
+            context.CheckinPoints.Add(new Domain.Entities.CheckinPoint() { Name = "SDB 9 reception", Description = "warehouse receiving space", SiteId = site.Id });
+            await context.SaveChangesAsync();
+        }
+        if (!context.Devices.Any())
+        {
+            var checkpoints = context.CheckinPoints.ToList();
+            context.Devices.Add(new Domain.Entities.Device() { Name = "Gate Machine 1", IPAddress="192.168.100.120", Status="Online", CheckinPointId=checkpoints[0].Id });
+            context.Devices.Add(new Domain.Entities.Device() { Name = "Gate Machine 2", IPAddress = "192.168.100.121", Status = "Online", CheckinPointId = checkpoints[1].Id });
+            context.Devices.Add(new Domain.Entities.Device() { Name = "Gate Machine 3", IPAddress = "192.168.100.122", CheckinPointId = checkpoints[2].Id });
+            context.Devices.Add(new Domain.Entities.Device() { Name = "IPAD wifi", IPAddress = "192.168.100.123", CheckinPointId = checkpoints[3].Id });
+            context.Devices.Add(new Domain.Entities.Device() { Name = "Face Id", IPAddress = "192.168.100.124", CheckinPointId = checkpoints[4].Id });
+            await context.SaveChangesAsync();
+        }
     }
 }

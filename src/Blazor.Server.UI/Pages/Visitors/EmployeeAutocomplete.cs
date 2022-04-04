@@ -43,14 +43,19 @@ public class EmployeeAutocomplete : MudAutocomplete<int?>
     private  Task<IEnumerable<int?>> Search(string value)
     {
         var list = new List<int?>();
-        if (!string.IsNullOrEmpty(value) || !_employees.Any(x => x.Name.Contains(value)))
-            return Task.FromResult(list.AsEnumerable());
-       var result= _employees.Where(x => x.Name.Contains(value)).Select(x => x.Id);
-       foreach(var i in result)
+        if (string.IsNullOrEmpty(value))
         {
-            list.Add(i);
+            var result = _employees.Where(x => x.Name.Contains(value)).Select(x => x.Id);
+            foreach (var i in result)
+            {
+                list.Add(i);
+            }
+            return Task.FromResult(list.AsEnumerable());
         }
-       return Task.FromResult(list.AsEnumerable());
+        if (!_employees.Any(x => x.Name.Contains(value)))
+            return Task.FromResult(list.AsEnumerable());
+
+        return Task.FromResult(list.AsEnumerable());
     }
 
     private string GetName(int? id) {
@@ -61,7 +66,7 @@ public class EmployeeAutocomplete : MudAutocomplete<int?>
         }
         else
         {
-            return $"{emp.Name}({emp.Designation}), {emp.Department}";
+            return $"{emp.Name} ({emp.Designation})";
         }
     }
 }

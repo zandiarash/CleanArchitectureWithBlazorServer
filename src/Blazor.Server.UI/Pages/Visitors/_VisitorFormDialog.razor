@@ -270,7 +270,7 @@
             }
         }
 
-        Snackbar.Add($"upload photo successfully", MudBlazor.Severity.Info);
+        Snackbar.Add(L["Upload photo successfully"], MudBlazor.Severity.Info);
 
     }
     private async Task UploadHealthCodePhoto(InputFileChangeEventArgs e)
@@ -302,7 +302,7 @@
             }
         }
 
-        Snackbar.Add($"upload health code successfully", MudBlazor.Severity.Info);
+        Snackbar.Add(L["Upload health code successfully"], MudBlazor.Severity.Info);
 
     }
     private async Task UploadTripCodePhoto(InputFileChangeEventArgs e)
@@ -334,7 +334,7 @@
             }
         }
 
-        Snackbar.Add($"upload trip code successfully", MudBlazor.Severity.Info);
+        Snackbar.Add(L["Upload trip code successfully"], MudBlazor.Severity.Info);
 
     }
     private async Task UploadTestReportPhoto(InputFileChangeEventArgs e)
@@ -366,7 +366,7 @@
             }
         }
 
-        Snackbar.Add($"upload test report successfully", MudBlazor.Severity.Info);
+        Snackbar.Add(L["Upload test report successfully"], MudBlazor.Severity.Info);
 
     }
     async Task Submit()
@@ -376,27 +376,27 @@
         {
             if (model.Promise != true)
             {
-                Snackbar.Add($"You must promise", MudBlazor.Severity.Error);
+                Snackbar.Add(L["You must promise"], MudBlazor.Severity.Error);
                 return;
             }
             if (model.PrivacyPolicy != true)
             {
-                Snackbar.Add($"You must agree", MudBlazor.Severity.Error);
+                Snackbar.Add(L["You must agree"], MudBlazor.Severity.Error);
                 return;
             }
             if (string.IsNullOrEmpty(model.Avatar))
             {
-                Snackbar.Add($"You must upload photo", MudBlazor.Severity.Error);
+                Snackbar.Add(L["You must upload photo"], MudBlazor.Severity.Error);
                 return;
             }
             if (string.IsNullOrEmpty(model.HealthCode))
             {
-                Snackbar.Add($"You must upload health code", MudBlazor.Severity.Error);
+                Snackbar.Add(L["You must upload health code"], MudBlazor.Severity.Error);
                 return;
             }
             if (string.IsNullOrEmpty(model.TripCode))
             {
-                Snackbar.Add($"You must upload trip code", MudBlazor.Severity.Error);
+                Snackbar.Add(L["You must upload trip code"], MudBlazor.Severity.Error);
                 return;
             }
             MudDialog.Close(DialogResult.Ok(true));

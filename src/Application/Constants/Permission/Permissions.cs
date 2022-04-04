@@ -37,6 +37,7 @@ public static class Permissions
         public const string Approve = "Permissions.Visitors.Approve";
         public const string Checkin = "Permissions.Visitors.Checkin";
         public const string Checkout = "Permissions.Visitors.Checkout";
+        public const string PreRegisters= "Permissions.Visitors.PreRegisters";
     }
     [DisplayName("Devices")]
     [Description("Devices Permissions")]
