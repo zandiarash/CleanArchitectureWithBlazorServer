@@ -38,6 +38,39 @@ public static class Permissions
         public const string Checkin = "Permissions.Visitors.Checkin";
         public const string Checkout = "Permissions.Visitors.Checkout";
     }
+    [DisplayName("Devices")]
+    [Description("Devices Permissions")]
+    public static class Devices
+    {
+        public const string View = "Permissions.Devices.View";
+        public const string Create = "Permissions.Devices.Create";
+        public const string Edit = "Permissions.Devices.Edit";
+        public const string Delete = "Permissions.Devices.Delete";
+        public const string Search = "Permissions.Devices.Search";
+
+    }
+    [DisplayName("CheckinPoints")]
+    [Description("CheckinPoints Permissions")]
+    public static class CheckinPoints
+    {
+        public const string View = "Permissions.CheckinPoints.View";
+        public const string Create = "Permissions.CheckinPoints.Create";
+        public const string Edit = "Permissions.CheckinPoints.Edit";
+        public const string Delete = "Permissions.CheckinPoints.Delete";
+        public const string Search = "Permissions.CheckinPoints.Search";
+
+    }
+    [DisplayName("Sites")]
+    [Description("Sites Permissions")]
+    public static class Sites
+    {
+        public const string View = "Permissions.Sites.View";
+        public const string Create = "Permissions.Sites.Create";
+        public const string Edit = "Permissions.Sites.Edit";
+        public const string Delete = "Permissions.Sites.Delete";
+        public const string Search = "Permissions.Sites.Search";
+
+    }
     [DisplayName("Employees")]
     [Description("Employees Permissions")]
     public static class Employees

@@ -100,13 +100,16 @@ public static class ApplicationDbContextSeed
             context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Purpose", Value = "Working ", Text = "Working", Description = "Visitor's Purpose" });
             context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Purpose", Value = "Others ", Text = "Others", Description = "Visitor's Purpose" });
 
-            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Gender", Value = "Male ", Text = "Male", Description = "Visitor's Gender" });
-            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Gender", Value = "Female ", Text = "Female", Description = "Visitor's Gender" });
-            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Gender", Value = "Unknown ", Text = "Unknown", Description = "Visitor's Gender" });
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Gender", Value = "Male", Text = "Male", Description = "Visitor's Gender" });
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Gender", Value = "Female", Text = "Female", Description = "Visitor's Gender" });
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "Gender", Value = "Unknown", Text = "Unknown", Description = "Visitor's Gender" });
 
-            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "ActiveStatus", Value = "Active ", Text = "Active", Description = "Active Status" });
-            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "ActiveStatus", Value = "Inactive ", Text = "Inactive", Description = "Active Status" });
-           
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "ActiveStatus", Value = "Active", Text = "Active", Description = "Active Status" });
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "ActiveStatus", Value = "Inactive", Text = "Inactive", Description = "Active Status" });
+
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "DeviceStatus", Value = "Online", Text = "Online", Description = "Device Status" });
+            context.KeyValues.Add(new Domain.Entities.KeyValue() { Name = "DeviceStatus", Value = "Offline", Text = "Offline", Description = "Device Status" });
+
             await context.SaveChangesAsync();
         }
         if (!context.Products.Any())
@@ -146,7 +149,7 @@ public static class ApplicationDbContextSeed
             var empId=context.Employees.First().Id;
             var hashids = new Hashids("Blazor.net");
             var hash = hashids.EncodeLong(DateTime.Now.Ticks);
-            context.Visitors.Add(new Domain.Entities.Visitor() { Name = "Mike Brown", Email = "Brown.Mike@gmail.com", PhoneNumber = "021-76888098", IdentificationNo="3205830000000001", DesignationId = desId, Gender = "Female", Purpose = "Meeting",Comment="have a meeting...", Address="China", PrivacyPolicy=true, Promise=true,  ExpectedDate= DateTime.Now, ExpectedTime=new TimeSpan(12,0,0), CompanyName="Google Inc.", EmployeeId= empId , PassCode= hash});
+            context.Visitors.Add(new Domain.Entities.Visitor() { Name = "Json Mic", Email = "Json.mic@gmail.com", PhoneNumber = "021-76888098", IdentificationNo="3205830000000001", DesignationId = desId, Gender = "Female", Purpose = "Meeting",Comment="have a meeting...", Address="China", PrivacyPolicy=true, Promise=true,  ExpectedDate= DateTime.Now, ExpectedTime=new TimeSpan(12,0,0), CompanyName="Google Inc.", EmployeeId= empId , PassCode= hash});
             await context.SaveChangesAsync();
         }
     }

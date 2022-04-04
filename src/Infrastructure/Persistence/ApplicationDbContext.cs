@@ -46,7 +46,9 @@ public class ApplicationDbContext : IdentityDbContext<
     public DbSet<Employee> Employees { get; set; }
     public DbSet<Visitor> Visitors { get; set; }
     public DbSet<VisitorHistory> VisitorHistories { get; set; }
-
+    public DbSet<Site> Sites { get; set; }
+    public DbSet<CheckinPoint> CheckinPoints { get; set; }
+    public DbSet<Device> Devices { get; set; }
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
     {
         var userId = await _currentUserService.UserId();

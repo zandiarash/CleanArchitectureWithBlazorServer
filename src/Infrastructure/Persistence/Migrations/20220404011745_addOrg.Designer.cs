@@ -4,6 +4,7 @@ using CleanArchitecture.Blazor.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleanArchitecture.Blazor.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220404011745_addOrg")]
+    partial class addOrg
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -196,7 +198,9 @@ namespace CleanArchitecture.Blazor.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CheckinPointId");
+                    b.HasIndex("CheckinPointId")
+                        .IsUnique()
+                        .HasFilter("[CheckinPointId] IS NOT NULL");
 
                     b.ToTable("Devices");
                 });
@@ -889,8 +893,8 @@ namespace CleanArchitecture.Blazor.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("CleanArchitecture.Blazor.Domain.Entities.Device", b =>
                 {
                     b.HasOne("CleanArchitecture.Blazor.Domain.Entities.CheckinPoint", "CheckinPoint")
-                        .WithMany("Devices")
-                        .HasForeignKey("CheckinPointId");
+                        .WithOne("Device")
+                        .HasForeignKey("CleanArchitecture.Blazor.Domain.Entities.Device", "CheckinPointId");
 
                     b.Navigation("CheckinPoint");
                 });
@@ -1016,7 +1020,7 @@ namespace CleanArchitecture.Blazor.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("CleanArchitecture.Blazor.Domain.Entities.CheckinPoint", b =>
                 {
-                    b.Navigation("Devices");
+                    b.Navigation("Device");
                 });
 
             modelBuilder.Entity("CleanArchitecture.Blazor.Domain.Entities.Site", b =>

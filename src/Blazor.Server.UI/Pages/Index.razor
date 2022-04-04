@@ -37,7 +37,7 @@
         </MudPaper>
         <MudPaper Class="py-4 px-6 rounded-lg d-flex align-center">
             <div class="flex-grow-1">
-                <MudText Typo="Typo.h6">CHECKED VISITORS</MudText>
+                <MudText Typo="Typo.h6">CHECKIN VISITORS</MudText>
                 <div class="d-flex align-center my-1">
                     <MudAvatar Class="me-2 pa-4" Style="background-color: var(--mud-palette-secondary-hover);" Size="Size.Small">
                         <MudIcon Color="Color.Secondary" Icon="@Icons.Material.Filled.TrendingUp" Size="Size.Small" />
@@ -61,7 +61,7 @@
         </MudPaper>
         <MudPaper Class="py-4 px-6 rounded-lg d-flex align-center">
             <div class="flex-grow-1">
-                <MudText Typo="Typo.h6">PENDING VISITORS</MudText>
+                <MudText Typo="Typo.h6">CHECKOUT VISITORS</MudText>
                 <div class="d-flex align-center my-1">
                     <MudAvatar Class="me-2 pa-4" Style="background-color: var(--mud-palette-tertiary-hover);" Size="Size.Small">
                         <MudIcon Color="Color.Tertiary" Icon="@Icons.Material.Filled.TrendingFlat" Size="Size.Small" />
@@ -105,7 +105,7 @@
 @code {
     private int day = -1; //default value cannot be 0 -> first selectedindex is 0.
     double[] data = { 77, 25, 20, 5,15 };
-    string[] labels = { "Meetting", "Interview", "Conferences", "Working", "Others" };
+    string[] labels = { "Meeting", "Interview", "Conferences", "Working", "Others" };
 
     public List<ChartSeries> Series = new List<ChartSeries>()
     {

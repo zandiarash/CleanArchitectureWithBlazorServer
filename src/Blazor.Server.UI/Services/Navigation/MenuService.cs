@@ -51,14 +51,48 @@ public class MenuService : IMenuService
                     Title = "Pre-registers",
                     Icon = Icons.Material.Filled.Bookmarks,
                     Href = "/visitor/preregisters",
-                    PageStatus = PageStatus.Completed
+                    PageStatus = PageStatus.ComingSoon
+                },
+                 new()
+                {
+                    Title = "Reports",
+                    Icon = Icons.Material.Filled.LineAxis,
+                    Href = "/visitor/histories",
+                    PageStatus = PageStatus.ComingSoon
                 },
                 new()
                 {
                     Title = "Histories",
                     Icon = Icons.Material.Filled.History,
                     Href = "/visitor/histories",
-                    PageStatus = PageStatus.Completed
+                    PageStatus = PageStatus.ComingSoon
+                },
+                new()
+                {
+                    IsParent = true,
+                    Title = "Sites & Org",
+                    Icon = Icons.Material.Filled.Devices,
+                    MenuItems = new List<MenuSectionSubItemModel>
+                    {
+                        new()
+                        {
+                            Title = "Sites",
+                            Href = "/visitor/sites",
+                            PageStatus = PageStatus.Completed
+                        },
+                        new()
+                        {
+                            Title = "Checkin Points",
+                            Href = "/visitor/checkinpoints",
+                            PageStatus = PageStatus.Completed
+                        },
+                        new()
+                        {
+                            Title = "Devices",
+                            Href = "/visitor/devices",
+                            PageStatus = PageStatus.Completed
+                        },
+                    }
                 }
             }
         },

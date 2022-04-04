@@ -21,6 +21,9 @@ public interface IApplicationDbContext
     DbSet<Employee> Employees { get; set; }
     DbSet<Visitor> Visitors { get; set; }
     DbSet<VisitorHistory> VisitorHistories { get; set; }
+    DbSet<Site> Sites { get; set; }
+    DbSet<CheckinPoint> CheckinPoints { get; set; }
+    DbSet<Device> Devices { get; set; }
 
     ChangeTracker ChangeTracker { get; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
