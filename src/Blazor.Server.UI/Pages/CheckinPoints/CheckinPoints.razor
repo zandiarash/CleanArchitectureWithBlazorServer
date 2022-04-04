@@ -170,21 +170,27 @@
                     <MudText Typo="Typo.body2">@context.Address</MudText>
                 </MudTd>
                 <MudTd DataLabel="@L["Devices"]">
-                    @foreach (var item in context.Devices)
-                    {
-                         @if (item.Status == "Online")
-                    {
-                        <MudBadge Dot="true" Color="Color.Success" Origin="Origin.CenterLeft" Bordered="true">
-                            <MudText Class="ml-3">@item.Name</MudText>
-                        </MudBadge>
-                    }
-                    else
-                    {
-                        <MudBadge Dot="true" Color="Color.Secondary" Origin="Origin.CenterLeft" Bordered="true">
-                            <MudText Class="ml-3">@item.Name</MudText>
-                        </MudBadge>
-                    }
-                    }
+                    <div class="d-flex flex-column flex-grow-1">
+                        @foreach (var item in context.Devices)
+                        {
+                            @if (item.Status == "Online")
+                            {
+                                <MudTooltip Text="@L["Online"]">
+                                <MudBadge Dot="true" Color="Color.Success" Origin="Origin.CenterLeft" Bordered="true">
+                                    <MudText Class="ml-3">@item.Name</MudText>
+                                </MudBadge>
+                                </MudTooltip>
+                            }
+                            else
+                            {
+                                <MudTooltip Text="@L["Offline"]">
+                                <MudBadge Dot="true" Color="Color.Secondary" Origin="Origin.CenterLeft" Bordered="true">
+                                    <MudText Class="ml-3">@item.Name</MudText>
+                                </MudBadge>
+                                 </MudTooltip>
+                            }
+                        }
+                    </div>
                 </MudTd>
             </RowTemplate>
             <NoRecordsContent>

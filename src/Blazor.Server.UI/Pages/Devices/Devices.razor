@@ -165,15 +165,19 @@
                 <MudTd DataLabel="@L["Device Name"]">
                     @if (context.Status == "Online")
                     {
-                        <MudBadge Dot="true" Color="Color.Success" Origin="Origin.CenterLeft" Bordered="true">
-                            <MudText Class="ml-3">@context.Name</MudText>
-                        </MudBadge>
+                        <MudTooltip Text="@L["Online"]">
+                            <MudBadge Dot="true" Color="Color.Success" Origin="Origin.CenterLeft" Bordered="true">
+                                <MudText Class="ml-3">@context.Name</MudText>
+                            </MudBadge>
+                        </MudTooltip>
                     }
                     else
                     {
-                        <MudBadge Dot="true" Color="Color.Secondary" Origin="Origin.CenterLeft" Bordered="true">
-                            <MudText Class="ml-3">@context.Name</MudText>
-                        </MudBadge>
+                        <MudTooltip Text="@L["Offline"]">
+                            <MudBadge Dot="true" Color="Color.Secondary" Origin="Origin.CenterLeft" Bordered="true">
+                                <MudText Class="ml-3">@context.Name</MudText>
+                            </MudBadge>
+                        </MudTooltip>
                     }
 
                 </MudTd>

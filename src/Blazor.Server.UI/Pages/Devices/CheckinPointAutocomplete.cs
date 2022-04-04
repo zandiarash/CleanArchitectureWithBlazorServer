@@ -53,5 +53,15 @@ public class CheckinPointAutocomplete : MudAutocomplete<int?>
         return Task.FromResult(list.AsEnumerable());
     }
 
-    private string GetName(int? id) => _checkinpoints.Find(b => b.Id == id)?.Name ?? string.Empty;
+    private string GetName(int? id) {
+        var chpoint = _checkinpoints.Find(b => b.Id == id);
+        if (chpoint is null)
+        {
+            return String.Empty;
+        }
+        else
+        {
+            return $"{chpoint.Site} - {chpoint.Name}";
+        }
+    }
 }
