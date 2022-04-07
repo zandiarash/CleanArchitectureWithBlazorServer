@@ -1,4 +1,7 @@
 @page "/"
+@implements IDisposable
+@inject IStringLocalizer<Index> L
+@using CleanArchitecture.Blazor.Application.Common.Interfaces.Identity
 @using Microsoft.AspNetCore.Authorization
 <style>
     .lp-app-grid {
@@ -8,7 +11,7 @@
     }
 </style>
 <PageTitle>@Title</PageTitle>
-
+<MudContainer MaxWidth="MaxWidth.Large">
 <div class="lp-app-grid">
     <MudPaper Class="py-4 px-6 rounded-lg d-flex align-center">
         <div class="flex-grow-1">
@@ -82,6 +85,57 @@
             <MudPaper Height="36%" Width="6px" Square="true" Class="mud-tertiary mr-1 rounded-t" />
         </div>
     </MudPaper>
+    
 </div>
+<div class="my-6 d-flex gap-6 flex-wrap">
+        <MudPaper>
+            <div class="flex-grow-1">
+            <MudList Clickable="true">
+                <MudListSubheader>
+                    @L["Online sessions"]
+                </MudListSubheader>
+                @foreach(var user in _usersStateContainer.UsersByConnectionId)
+                {
+                    <MudListItem Icon="@Icons.Material.Filled.Person">
+                        <MudText Typo="Typo.subtitle1">@user.Value</MudText>
+                        <MudText Typo="Typo.body2">@user.Key</MudText>
+                   </MudListItem>
+                }
+           
+                
+            </MudList>
+            </div>
+        </MudPaper>
+    </div>
+</MudContainer>
+@code{
+    [Inject]
+    private IUsersStateContainer _usersStateContainer { get; set; }
+    public string Title { get; set; } = "Dashboard";
+    private const int TotalActiveUsers = 18765;
+    private const double IncreaseDecreaseActiveUsers = 2.6;
+    private const int TotalInstalls = 4876;
+    private const double IncreaseDecreaseInstalls = 0.2;
+    private const int TotalDownloads = 678;
+    private const double IncreaseDecreaseDownloads = -0.1;
 
+    private readonly List<int> _lastTenDaysActiveUsers = new() {20, 41, 63, 23, 38, 25, 50, 46, 11, 26};
+    private readonly List<int> _lastTenDaysDownloads = new() {20, 41, 63, 23, 38, 25, 50, 46, 11, 26};
+    private readonly List<int> _lastTenDaysInstalls = new() {20, 41, 63, 23, 38, 25, 50, 46, 11, 26};
+
+    public void Dispose()
+    {
+        _usersStateContainer.OnChange -= HandleCircuitsChanged;
+    }
+    protected override Task OnInitializedAsync()
+    {
+        _usersStateContainer.OnChange += HandleCircuitsChanged;
+        return Task.CompletedTask;
+    }
+
+    public async void HandleCircuitsChanged()
+    {
+        await InvokeAsync(StateHasChanged);
+    }
+}
 
