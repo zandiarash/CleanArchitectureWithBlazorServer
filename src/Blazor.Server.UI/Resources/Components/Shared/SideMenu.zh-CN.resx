@@ -189,4 +189,7 @@
   <data name="Drivers" xml:space="preserve">
     <value>司机管理</value>
   </data>
+  <data name="Picklist" xml:space="preserve">
+    <value>参数选用表</value>
+  </data>
 </root>

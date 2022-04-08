@@ -31,7 +31,7 @@
         <MudTable ServerData="@(new Func<TableState, Task<TableData<ShippingOrderDto>>>(ServerReload))"
                   FixedHeader="true"
                   FixedFooter="true"
-                  Height="calc(100vh - 265px)"
+                  Height="calc(100vh - 330px)"
                   Loading="@_loading"
                   SortLabel="@L["Sort By"]"
                   MultiSelection="true" @bind-SelectedItems="_selectedItems"
