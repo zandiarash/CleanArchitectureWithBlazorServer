@@ -9,6 +9,7 @@ using CleanArchitecture.Blazor.Infrastructure.Services.Authentication;
 using Microsoft.AspNetCore.Components.Server.Circuits;
 using CleanArchitecture.Blazor.Infrastructure.Services.Picklist;
 using CleanArchitecture.Blazor.Infrastructure.Hubs;
+using CleanArchitecture.Blazor.Infrastructure.Extensions;
 
 namespace CleanArchitecture.Blazor.Infrastructure;
 
@@ -58,8 +59,16 @@ public static class DependencyInjection
         services.Configure<AppConfigurationSettings>(configuration.GetSection("AppConfigurationSettings"));
         services.Configure<MailSettings>(configuration.GetSection("MailSettings"));
         services.AddScoped<IMailService, SMTPMailService>();
+
+        services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
+            options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
+            options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+        })
+        .TryConfigureMicrosoftAccount(configuration)
+        .TryConfigureGoogleAccount(configuration);
         
-        services.AddAuthentication();
         services.Configure<IdentityOptions>(options =>
         {
             // Default SignIn settings.
