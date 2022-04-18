@@ -38,7 +38,7 @@ const msalConfig = {
     },
     telemetry: {
         application: {
-            appName: "Blazor",
+            appName: "ForBlazorAuth",
             appVersion: "1.0.0"
         }
     }

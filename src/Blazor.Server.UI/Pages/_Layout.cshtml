@@ -81,7 +81,8 @@
       async function loginWithMicrosoft(provider, dotNetHelper){
            var client = new msal.PublicClientApplication(msalConfig);
            var response = await client.loginPopup(loginRequest);
-           await dotNetHelper.invokeMethodAsync('ConfirmExternal', provider, response.account.username, response.account.name, response.accessToken);
+           console.log(response)
+           await dotNetHelper.invokeMethodAsync('ConfirmExternal', provider, response.account.username, response.account.name, response.account.homeAccountId);
            console.log('login with microsoft success');
            localStorage.setItem('microsoft_client_token', response.account.homeAccountId);
       }

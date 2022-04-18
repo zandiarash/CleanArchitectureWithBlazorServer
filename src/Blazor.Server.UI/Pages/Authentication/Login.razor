@@ -145,12 +145,12 @@
         var result = await _authenticationService.ExternalLogin(provider, userName, name, accesstoken);
             if (!result)
             {
-                _logger.LogWarning("{@UserName} login fail.", model.UserName);
+                _logger.LogWarning("{@UserName} login fail.", userName);
                 Snackbar.Add(L["Please check your username and password. If you are still unable to log in, contact your administrator."], MudBlazor.Severity.Error);
             }
             else
             {
-                _logger.LogInformation("{@UserName} login successfully.", model.UserName);
+                _logger.LogInformation("{@UserName} login successfully.", userName);
             }
     }
 }
