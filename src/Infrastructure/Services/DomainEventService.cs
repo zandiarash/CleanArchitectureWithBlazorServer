@@ -27,6 +27,6 @@ public class DomainEventService : IDomainEventService
     private INotification GetNotificationCorrespondingToDomainEvent(DomainEvent domainEvent)
     {
         return (INotification)Activator.CreateInstance(
-            typeof(DomainEventNotification<>).MakeGenericType(domainEvent.GetType()), domainEvent);
+            typeof(DomainEventNotification<>).MakeGenericType(domainEvent.GetType()), domainEvent)!;
     }
 }
