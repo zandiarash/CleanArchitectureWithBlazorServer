@@ -17,9 +17,9 @@ public partial class ThemesMenu
     {
         "#2d4275",
         Colors.Green.Default,
-        Colors.Blue.Default,
+        "#0576b9",
         Colors.BlueGrey.Default,
-        Colors.Purple.Default,
+        "#6f42c1",
         Colors.Orange.Default,
         Colors.Red.Default
     };
