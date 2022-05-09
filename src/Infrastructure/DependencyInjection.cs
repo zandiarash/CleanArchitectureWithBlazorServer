@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using CleanArchitecture.Blazor.Infrastructure.Services.Authentication;
 using Microsoft.AspNetCore.Components.Server.Circuits;
-using CleanArchitecture.Blazor.Infrastructure.Services.Picklist;
 using CleanArchitecture.Blazor.Infrastructure.Hubs;
 using CleanArchitecture.Blazor.Infrastructure.Extensions;
 
@@ -51,7 +50,6 @@ public static class DependencyInjection
         services.AddScoped<IdentityAuthenticationService>();
         services.AddScoped<AuthenticationStateProvider>(sp => sp.GetRequiredService<IdentityAuthenticationService>());
         services.AddScoped<ICurrentUserService, CurrentUserService>();
-        services.AddScoped<IPicklistService, PicklistService>();
         services.AddScoped<IDateTime, DateTimeService>();
         services.AddScoped<IExcelService, ExcelService>();
         services.AddScoped<IUploadService, UploadService>();
