@@ -23,8 +23,9 @@ public static class DependencyInjection
         else
         {
             services.AddDbContext<ApplicationDbContext>(options => {
-                options.UseSqlServer(
+                options.UseMySql(
                     configuration.GetConnectionString("DefaultConnection"),
+                    ServerVersion.AutoDetect(configuration.GetConnectionString("DefaultConnection")),
                     b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName));
                  options.EnableSensitiveDataLogging();
             });

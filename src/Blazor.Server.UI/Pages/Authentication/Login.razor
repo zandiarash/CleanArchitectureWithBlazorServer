@@ -1,6 +1,7 @@
 @page "/pages/authentication/login"
 @using System.Text.RegularExpressions
 @using CleanArchitecture.Blazor.Application.Common.Security
+@using CleanArchitecture.Blazor.Infrastructure.Constants.Role
 @using CleanArchitecture.Blazor.Infrastructure.Services.Authentication
 @using Microsoft.AspNetCore.Authentication
 @using Microsoft.AspNetCore.DataProtection
@@ -78,7 +79,7 @@
     LoginFormModel model = new LoginFormModel()
         {
             UserName = "administrator",
-            Password = "Password123!",
+            Password = RoleConstants.DefaultPassword,
             RememberMe = true
         };
 
@@ -89,6 +90,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+        _logger.LogInformation("Welcome!");
         Title = L["Sign In"];
         _signInManager = ScopedServices.GetRequiredService<SignInManager<ApplicationUser>>();
         var externalSchemes = await _signInManager.GetExternalAuthenticationSchemesAsync();

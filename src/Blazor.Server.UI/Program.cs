@@ -16,6 +16,8 @@ using Blazor.Analytics;
 using Blazor.Server.UI.Services.Notifications;
 using Blazor.Server.UI.Services.Navigation;
 using Blazor.Server.UI;
+using Serilog.Sinks.MariaDB;
+using Serilog.Sinks.MariaDB.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,8 +27,6 @@ builder.Host.UseSerilog((context, configuration) =>
                 .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Error)
                 .MinimumLevel.Override("Serilog", LogEventLevel.Error)
           .Enrich.FromLogContext()
-          .Enrich.WithClientIp()
-          .Enrich.WithClientAgent()
           .WriteTo.Console()
     );
 
@@ -44,7 +44,7 @@ using (var scope = app.Services.CreateScope())
     {
         var context = services.GetRequiredService<ApplicationDbContext>();
 
-        if (context.Database.IsSqlServer())
+        if (context.Database.IsMySql())
         {
             context.Database.Migrate();
         }
@@ -53,8 +53,8 @@ using (var scope = app.Services.CreateScope())
         var roleManager = services.GetRequiredService<RoleManager<ApplicationRole>>();
 
         await ApplicationDbContextSeed.SeedSampleDataAsync(context);
-        await ApplicationDbContextSeed.SeedDefaultUserAsync(context,userManager, roleManager);
-        
+        await ApplicationDbContextSeed.SeedDefaultUserAsync(context, userManager, roleManager);
+
     }
     catch (Exception ex)
     {
