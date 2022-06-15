@@ -5,6 +5,7 @@ namespace CleanArchitecture.Blazor.Application.Features.Logs.DTOs;
 
 public class LogDto : IMapFrom<Logger>
 {
+     
     public int Id { get; set; }
     public string? Message { get; set; }
     public string? MessageTemplate { get; set; }

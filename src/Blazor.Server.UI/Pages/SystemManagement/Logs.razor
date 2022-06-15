@@ -62,17 +62,17 @@
                 </MudTd>
                 <MudTd Style="text-align:center" DataLabel="@L["Level"]">
                     @switch(context.Level) {
-                         case "Trace" : <MudChip Label="true">@context.Level</MudChip>
+                         case "0" : <MudChip Label="true">Trace</MudChip>
                             break;
-                        case "Debug" : <MudChip Label="true">@context.Level</MudChip>
+                        case "1" : <MudChip Label="true">Debug</MudChip>
                             break;
-                        case "Information": <MudChip Color="Color.Info" Label="true">@context.Level</MudChip>
+                        case "2": <MudChip Color="Color.Info" Label="true">Information</MudChip>
                             break;
-                        case "Warning": <MudChip Color="Color.Warning" Label="true">@context.Level</MudChip>
+                        case "3": <MudChip Color="Color.Warning" Label="true">Warning</MudChip>
                             break;
-                       case "Error": <MudChip Color="Color.Error" Label="true">@context.Level</MudChip>
+                       case "4": <MudChip Color="Color.Error" Label="true">Error</MudChip>
                             break;
-                        case "Critical":  <MudChip Color="Color.Error" Label="true">@context.Level</MudChip>
+                        case "5":  <MudChip Color="Color.Error" Label="true">Critical</MudChip>
                             break;
                        default: <MudChip Label="true">@context.Level</MudChip>
                          break;
