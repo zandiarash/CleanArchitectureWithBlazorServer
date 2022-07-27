@@ -16,6 +16,7 @@ using Blazor.Analytics;
 using Blazor.Server.UI.Services.Notifications;
 using Blazor.Server.UI.Services.Navigation;
 using Blazor.Server.UI;
+using Blazor.Server.UI.Services.Notifications;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -63,6 +64,12 @@ using (var scope = app.Services.CreateScope())
         logger.LogError(ex, "An error occurred while migrating or seeding the database.");
 
         throw;
+    }
+
+    var notificationService = scope.ServiceProvider.GetService<INotificationService>();
+    if (notificationService is InMemoryNotificationService inmemoryService)
+    {
+        inmemoryService.Preload();
     }
 }
 
