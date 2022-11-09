@@ -302,7 +302,7 @@
     private async Task OnCreate()
     {
         _editing = true;
-        _table.SetEditingItem(null);
+        _table!.SetEditingItem(null);
         var newitem = new KeyValueDto()
             {
                 Name = _selectedItem?.Name,
@@ -338,7 +338,7 @@
         {
             if (((KeyValueDto)element).TrackingState == TrackingState.Added)
             {
-                _table.SetEditingItem(null);
+                _table!.SetEditingItem(null);
                 _keyValueList.Remove((KeyValueDto)element);
             }
             else
@@ -373,7 +373,7 @@
         var request = new ExportKeyValuesQuery()
             {
                 Keyword = _searchString,
-                OrderBy = string.IsNullOrEmpty(_table.TableContext.SortFieldLabel) ? "Id" : _table.TableContext.SortFieldLabel,
+                OrderBy = string.IsNullOrEmpty(_table!.TableContext.SortFieldLabel) ? "Id" : _table.TableContext.SortFieldLabel,
                 SortDirection = (_table.TableContext.SortDirection == SortDirection.None ? SortDirection.Descending.ToString() : _table.TableContext.SortDirection.ToString()),
             };
         var result = await _mediator.Send(request);
