@@ -11,6 +11,7 @@ global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore;
 global using CleanArchitecture.Blazor.Domain;
 global using CleanArchitecture.Blazor.Domain.Common;
+global using CleanArchitecture.Blazor.Domain.Identity;
 global using CleanArchitecture.Blazor.Domain.Entities;
 global using CleanArchitecture.Blazor.Domain.Entities.Audit;
 global using CleanArchitecture.Blazor.Domain.Entities.Log;
@@ -23,7 +24,7 @@ global using CleanArchitecture.Blazor.Application.Settings;
 global using CleanArchitecture.Blazor.Application.Configurations;
 global using CleanArchitecture.Blazor.Infrastructure.Constants;
 global using CleanArchitecture.Blazor.Application.Constants;
-global using CleanArchitecture.Blazor.Infrastructure.Identity;
+
 global using CleanArchitecture.Blazor.Infrastructure.Middlewares;
 global using CleanArchitecture.Blazor.Infrastructure.Persistence;
 global using CleanArchitecture.Blazor.Infrastructure.Services;

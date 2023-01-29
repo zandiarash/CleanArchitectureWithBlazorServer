@@ -1,9 +1,9 @@
 using CleanArchitecture.Blazor.Application;
 using CleanArchitecture.Blazor.Application.Common.Interfaces;
 using CleanArchitecture.Blazor.Application.Common.Interfaces.MultiTenant;
+using CleanArchitecture.Blazor.Domain.Identity;
 using CleanArchitecture.Blazor.Infrastructure;
 using CleanArchitecture.Blazor.Infrastructure.Extensions;
-using CleanArchitecture.Blazor.Infrastructure.Identity;
 using CleanArchitecture.Blazor.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;

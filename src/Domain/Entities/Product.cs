@@ -1,6 +1,9 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System.ComponentModel.DataAnnotations.Schema;
+using CleanArchitecture.Blazor.Domain.Identity;
+
 namespace CleanArchitecture.Blazor.Domain.Entities;
 
 public class Product : BaseAuditableEntity
@@ -12,5 +15,6 @@ public class Product : BaseAuditableEntity
     public string? Unit { get; set; }
     public decimal Price { get; set; }
     public IList<string>? Pictures { get; set; }
-
+    [ForeignKey("CreatedBy")]
+    public ApplicationUser? CreatedByUser { get; set;}
 }
