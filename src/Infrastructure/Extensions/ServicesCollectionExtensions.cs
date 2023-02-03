@@ -7,5 +7,7 @@ public static class ServicesCollectionExtensions
                    .AddScoped<ICurrentUserService, CurrentUserService>()
                    .AddScoped<IDateTime, DateTimeService>()
                    .AddScoped<IExcelService, ExcelService>()
-                   .AddScoped<IUploadService, UploadService>();
+                   .AddScoped<IUploadService, UploadService>()
+                   .AddScoped<IPDFService, PDFService>();
+          
 }
