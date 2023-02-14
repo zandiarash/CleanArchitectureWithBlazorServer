@@ -7,6 +7,7 @@ using CleanArchitecture.Blazor.Application.Common.Interfaces.MultiTenant;
 using CleanArchitecture.Blazor.Application.Common.Security;
 using CleanArchitecture.Blazor.Application.Services.MultiTenant;
 using CleanArchitecture.Blazor.Application.Services.Picklist;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -22,6 +23,7 @@ public static class DependencyInjection
         services.AddBlazorState((options) => options.Assemblies = new Assembly[] {
             Assembly.GetExecutingAssembly(),
         });
+       
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehaviour<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
