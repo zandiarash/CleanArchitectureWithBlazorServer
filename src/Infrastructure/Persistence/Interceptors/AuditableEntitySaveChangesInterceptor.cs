@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CleanArchitecture.Blazor.Application.Common.Interfaces.MultiTenant;
+using CleanArchitecture.Blazor.Application.Common.PublishStrategies;
 using CleanArchitecture.Blazor.Infrastructure.Extensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -14,19 +15,19 @@ public class AuditableEntitySaveChangesInterceptor : SaveChangesInterceptor
 {
     private readonly ITenantProvider _tenantProvider;
     private readonly ICurrentUserService _currentUserService;
-    private readonly IMediator _mediator;
+    private readonly Publisher _publisher;
     private readonly IDateTime _dateTime;
     private List<AuditTrail> _temporaryAuditTrailList = new();
     private List<DomainEvent> _deletingDomainEvents = new();
     public AuditableEntitySaveChangesInterceptor(
         ITenantProvider tenantProvider,
         ICurrentUserService currentUserService,
-                IMediator mediator,
+                Publisher publisher,
         IDateTime dateTime)
     {
         _tenantProvider = tenantProvider;
         _currentUserService = currentUserService;
-        _mediator = mediator;
+        _publisher = publisher;
         _dateTime = dateTime;
     }
 
@@ -42,7 +43,7 @@ public class AuditableEntitySaveChangesInterceptor : SaveChangesInterceptor
     {
         var resultvalueTask = await base.SavedChangesAsync(eventData, result, cancellationToken);
         await TryUpdateTemporaryPropertiesForAuditTrail(eventData.Context, cancellationToken);
-        await _mediator.DispatchDomainEvents(eventData.Context!, _deletingDomainEvents);
+        await _publisher.DispatchDomainEvents(eventData.Context!, _deletingDomainEvents);
         return resultvalueTask;
     }
     private Task updateEntities(DbContext? context)

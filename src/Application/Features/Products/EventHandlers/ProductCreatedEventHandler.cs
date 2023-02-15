@@ -14,10 +14,10 @@ namespace CleanArchitecture.Blazor.Application.Features.Products.EventHandlers;
         {
             _logger = logger;
         }
-        public Task Handle(CreatedEvent<Product> notification, CancellationToken cancellationToken)
+        public async Task Handle(CreatedEvent<Product> notification, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Domain Event: {DomainEvent}", notification.GetType().FullName);
-
-            return Task.CompletedTask;
+             await Task.Delay(5000);
+ 
         }
     }
