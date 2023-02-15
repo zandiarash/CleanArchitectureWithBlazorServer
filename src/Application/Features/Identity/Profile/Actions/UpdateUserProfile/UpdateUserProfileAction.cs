@@ -9,15 +9,7 @@ using CleanArchitecture.Blazor.Application.Features.Identity.Dto;
 namespace CleanArchitecture.Blazor.Application.Features.Identity.Profile;
 public partial class UserProfileState
 {
-    public class UpdateUserProfileAction : IAction
-    {
-        public UpdateUserProfileAction(UserProfile userProfile)
-        {
-            UserProfile = userProfile;
-        }
 
-        public UserProfile UserProfile { get; private set; }
-    }
     public class UpdateUserDtoAction : IAction
     {
         public UpdateUserDtoAction(UserDto userDto)

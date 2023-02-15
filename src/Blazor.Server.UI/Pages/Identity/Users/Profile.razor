@@ -234,7 +234,8 @@
                 user!.ProfilePictureDataUrl = model.ProfilePictureDataUrl;
                 await _userManager.UpdateAsync(user);
                 Snackbar.Add(L["The avatar has been updated."], MudBlazor.Severity.Info);
-                await Mediator.Send(new UserProfileState.UpdateUserProfileAction(model));
+                var userDto =await  _identityService.GetUserDto(model.UserId);
+                await Mediator.Send(new UserProfileState.UpdateUserDtoAction(userDto));
             }
         }
     }
@@ -252,7 +253,8 @@
                 user.ProfilePictureDataUrl = model.ProfilePictureDataUrl;
                 await _userManager.UpdateAsync(user);
                 Snackbar.Add($"{ConstantString.UPDATESUCCESS}", MudBlazor.Severity.Info);
-                await Mediator.Send(new UserProfileState.UpdateUserProfileAction(model));
+                var userDto = await _identityService.GetUserDto(model.UserId);
+                await Mediator.Send(new UserProfileState.UpdateUserDtoAction(userDto));
             }
         }
         finally

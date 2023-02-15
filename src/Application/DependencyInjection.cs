@@ -26,7 +26,7 @@ public static class DependencyInjection
         services.AddBlazorState((options) => options.Assemblies = new Assembly[] {
             Assembly.GetExecutingAssembly(),
         });
-       
+
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehaviour<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
