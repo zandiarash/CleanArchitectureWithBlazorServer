@@ -20,6 +20,7 @@ public class GenericExceptionHandler<TRequest, TResponse, TException> : IRequest
     {
         var requestName = nameof(request);
         _logger.LogError(exception, "Application Request: Exception for Request {Name} {@Request}", requestName, request);
+        state.SetHandled(default);
         return Task.CompletedTask;
     }
 }
