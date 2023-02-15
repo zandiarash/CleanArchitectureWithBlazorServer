@@ -59,13 +59,13 @@ public class IdentityService : IIdentityService
     }
     public async Task<bool> IsInRoleAsync(string userId, string role, CancellationToken cancellation = default)
     {
-        var user = await _userManager.Users.SingleOrDefaultAsync(u => u.Id == userId, cancellation) ?? throw new NotFoundException(_localizer["User Not Found."]);
+        var user = await _userManager.Users.SingleOrDefaultAsync(u => u.Id == userId, cancellation) ?? throw new ResourceNotFoundException(_localizer["User Not Found."]);
         return await _userManager.IsInRoleAsync(user, role);
     }
 
     public async Task<bool> AuthorizeAsync(string userId, string policyName, CancellationToken cancellation = default)
     {
-        var user = await _userManager.Users.SingleOrDefaultAsync(u => u.Id == userId, cancellation) ?? throw new NotFoundException(_localizer["User Not Found."]);
+        var user = await _userManager.Users.SingleOrDefaultAsync(u => u.Id == userId, cancellation) ?? throw new ResourceNotFoundException(_localizer["User Not Found."]);
         var principal = await _userClaimsPrincipalFactory.CreateAsync(user);
         var result = await _authorizationService.AuthorizeAsync(principal, policyName);
         return result.Succeeded;
@@ -74,7 +74,7 @@ public class IdentityService : IIdentityService
 
     public async Task<Result> DeleteUserAsync(string userId, CancellationToken cancellation = default)
     {
-        var user = await _userManager.Users.SingleOrDefaultAsync(u => u.Id == userId, cancellation) ?? throw new NotFoundException(_localizer["User Not Found."]);
+        var user = await _userManager.Users.SingleOrDefaultAsync(u => u.Id == userId, cancellation) ?? throw new ResourceNotFoundException(_localizer["User Not Found."]);
         var result = await _userManager.DeleteAsync(user);
         return result.ToApplicationResult();
     }

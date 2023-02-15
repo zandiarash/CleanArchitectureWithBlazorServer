@@ -1,4 +1,4 @@
-using CleanArchitecture.Blazor.Application.Common.Exceptions;
+using CleanArchitecture.Blazor.Application.Common.ExceptionHandler;
 using FluentAssertions;
 using FluentValidation.Results;
 using NUnit.Framework;

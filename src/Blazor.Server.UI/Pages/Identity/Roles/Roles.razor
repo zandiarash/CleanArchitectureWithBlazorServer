@@ -1,7 +1,7 @@
 @inherits OwningComponentBase
 @page "/identity/roles"
 @using Blazor.Server.UI.Components.Dialogs
-@using CleanArchitecture.Blazor.Application.Common.Exceptions
+@using CleanArchitecture.Blazor.Application.Common.ExceptionHandler
 @using CleanArchitecture.Blazor.Application.Features.Identity.Dto
 @using CleanArchitecture.Blazor.Infrastructure.Constants
 @using CleanArchitecture.Blazor.Application.Common.Security
@@ -302,7 +302,7 @@
     {
         Func<string, Task<IList<Claim>>> getcalims = async (roleId) =>
         {
-            var role = await _roleManager.FindByIdAsync(dto.Id) ?? throw new NotFoundException($"not found application role: {roleId}");
+            var role = await _roleManager.FindByIdAsync(dto.Id) ?? throw new ResourceNotFoundException($"not found application role: {roleId}");
             var claims = await _roleManager.GetClaimsAsync(role);
             return claims;
         };
@@ -356,7 +356,7 @@
         {
             processing = true;
             var roleId = model.RoleId!;
-            var role = await _roleManager.FindByIdAsync(roleId) ?? throw new NotFoundException($"Application role {roleId} Not Found."); ;
+            var role = await _roleManager.FindByIdAsync(roleId) ?? throw new ResourceNotFoundException($"Application role {roleId} Not Found."); ;
             model.Assigned = !model.Assigned;
             if (model.Assigned && model.ClaimType is not null && model.ClaimValue is not null)
             {
@@ -387,7 +387,7 @@
         {
             processing = true;
             var roleId = models.First().RoleId;
-            var role = await _roleManager.FindByIdAsync(roleId!) ?? throw new NotFoundException($"not found application role: {roleId}");
+            var role = await _roleManager.FindByIdAsync(roleId!) ?? throw new ResourceNotFoundException($"not found application role: {roleId}");
             foreach (var model in models)
             {
                 if (model.Assigned)

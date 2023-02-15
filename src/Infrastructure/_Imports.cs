@@ -15,7 +15,7 @@ global using CleanArchitecture.Blazor.Domain.Entities;
 global using CleanArchitecture.Blazor.Domain.Entities.Audit;
 global using CleanArchitecture.Blazor.Domain.Entities.Log;
 global using CleanArchitecture.Blazor.Infrastructure.Persistence.Extensions;
-global using CleanArchitecture.Blazor.Application.Common.Exceptions;
+global using CleanArchitecture.Blazor.Application.Common.ExceptionHandler;
 global using CleanArchitecture.Blazor.Application.Common.Models;
 global using CleanArchitecture.Blazor.Application.Common.Interfaces;
 global using CleanArchitecture.Blazor.Application.Common.Interfaces.Identity;

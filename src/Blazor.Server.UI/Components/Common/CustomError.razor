@@ -1,4 +1,4 @@
-@using CleanArchitecture.Blazor.Application.Common.Exceptions
+@using CleanArchitecture.Blazor.Application.Common.ExceptionHandler
 @using System.Net
 <MudPaper Class="py-4 px-6 rounded-lg d-flex flex-column">
     <MudText Typo="Typo.h6" Color="Color.Error">@statusCode</MudText>
@@ -35,7 +35,7 @@
         var userName = state.User.GetUserName();
         switch (Exception)
         {
-            case CustomException e:
+            case ServerException e:
                 statusCode = e.StatusCode.ToString();
                 if (e.ErrorMessages is not null)
                 {

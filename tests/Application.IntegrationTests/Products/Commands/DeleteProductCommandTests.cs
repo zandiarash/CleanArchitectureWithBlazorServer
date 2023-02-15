@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CleanArchitecture.Application.IntegrationTests;
-using CleanArchitecture.Blazor.Application.Common.Exceptions;
+using CleanArchitecture.Blazor.Application.Common.ExceptionHandler;
 using CleanArchitecture.Blazor.Application.Features.KeyValues.Commands.AddEdit;
 using CleanArchitecture.Blazor.Application.Features.KeyValues.Commands.Delete;
 using CleanArchitecture.Blazor.Application.Features.Products.Commands.AddEdit;
@@ -24,7 +24,7 @@ internal class DeleteProductCommandTests: TestBase
         var command = new DeleteProductCommand(new int[] { 99 });
 
         FluentActions.Invoking(() =>
-            SendAsync(command)).Should().ThrowAsync<NotFoundException>();
+            SendAsync(command)).Should().ThrowAsync<ResourceNotFoundException>();
     }
 
     [Test]

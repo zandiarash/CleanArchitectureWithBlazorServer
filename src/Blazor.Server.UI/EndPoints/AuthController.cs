@@ -57,7 +57,7 @@ public class AuthController : Controller
         var user = await _userManager.FindByNameAsync(userName);
         if (user is null)
         {
-            var admin = await _userManager.FindByNameAsync("administrator") ?? throw new NotFoundException($"Application user administrator Not Found.");
+            var admin = await _userManager.FindByNameAsync("administrator") ?? throw new ResourceNotFoundException($"Application user administrator Not Found.");
             user = new ApplicationUser
             {
                 EmailConfirmed = true,
@@ -97,7 +97,7 @@ public class AuthController : Controller
     public async Task<IActionResult> Logout()
     {
         var userId = _signInManager.Context.User.GetUserId();
-        var identityUser = await _userManager.FindByIdAsync(userId) ?? throw new NotFoundException($"Application user not found.");
+        var identityUser = await _userManager.FindByIdAsync(userId) ?? throw new ResourceNotFoundException($"Application user not found.");
         identityUser.IsLive = false;
         await _userManager.UpdateAsync(identityUser);
         _logger.LogInformation("{@UserName} logout successful.", identityUser.UserName);

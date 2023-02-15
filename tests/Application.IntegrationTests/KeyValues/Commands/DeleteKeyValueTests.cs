@@ -3,7 +3,7 @@ using FluentAssertions;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using CleanArchitecture.Blazor.Application.Features.KeyValues.Commands.Delete;
-using CleanArchitecture.Blazor.Application.Common.Exceptions;
+using CleanArchitecture.Blazor.Application.Common.ExceptionHandler;
 using CleanArchitecture.Blazor.Application.Features.KeyValues.Commands.AddEdit;
 using CleanArchitecture.Blazor.Domain.Entities;
 using CleanArchitecture.Blazor.Domain;
@@ -20,7 +20,7 @@ namespace CleanArchitecture.Application.IntegrationTests.KeyValues.Commands
             var command = new DeleteKeyValueCommand (new int[] { 99});
 
             FluentActions.Invoking(() =>
-                SendAsync(command)).Should().ThrowAsync<NotFoundException>();
+                SendAsync(command)).Should().ThrowAsync<ResourceNotFoundException>();
         }
 
         [Test]

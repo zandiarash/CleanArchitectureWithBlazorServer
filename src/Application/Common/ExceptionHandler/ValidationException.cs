@@ -3,9 +3,9 @@
 
 using FluentValidation.Results;
 
-namespace CleanArchitecture.Blazor.Application.Common.Exceptions;
+namespace CleanArchitecture.Blazor.Application.Common.ExceptionHandler;
 
-public class ValidationException : CustomException
+public class ValidationException : ServerException
 {
     public ValidationException(IEnumerable<ValidationFailure> failures):base(string.Empty, failures
              .GroupBy(e => e.PropertyName, e => e.ErrorMessage)

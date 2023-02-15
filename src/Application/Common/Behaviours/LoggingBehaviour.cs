@@ -22,8 +22,8 @@ public class LoggingBehaviour<TRequest> : IRequestPreProcessor<TRequest> where T
     {
         var requestName = nameof(TRequest);
         var userName = _currentUserService.UserName;
-        _logger.LogTrace("Request: {Name} with {@Request} by {@UserName}",
-            requestName,  request, userName);
+        _logger.LogTrace("Application Request: {Name} by {@UserName} {@Request}",
+            requestName,userName, request);
         return Task.CompletedTask;
     }
 }

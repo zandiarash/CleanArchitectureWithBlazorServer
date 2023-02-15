@@ -3,7 +3,7 @@
 @page "/identity/users"
 @using Blazor.Server.UI.Components.Dialogs
 @using BlazorDownloadFile;
-@using CleanArchitecture.Blazor.Application.Common.Exceptions
+@using CleanArchitecture.Blazor.Application.Common.ExceptionHandler
 @using Blazor.Server.UI.Pages.Identity.Roles;
 @using CleanArchitecture.Blazor.Application.Common.Interfaces.Identity
 @using CleanArchitecture.Blazor.Application.Common.Interfaces.MultiTenant
@@ -417,7 +417,7 @@
         var result = await dialog.Result;
         if (!result.Canceled)
         {
-            var user = await _userManager.FindByIdAsync(item.Id!) ?? throw new NotFoundException($"The application user [{item.Id}] was not found.");
+            var user = await _userManager.FindByIdAsync(item.Id!) ?? throw new ResourceNotFoundException($"The application user [{item.Id}] was not found.");
             var state = await _authState;
             user.Email = item.Email;
             user.PhoneNumber = item.PhoneNumber;
@@ -505,7 +505,7 @@
 
     private async Task OnSetActive(UserDto item)
     {
-        var user = await _userManager.FindByIdAsync(item.Id!) ?? throw new NotFoundException($"Application user not found {item.Id}.");
+        var user = await _userManager.FindByIdAsync(item.Id!) ?? throw new ResourceNotFoundException($"Application user not found {item.Id}.");
         user.IsActive = !item.IsActive;
         var state = await _userManager.UpdateAsync(user);
         item.IsActive = !item.IsActive;
@@ -561,7 +561,7 @@
     {
         Func<string, Task<IList<Claim>>> getcalims = async (userId) =>
         {
-            var user = await _userManager.FindByIdAsync(dto.Id) ?? throw new NotFoundException($"not found application user: {userId}");
+            var user = await _userManager.FindByIdAsync(dto.Id) ?? throw new ResourceNotFoundException($"not found application user: {userId}");
             var claims = await _userManager.GetClaimsAsync(user);
             return claims;
         };
@@ -610,7 +610,7 @@
         {
             _processing = true;
             var userId = models.First().UserId;
-            var user = await _userManager.FindByIdAsync(userId!)?? throw new NotFoundException($"not found application user: {userId}");
+            var user = await _userManager.FindByIdAsync(userId!)?? throw new ResourceNotFoundException($"not found application user: {userId}");
             foreach (var model in models)
             {
                 if (model.Assigned)
@@ -647,7 +647,7 @@
         {
             _processing = true;
             var userId = model.UserId!;
-            var user = await _userManager.FindByIdAsync(userId) ?? throw new NotFoundException($"Application user Not Found {userId}."); ;
+            var user = await _userManager.FindByIdAsync(userId) ?? throw new ResourceNotFoundException($"Application user Not Found {userId}."); ;
             model.Assigned = !model.Assigned;
             if (model.Assigned && model.ClaimType is not null && model.ClaimValue is not null)
             {

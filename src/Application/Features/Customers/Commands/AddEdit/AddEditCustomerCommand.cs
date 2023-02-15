@@ -40,7 +40,7 @@ public class AddEditCustomerCommandHandler : IRequestHandler<AddEditCustomerComm
         var dto = _mapper.Map<CustomerDto>(request);
         if (request.Id > 0)
         {
-            var item = await _context.Customers.FindAsync(new object[] { request.Id }, cancellationToken) ?? throw new NotFoundException($"The customer [{request.Id}] was not found.");
+            var item = await _context.Customers.FindAsync(new object[] { request.Id }, cancellationToken) ?? throw new ResourceNotFoundException($"The customer [{request.Id}] was not found.");
             item = _mapper.Map(dto, item);
             // raise a update domain event
             item.AddDomainEvent(new UpdatedEvent<Customer>(item));
