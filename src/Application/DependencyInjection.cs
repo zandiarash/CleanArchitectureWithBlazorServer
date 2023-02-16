@@ -21,14 +21,16 @@ public static class DependencyInjection
        
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-        services.AddSingleton<Publisher>();
-        services.AddMediatR(Assembly.GetExecutingAssembly());
+        services.AddMediatR(configuration=> {
+            configuration.RegisterServicesFromAssemblies( Assembly.GetExecutingAssembly());
+            configuration.NotificationPublisher = new ParallelNoWaitPublisher();
+            });
         services.AddBlazorState((options) => options.Assemblies = new Assembly[] {
             Assembly.GetExecutingAssembly(),
         });
 
         //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehaviour<,>));
+        //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehaviour<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(MemoryCacheBehaviour<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CacheInvalidationBehaviour<,>));
