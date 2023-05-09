@@ -29,11 +29,6 @@ if (app.Environment.IsDevelopment())
         ApplicationDbContextInitializer initializer = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitializer>();
         await initializer.InitialiseAsync();
         await initializer.SeedAsync();
-        INotificationService? notificationService = scope.ServiceProvider.GetService<INotificationService>();
-        if (notificationService is InMemoryNotificationService inMemoryNotificationService)
-        {
-            inMemoryNotificationService.Preload();
-        }
     }
 }
 else

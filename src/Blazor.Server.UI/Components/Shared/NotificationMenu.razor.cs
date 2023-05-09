@@ -17,6 +17,7 @@ public partial class NotificationMenu : MudComponentBase
     {
         if (firstRender == true)
         {
+            (NotificationService as InMemoryNotificationService).Preload();
             _newNotificationsAvailable = await NotificationService.AreNewNotificationsAvailable();
             _messages = await NotificationService.GetNotifications();
             StateHasChanged();
