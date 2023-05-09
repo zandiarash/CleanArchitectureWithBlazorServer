@@ -1,0 +1,10 @@
+@inherits MudComponentBase
+@inject IStringLocalizer<SharedResource> L
+<MudTooltip Arrow="true" Text="@L["Chat"]">
+    <MudBadge Color="Color.Secondary" Dot="true" Overlap="true" Visible="_newMessageAvailable">
+        <MudIconButton Class="mx-1"
+                       Color="Color.Default"
+                       Icon="@Icons.Material.Filled.Chat" />
+
+</MudBadge>
+</MudTooltip>
