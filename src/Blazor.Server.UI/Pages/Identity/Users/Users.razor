@@ -279,8 +279,8 @@
  </ErrorBoundary>
 
  @code {
-    [Inject]
-    private IUsersStateContainer UsersStateContainer { get; set; } = default!;
+    // [Inject]
+    // private IUsersStateContainer UsersStateContainer { get; set; } = default!;
     private int _defaultPageSize = 15;
     private HashSet<ApplicationUserDto> _selectedItems = new();
     private readonly ApplicationUserDto _currentDto = new();
@@ -346,7 +346,8 @@
     }
     private bool isOnline(string username)
     {
-        return UsersStateContainer.UsersByConnectionId.Any(x => x.Value.Equals(username, StringComparison.OrdinalIgnoreCase));
+        return false;
+        //return UsersStateContainer.UsersByConnectionId.Any(x => x.Value.Equals(username, StringComparison.OrdinalIgnoreCase));
     }
 
     private async Task<GridData<ApplicationUserDto>> ServerReload(GridState<ApplicationUserDto> state)

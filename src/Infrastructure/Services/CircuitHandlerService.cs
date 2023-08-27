@@ -21,13 +21,14 @@ public class CircuitHandlerService : CircuitHandler
         {
             _usersStateContainer.Update(circuit.Id, state.User.Identity.Name);
         }
+       await base.OnConnectionUpAsync(circuit, cancellationToken);
     }
 
     public override Task OnConnectionDownAsync(Circuit circuit,
         CancellationToken cancellationToken)
     {
         _usersStateContainer.Remove(circuit.Id);
-        return Task.CompletedTask;
+        return base.OnConnectionDownAsync(circuit, cancellationToken);
     }
 
 }
