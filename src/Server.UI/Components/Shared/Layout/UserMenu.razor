@@ -6,7 +6,7 @@
 @inject NavigationManager NavigationManager
 @inject IState<Fluxor.UserProfileState> UserProfileState
 @inject IStringLocalizer<SharedResource> L
-@inject IAccessTokenProvider TokenProvider
+ 
 
 
 <MudTooltip Arrow="true" Text="@L["User Profile"]">
@@ -94,8 +94,8 @@
 
         if (!result.Canceled)
         {
-            await TokenProvider.RemoveAuthDataFromStorage();
-            ((BlazorAuthenticationStateProvider)AuthenticationStateProvider).MarkUserAsLoggedOut();
+             await ((BlazorAuthenticationStateProvider)AuthenticationStateProvider).MarkUserAsLoggedOut();
+         
         }
     }
 }

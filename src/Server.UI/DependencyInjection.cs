@@ -2,7 +2,6 @@ using System.Net.Http.Headers;
 using System.Reflection;
 using BlazorDownloadFile;
 using CleanArchitecture.Blazor.Infrastructure.Constants.Localization;
-using CleanArchitecture.Blazor.Server.Common.Interfaces;
 using CleanArchitecture.Blazor.Server.Hubs;
 using CleanArchitecture.Blazor.Server.Middlewares;
 using CleanArchitecture.Blazor.Server.UI.Hubs;
@@ -13,7 +12,6 @@ using CleanArchitecture.Blazor.Server.UI.Services.Notifications;
 using CleanArchitecture.Blazor.Server.UI.Services.UserPreferences;
 using Hangfire;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.Extensions.FileProviders;
 using MudBlazor.Services;
 using MudExtensions.Services;
@@ -26,7 +24,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddServerUI(this IServiceCollection services, IConfiguration config)
     {
-        services.AddRazorComponents().AddInteractiveServerComponents();
+        services.AddRazorComponents().AddInteractiveServerComponents(options=>options.JSInteropDefaultCallTimeout= TimeSpan.FromSeconds(180));
         services.AddCascadingAuthenticationState();
         services.AddMudBlazorDialog()
             .AddMudServices(config =>

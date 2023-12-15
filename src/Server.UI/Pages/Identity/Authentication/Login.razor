@@ -15,9 +15,6 @@
 @using CleanArchitecture.Blazor.Server.UI.Pages.Identity.Users
 @using CleanArchitecture.Blazor.Application.Common.ExceptionHandlers
 
-@inherits OwningComponentBase
-@implements IDisposable
-
 @inject IAccessTokenProvider TokenProvider
 @inject IJSRuntime JS
 @inject ILogger<Login> Logger
@@ -150,7 +147,7 @@
                             var claims =await TokenProvider.ParseClaimsFromJwt(accessToken);
                             ((BlazorAuthenticationStateProvider)AuthenticationStateProvider).MarkUserAsAuthenticated(claims);
                             Logger.LogInformation("{@UserName:l} has successfully logged in", user.UserName);
-
+                            NavigationManager.NavigateTo("/");
 
                         }
                     }

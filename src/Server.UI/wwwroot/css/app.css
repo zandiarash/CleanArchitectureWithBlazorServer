@@ -12,3 +12,6 @@
     opacity: 0;
     visibility: hidden;
 }
+::view-transition-group(*) {
+    animation-duration: 0.5s;
+}

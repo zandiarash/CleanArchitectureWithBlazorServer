@@ -22,8 +22,9 @@ public  class BlazorAuthenticationStateProvider : AuthenticationStateProvider
         var authState = Task.FromResult(new AuthenticationState(authenticatedUser));
         NotifyAuthenticationStateChanged(authState);
     }
-    public void MarkUserAsLoggedOut()
+    public  async Task MarkUserAsLoggedOut()
     {
+        await _tokenProvider.RemoveAuthDataFromStorage();
         var anonymousUser = new ClaimsPrincipal(new ClaimsIdentity());
         var authState = Task.FromResult(new AuthenticationState(anonymousUser));
         NotifyAuthenticationStateChanged(authState);
